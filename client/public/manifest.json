@@ -1,0 +1,53 @@
+{
+  "short_name": "DM",
+  "name": "Daily Manager",
+  "icons": [
+    {
+      "src": "./favicon.ico",
+      "type": "image/icon",
+      "sizes": "512x512"
+    },
+    {
+      "src": "../imgs/logo.png",
+      "type": "image/png",
+      "sizes": "540x720"
+    }
+  ],
+  "id": "/",
+  "start_url": "./",
+  "background_color": "#fff",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6",
+  "shortcuts": [
+    {
+      "name": "DM-Calender",
+      "short_name": "Calender",
+      "description": "View calender and events",
+      "url": "/today?source=pwa",
+      "icons": [{ "src": "../imgs/logo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "DM-Chat",
+      "short_name": "Chat",
+      "description": "View my chat",
+      "url": "/tomorrow?source=pwa",
+      "icons": [{ "src": "../imgs/logo.png", "sizes": "192x192" }]
+    }
+  ],
+  "description": "Daily Manager is a web-based application that combines a calendar, task manager, and charting functionality to help users stay organized and on top of their daily activities. It offers an intuitive interface that makes it easy to view and manage your schedule, add and track tasks, and visualize your progress over time.",
+  "screenshots": [
+    {
+      "src": "../imgs/logo.png",
+      "type": "image/png",
+      "sizes": "540x720",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "./favicon.ico",
+      "type": "image/icon",
+      "sizes": "512x512",
+      "form_factor": "narrow"
+    }
+  ]
+}
