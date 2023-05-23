@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 
-const Nav = () => {
+const Nav = ({ page }) => {
   return <nav>
     <div className="nav">
       <div className="container">
@@ -26,15 +26,15 @@ const Nav = () => {
         </div>
         <div className="app-options">
           <ul >
-            <li key='Schedule' className="schedule" onClick={(e) => console.log(e.target)}>
-              <Link to='/calender' className='nav-text-icon'>
+            <li key='Schedule' className={page === 'schedule' ? "schedule clicked" : "schedule"}>
+              < Link to='/calender' className='nav-text-icon'>
                 <div className="icon">
                   <i className="fa-solid fa-clock"></i>
                 </div>
                 <div className="text">My Schedule</div>
               </Link>
             </li>
-            <li key='Tasks' className="tasks">
+            <li key='Tasks' className={page === 'tasks' ? "tasks clicked" : "tasks"}>
               <Link to='/tasks' className='nav-text-icon'>
                 <div className="icon">
                   <i className="fa-solid fa-list-check"></i>
@@ -42,7 +42,7 @@ const Nav = () => {
                 <div className="text">Tasks</div>
               </Link>
             </li>
-            <li key='Chat' className="chat ">
+            <li key='Chat' className={page === 'chat' ? "chat clicked" : "chat"}>
               <Link to='/chat' className='nav-text-icon'>
                 <div className="icon">
                   <i className="fa-solid fa-comment-dots"></i>
@@ -50,7 +50,7 @@ const Nav = () => {
                 <div className="text">Chat</div>
               </Link>
             </li>
-            <li key='Dashboard' className="dashboard">
+            <li key='Dashboard' className={page === 'dashboard' ? "dashboard clicked" : "dashboard"}>
               <Link to='/dashboard' className='nav-text-icon'>
                 <div className="icon">
                   <i className="fa-sharp fa-solid fa-bolt"></i>
@@ -70,12 +70,9 @@ const Nav = () => {
         </div>
       </div>
     </div>
-  </nav>
+  </nav >
 }
 export default Nav;
 
 
-function navClicker(ele) {
-  console.log('🚀 ~ ele:', ele)
 
-}

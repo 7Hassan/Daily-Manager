@@ -13,6 +13,26 @@
   src: url("./fonts/Gilroy-Regular.ttf") format("truetype");
   font-weight: lighter;
 }
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 * {
   padding: 0;
   margin: 0;
@@ -72,10 +92,15 @@ nav .nav .container .header-nav {
 nav .nav .container .header-nav .logo {
   gap: 7px;
   margin-top: 9px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  padding-left: 10px;
 }
 nav .nav .container .header-nav .logo img {
   width: 25px;
+}
+nav .nav .container .header-nav .logo img.spin {
+  -webkit-animation: spin 2s infinite;
+          animation: spin 2s infinite;
 }
 nav .nav .container .header-nav .logo .text {
   font-family: "Gilroy Bold" !important;
@@ -113,6 +138,9 @@ nav .nav .container .app-options ul li.clicked::before {
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
 }
+nav .nav .container .app-options ul li.clicked .text, nav .nav .container .app-options ul li.clicked .icon {
+  color: #0077FC !important;
+}
 nav .nav .container .app-options ul li a, nav .nav .container .app-options ul li .logout {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -125,4 +153,37 @@ nav .nav .container .app-options ul li > :hover {
 }
 nav .nav .container .app-options ul li > :hover .text, nav .nav .container .app-options ul li > :hover .icon {
   color: #0077FC !important;
+}
+
+main .main-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+main .main-container .main {
+  width: calc(100% - 180px);
+}
+
+@media (max-width: 799px) {
+  nav .nav {
+    width: 70px;
+  }
+  nav .nav .logo img {
+    width: 30px !important;
+  }
+  nav .nav .user-account a {
+    margin-left: 5px !important;
+  }
+  nav .nav .text {
+    display: none;
+  }
+  nav .nav .icon {
+    font-size: 25px;
+  }
+  .main {
+    width: calc(100% - 70px) !important;
+  }
 }

@@ -1,5 +1,6 @@
 @use './helpers/fonts';
 @use './helpers/colors' as *;
+@use './helpers/animation';
 
 *{
   padding: 0;
@@ -29,6 +30,7 @@ a{
   gap: 15px;
   padding-left: 20px;
 }
+
 nav{
     position: fixed;
     background-color: white;
@@ -46,9 +48,13 @@ nav{
           .logo{
             gap:7px;
             margin-top: 9px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            padding-left: 10px;
             img{
               width: 25px;
+              &.spin{
+                animation: spin 2s infinite;
+              }
             }
             .text{
               font-family: 'Gilroy Bold' !important; 
@@ -83,7 +89,8 @@ nav{
           ul{
             li{
               position: relative;
-              &.clicked::before{
+              &.clicked{
+                &::before{
                 content: "";
                 background-color: $mainColor;
                 width: 5px;
@@ -91,6 +98,10 @@ nav{
                 position: absolute;
                 top: 50%;
                 transform: translateY(-50%);
+                }
+                .text,.icon{
+                  color: $mainColor !important;
+                }
               }
               a,.logout{
                 padding-top: 20px;
@@ -112,4 +123,39 @@ nav{
       }
     }
     
+}
+
+main {
+  .main-container{
+    display: flex;
+    justify-content: flex-end;
+    .main{
+      width: calc(100% - 180px);
+    }
+  }
+}
+
+@media (max-width:799px) {
+nav{
+.nav{
+  width: 70px;
+  .logo{
+      img{
+      width: 30px !important;
+    }
+  }
+  .user-account a {
+    margin-left: 5px !important;
+  }
+    .text{
+      display: none;
+    }
+    .icon{
+      font-size: 25px;
+    }
+   }
+  }
+  .main{
+    width: calc(100% - 70px) !important;
+  }
 }

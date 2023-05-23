@@ -1,12 +1,14 @@
 
 
-// import { Title } from "../utils/funcs";
+import { Title } from "../utils/funcs";
+import Nav from "../components/nav";
 
 const Home = () => {
-  return <div>
-    {/* <Title title='Daily Manager (DM)' /> */}
+  return <main>
+    <Title title='Daily Manager (DM)' />
+    <Nav page='' />
     Home
-  </div>
+  </main>
 };
 
 export default Home;

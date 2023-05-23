@@ -1,7 +1,13 @@
 
+import Nav from "../components/nav";
+import { Title } from "../utils/funcs";
+
 
 const Dashboard = () => {
-  return <div>Dashboard</div>
+  return <main>
+    <Title title='DM - Dashboard' />
+    <Nav page='dashboard' />
+  </main>
 };
 
 export default Dashboard;

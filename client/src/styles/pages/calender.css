@@ -1,0 +1,59 @@
+.main .container {
+  margin-left: 20px;
+  margin-top: 60px;
+  border-left: 1px solid #95a0ae;
+}
+.main .container .schedule {
+  padding: 40px 20px 0 20px;
+}
+.main .container .schedule .header .text-header {
+  font-family: "Gilroy Bold";
+  font-size: 21px;
+}
+.main .container .schedule .header .features-header-container {
+  margin-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.main .container .schedule .header .features-header-container .date-buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 20px;
+  color: #95a0ae;
+}
+.main .container .schedule .header .features-header-container .date-buttons .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 20px;
+  color: #7D8EA6;
+}
+.main .container .schedule .header .features-header-container .date-buttons .buttons div {
+  cursor: pointer;
+  font-size: 20px;
+  background-color: #e9eff6;
+  padding: 5px;
+  border-radius: 4px;
+}
+.main .container .schedule .header .features-header-container .new-event .button {
+  font-size: 18px;
+  color: #0077FC;
+  background-color: #E6F2FF;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+}
