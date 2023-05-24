@@ -7,8 +7,11 @@
     margin-left: 20px;
     margin-top: 60px;
     border-left: 1px solid $mainColorIcons;
+    height: calc(100vh - 60px);
+    overflow: scroll;
     .schedule{
       padding: 40px 20px 0 20px;
+      height: 200vh;
       .header{
         .text-header{
           font-family: 'Gilroy Bold';   
@@ -50,6 +53,18 @@
           }
         }
       }
+    }
+    .calender{
+      &.hidden{
+        right: -200px;
+      }
+      transition: .3s;
+      width: 200px;
+      height: 100vh;
+      background-color: red;
+      position: fixed;
+      top: 0;
+      right: 0;
     }
   }
 }

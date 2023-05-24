@@ -1,7 +1,10 @@
 
 import { Title } from "../utils/funcs";
 import Nav from "../components/nav";
-import '../styles/pages/calender.css'
+import '../styles/pages/calender.css';
+import Clock from "../components/clock";
+import DateClock from "../components/date.clock";
+// import DateCalender from "../components/date.calender";
 const Calender = () => {
   return <main>
     <div className="main-container">
@@ -25,10 +28,16 @@ const Calender = () => {
                 </div>
               </div>
             </div>
+            <div className="table-dates">
+              {/* <DateCalender /> */}
+              {/* <Clock /> */}
+              <DateClock />
+            </div>
+          </div>
+          <div className="calender hidden">
           </div>
         </div>
       </div>
-      <div className="calender"></div>
     </div>
   </main>
 };
