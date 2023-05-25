@@ -30,8 +30,8 @@ const Calender = () => {
             </div>
             <div className="table-dates">
               {/* <DateCalender /> */}
-              {/* <Clock /> */}
-              <DateClock />
+              <Clock />
+              {/* <DateClock /> */}
             </div>
           </div>
           <div className="calender hidden">
