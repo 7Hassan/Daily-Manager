@@ -3,10 +3,10 @@
 @use '../helpers/colors' as *;
 
 .main{
+  width: 100%;
   .container{
     margin-left: 20px;
     margin-top: 60px;
-    border-left: 1px solid $mainColorIcons;
     height: calc(100vh - 60px);
     overflow: scroll;
     .schedule{

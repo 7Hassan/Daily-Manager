@@ -1,9 +1,25 @@
 
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
 
 const Nav = ({ page }) => {
-  return <nav>
+  const [classSlider, setClassSlider] = useState('slider')
+  const [classNav, setClassNav] = useState('')
+  return <nav className={classNav}>
     <div className="nav">
+      <div className={classSlider} onClick={() => {
+        classSlider.includes('left') ? setClassSlider('slider') : setClassSlider('slider left')
+        classNav.includes('hidden') ? setClassNav('') : setClassNav('hidden')
+
+      }}>
+        <div className="icon">
+          <div className="x-rate"></div>
+          <div className="container">
+            <div className="y-slider"></div>
+          </div>
+        </div>
+      </div>
       <div className="container">
         <div className="header-nav">
           <div className="logo nav-text-icon">

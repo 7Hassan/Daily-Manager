@@ -1,7 +1,9 @@
+.main {
+  width: 100%;
+}
 .main .container {
   margin-left: 20px;
   margin-top: 60px;
-  border-left: 1px solid #95a0ae;
   height: calc(100vh - 60px);
   overflow: scroll;
 }
