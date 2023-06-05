@@ -1,15 +1,15 @@
 @font-face {
-  font-family: "Gilroy Bold";
+  font-family: "bold";
   src: url("./fonts/Gilroy-Bold.ttf") format("truetype");
   font-weight: bold;
 }
 @font-face {
-  font-family: "Gilroy Medium";
+  font-family: "medium";
   src: url("./fonts/Gilroy-Medium.ttf") format("truetype");
   font-weight: normal;
 }
 @font-face {
-  font-family: "Gilroy Normal";
+  font-family: "light";
   src: url("./fonts/Gilroy-Regular.ttf") format("truetype");
   font-weight: lighter;
 }
@@ -41,7 +41,7 @@
 }
 
 body {
-  font-family: "Gilroy Medium";
+  font-family: "medium";
   font-size: 16px;
 }
 
@@ -106,7 +106,7 @@ nav .slider.left {
           box-shadow: 7px 5px 15px rgba(0, 0, 0, 0.04);
 }
 nav .slider.left .container {
-  left: 12% !important;
+  left: 20% !important;
   padding-left: 0 !important;
   padding-right: 3px !important;
 }
@@ -174,7 +174,7 @@ nav .nav .container .header-nav .logo img.spin {
           animation: spin 2s infinite;
 }
 nav .nav .container .header-nav .logo .text {
-  font-family: "Gilroy Bold" !important;
+  font-family: "bold" !important;
   font-size: 13px;
 }
 nav .nav .container .header-nav .user-account a {
@@ -189,7 +189,7 @@ nav .nav .container .header-nav .user-account img {
   border-radius: 50%;
 }
 nav .nav .container .header-nav .user-account .text .name {
-  font-family: "Gilroy Bold" !important;
+  font-family: "bold" !important;
   margin-bottom: 4px;
 }
 nav .nav .container .header-nav .user-account .text .title {

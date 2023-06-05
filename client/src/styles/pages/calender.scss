@@ -1,10 +1,20 @@
 
-
 @use '../helpers/colors' as *;
+$barColor:white;
+
+.btn{
+    padding: 10px;
+    background-color: #E6F2FF;
+    border-radius: 15px;
+    font-family: "medium";
+    color: #0077FC;
+    cursor: pointer;
+    border: none;
+}
 
 .main{
   width: 100%;
-  .container{
+  >.container{
     margin-left: 20px;
     margin-top: 60px;
     height: calc(100vh - 60px);
@@ -14,7 +24,7 @@
       height: 200vh;
       .header{
         .text-header{
-          font-family: 'Gilroy Bold';   
+          font-family: 'bold';   
           font-size: 21px;  
         }
         .features-header-container{
@@ -54,17 +64,242 @@
         }
       }
     }
-    .calender{
-      &.hidden{
-        right: -200px;
-      }
+    .schedule-nav{
+      $widthSlider:300px;
+      z-index: 10;
       transition: .3s;
-      width: 200px;
+      width: $widthSlider;
       height: 100vh;
-      background-color: red;
+      background-color: $barColor;
       position: fixed;
       top: 0;
       right: 0;
+      transition: .5s;
+      box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.06);
+      &.hidden{
+        right: -$widthSlider;
+      }
+      .slider{
+        position: absolute;
+        top: 50%;
+        left: -48px;
+        background-color: white;
+        border-radius: 50% 0% 0% 50%;
+        width: 35px;
+        height: 35px;
+        padding: 24px;
+        z-index: 3;
+        box-shadow: -14px 0px 15px rgba(0, 0, 0, 0.04);
+        cursor: pointer;
+        cursor: pointer;
+        .slider-container{
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          i{
+            font-size: 20px;
+            transition: .5s;
+            transform: rotateY(180deg);
+          &:last-child{
+            font-size: 18px;
+            margin: -3px;
+          }
+          }
+
+        }
+        &.slide-up{
+          .slider-container{
+            i{
+              color: $mainColor !important;
+              transform: rotateY(0deg) !important;
+            }
+          }
+        }
+      }
+      .container{
+        padding:10px 5px;
+        height: 100%;
+        >.header{
+          width: 100%;
+          height: 70px;
+          text-align: center;
+        }
+        .calender{
+          height: 360px;
+          overflow: hidden;
+          .calender-container{
+            height: 100%;
+            .header{
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+              padding: 5px 0;
+              margin-bottom: 10px;
+              div{
+                padding: 10px;
+                background-color: #E6F2FF;
+                border-radius: 10px;
+                font-family: 'medium';   
+                color: $mainColor;
+                cursor: pointer;
+              }
+            }
+              .calender-component{
+                .head{
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: space-between;
+                  padding: 5px 0;
+                  margin-bottom: 10px;
+                  padding: 0 15px;
+                  margin-bottom: 20px;
+                  button{
+                    background-color: white;
+                    padding: 2px;
+                    font-size: 14px;
+                    border-radius: 12px;
+                    width: 35px;
+                    height: 35px;
+                    cursor: pointer;
+                    border: none;
+                    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+                    color: $mainColor;
+                  }              
+                }
+                .dates{
+                  $width:36px;
+                  $height:36px;
+                  .week-days,
+                  .mon-days{
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    padding: 0 5px;
+                    justify-content: flex-start;
+                    flex-wrap: nowrap;
+                    div{
+                      width: $width;
+                      height: $height;
+                      text-align: center;
+                      margin: 2px;
+                      line-height: 35px;
+                    }
+                  }
+                  .mon-days{
+                    flex-wrap: wrap !important;
+                    .mon-day{
+                      border-radius: 50%;
+                      cursor: pointer;
+                      &:hover{
+                        background-color: #E6F2FF;
+                        color: $mainColor;
+                      }
+                      &.today{
+                        border: 1px solid $mainColor;
+                        color: $mainColor;
+                      }
+                    }
+                    
+                  }
+                }
+                
+              }
+
+          }
+        }
+        .today-events{
+          margin-top: 20px;
+          .event-container{
+            .header{
+              font-size: 24px;
+              font-family: 'bold'; 
+              margin-bottom: 15px;
+            }
+            .events{
+              overflow-y:scroll ;
+              height: calc(100vh - 515px);
+              border-radius: 20px;
+              .container-ev{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .box-selection{
+                      width: 80%;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      gap: 30px;
+                      transition: .3s;
+                      background-color: transparent;
+                      font-size: 15px;
+                      margin: -50px auto;
+                      &.show{
+                        margin: 0 auto;
+                      }
+                      button:first-child{
+                        background-color: $mainColor;
+                        color: white;
+                      }
+                      button:last-child{
+                        background-color: #F2F2F2;
+                        color: black;
+                      }
+                  }
+                }
+            .event{
+                background-color: #F2F2F2;
+                border-radius: 30px;
+                height: 60px;
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: center;
+                overflow: hidden;
+                margin: 10px 0;
+              .hover{
+                height: 100%;
+                background-color: $mainColor;
+                position: absolute;
+                left: 0;
+                opacity: .4;
+                width: 0%;
+              }
+            .time{
+              padding-left: 20px;
+              margin-right: 15px;
+              font-size: 18px;
+            }
+            .info{
+              font-size: 15px;
+              .title{
+                width: 160px;
+                overflow: hidden;
+                height: 18px;
+                text-overflow: ellipsis;
+              }
+              .remaining-time{
+                font-size: 13px;
+                color: #A0A1BC;
+                padding-top: 4px;
+              }
+            }
+            .bar{
+              position: absolute;
+              right: 0;
+              font-size: 19px;
+              padding: 15px;
+              cursor: pointer;
+            }
+            }
+            }
+          }
+        }
+      }
     }
   }
 }

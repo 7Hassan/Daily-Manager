@@ -9,7 +9,7 @@
 }
 
 body{
-  font-family: 'Gilroy Medium';
+  font-family: 'medium';
 font-size: 16px;
 }
 
@@ -36,8 +36,6 @@ nav{
   margin-left: -193px;
   box-shadow: none !important;
   padding: 0;
-  // margin: 0;
-
   }
     box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.06);
     padding-right: 15px;
@@ -61,7 +59,7 @@ nav{
         border-color: $mainColor;
         box-shadow: 7px 5px 15px rgb(0 0 0 / 4%);
         .container{
-          left: 12% !important;
+          left: 20% !important;
           padding-left: 0 !important;
           padding-right: 3px!important;
         }
@@ -121,7 +119,7 @@ nav{
               }
             }
             .text{
-              font-family: 'Gilroy Bold' !important; 
+              font-family: 'bold' !important; 
               font-size: 13px;
             }
           }
@@ -139,7 +137,7 @@ nav{
             }
             .text{
               .name{
-                font-family: 'Gilroy Bold' !important; 
+                font-family: 'bold' !important; 
                 margin-bottom: 4px;
               }
               .title{

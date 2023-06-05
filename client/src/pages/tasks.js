@@ -5,7 +5,14 @@ import { Title } from "../utils/funcs";
 const Tasks = () => {
   return <main>
     <Title title='DM - Tasks' />
-    <Nav page='tasks' />
+    <div className="main-container">
+      <Nav page='tasks' />
+      <div className="main">
+        <div className="container">
+        tasks
+        </div>
+      </div>
+    </div>
   </main>
 };
 

@@ -6,7 +6,14 @@ import Nav from "../components/nav";
 const Home = () => {
   return <main>
     <Title title='Daily Manager (DM)' />
-    <Nav page='' />
+    <div className="main-container">
+      <Nav page='' />
+      <div className="main">
+        <div className="container">
+          home
+        </div>
+      </div>
+    </div>
     Home
   </main>
 };
