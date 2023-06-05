@@ -5,4 +5,4 @@ Daily Manager is a web-based application that combines a calendar, task manager,
 </p>
 
 <h2>Design</h2>
-<img src='./Design.png'/>
+<img src='./Design/Design.png'/>
