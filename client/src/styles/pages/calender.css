@@ -91,18 +91,16 @@
   right: -300px;
 }
 .main > .container .schedule-nav .slider {
+  opacity: 1;
   position: absolute;
   top: 50%;
-  left: -48px;
+  left: -38px;
   background-color: white;
   border-radius: 50% 0% 0% 50%;
-  width: 35px;
-  height: 35px;
-  padding: 24px;
+  padding: 20px 10px;
   z-index: 3;
   -webkit-box-shadow: -14px 0px 15px rgba(0, 0, 0, 0.04);
           box-shadow: -14px 0px 15px rgba(0, 0, 0, 0.04);
-  cursor: pointer;
   cursor: pointer;
 }
 .main > .container .schedule-nav .slider .slider-container {
@@ -128,6 +126,9 @@
 .main > .container .schedule-nav .slider .slider-container i:last-child {
   font-size: 18px;
   margin: -3px;
+}
+.main > .container .schedule-nav .slider.slide-up {
+  opacity: 0.8;
 }
 .main > .container .schedule-nav .slider.slide-up .slider-container i {
   color: #0077FC !important;
@@ -255,8 +256,8 @@
 }
 .main > .container .schedule-nav .container .today-events .event-container .header {
   font-size: 24px;
-  font-family: "bold";
   margin-bottom: 15px;
+  text-align: center;
 }
 .main > .container .schedule-nav .container .today-events .event-container .events {
   overflow-y: scroll;
@@ -343,8 +344,8 @@
 .main > .container .schedule-nav .container .today-events .event-container .events .event .info .title {
   width: 160px;
   overflow: hidden;
-  height: 18px;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .main > .container .schedule-nav .container .today-events .event-container .events .event .info .remaining-time {
   font-size: 13px;

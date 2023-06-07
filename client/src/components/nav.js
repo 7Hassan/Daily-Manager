@@ -1,89 +1,68 @@
 
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-
 
 const Nav = ({ page }) => {
-  const [classSlider, setClassSlider] = useState('slider')
-  const [classNav, setClassNav] = useState('')
-  return <nav className={classNav}>
+  return <nav>
     <div className="nav">
-      <div className={classSlider} onClick={() => {
-        classSlider.includes('left') ? setClassSlider('slider') : setClassSlider('slider left')
-        classNav.includes('hidden') ? setClassNav('') : setClassNav('hidden')
-
-      }}>
-        <div className="icon">
-          <div className="x-rate"></div>
-          <div className="container">
-            <div className="y-slider"></div>
-          </div>
-        </div>
-      </div>
       <div className="container">
-        <div className="header-nav">
-          <div className="logo nav-text-icon">
-            <div className="icon">
+        <ul>
+          <li className="img-text logo">
+            <div className="img">
               <img src="./favicon.ico" alt="logo" />
             </div>
             <div className="text">Daily Manager</div>
-          </div>
-          <div className="user-account">
-            <Link to='/' className='nav-text-icon'>
-              <div className="icon">
-                <img src="./imgs/Profile.png" alt="user-img" />
-              </div>
-              <div className="text">
-                <div className="name"> Jone copper</div>
-                <div className="title">UI Designer</div>
+          </li>
+          <li className="img-text user">
+            <Link to='/'>
+              <div className="img">
+                <img src="./imgs/Profile.png" alt="user-img" className={page === 'home' ? "clicked" : NaN} />
               </div>
             </Link>
-          </div>
-        </div>
-        <div className="app-options">
-          <ul >
-            <li key='Schedule' className={page === 'schedule' ? "schedule clicked" : "schedule"}>
-              < Link to='/calender' className='nav-text-icon'>
-                <div className="icon">
-                  <i className="fa-solid fa-clock"></i>
-                </div>
-                <div className="text">My Schedule</div>
-              </Link>
-            </li>
-            <li key='Tasks' className={page === 'tasks' ? "tasks clicked" : "tasks"}>
-              <Link to='/tasks' className='nav-text-icon'>
-                <div className="icon">
-                  <i className="fa-solid fa-list-check"></i>
-                </div>
-                <div className="text">Tasks</div>
-              </Link>
-            </li>
-            <li key='Chat' className={page === 'chat' ? "chat clicked" : "chat"}>
-              <Link to='/chat' className='nav-text-icon'>
-                <div className="icon">
-                  <i className="fa-solid fa-comment-dots"></i>
-                </div>
-                <div className="text">Chat</div>
-              </Link>
-            </li>
-            <li key='Dashboard' className={page === 'dashboard' ? "dashboard clicked" : "dashboard"}>
-              <Link to='/dashboard' className='nav-text-icon'>
-                <div className="icon">
-                  <i className="fa-sharp fa-solid fa-bolt"></i>
-                </div>
-                <div className="text">Dashboard</div>
-              </Link>
-            </li>
-            <li key='Logout'>
-              <div className="logout nav-text-icon">
-                <div className="icon">
-                  <i className="fa-solid fa-right-from-bracket"></i>
-                </div>
-                <div className="text">Logout</div>
+            <div className="text">
+              Profile
+              {/* <div className="name"> Jone copper</div>
+              <div className="title">UI Designer</div> */}
+            </div>
+          </li>
+          <li key='Schedule' className={page === 'schedule' ? "schedule img-text clicked" : "img-text schedule"}>
+            < Link to='/calender' >
+              <div className="img">
+                <i className="fa-solid fa-clock"></i>
               </div>
-            </li>
-          </ul>
-        </div>
+              <div className="text">My Schedule</div>
+            </Link>
+          </li>
+          <li key='Tasks' className={page === 'tasks' ? "tasks clicked img-text" : "tasks img-text"}>
+            <Link to='/tasks' >
+              <div className="img">
+                <i className="fa-solid fa-list-check"></i>
+              </div>
+              <div className="text">Tasks</div>
+            </Link>
+          </li>
+          <li key='Chat' className={page === 'chat' ? "chat img-text clicked" : "img-text chat"}>
+            <Link to='/chat' >
+              <div className="img">
+                <i className="fa-solid fa-comment-dots"></i>
+              </div>
+              <div className="text">Chat</div>
+            </Link>
+          </li>
+          <li key='Dashboard' className={page === 'dashboard' ? "dashboard img-text clicked" : "img-text dashboard"}>
+            <Link to='/dashboard' >
+              <div className="img">
+                <i className="fa-sharp fa-solid fa-bolt"></i>
+              </div>
+              <div className="text">Dashboard</div>
+            </Link>
+          </li>
+          <li key='Logout' className='img-text logout'>
+            <div className="img">
+              <i className="fa-solid fa-right-from-bracket"></i>
+            </div>
+            <div className="text">Logout</div>
+          </li>
+        </ul>
       </div>
     </div>
   </nav >

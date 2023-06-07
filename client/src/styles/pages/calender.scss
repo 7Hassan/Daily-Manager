@@ -80,17 +80,15 @@ $barColor:white;
         right: -$widthSlider;
       }
       .slider{
+        opacity: 1;
         position: absolute;
         top: 50%;
-        left: -48px;
+        left: -38px;
         background-color: white;
         border-radius: 50% 0% 0% 50%;
-        width: 35px;
-        height: 35px;
-        padding: 24px;
+        padding: 20px 10px;
         z-index: 3;
         box-shadow: -14px 0px 15px rgba(0, 0, 0, 0.04);
-        cursor: pointer;
         cursor: pointer;
         .slider-container{
           width: 100%;
@@ -110,6 +108,7 @@ $barColor:white;
 
         }
         &.slide-up{
+          opacity: .8;
           .slider-container{
             i{
               color: $mainColor !important;
@@ -216,8 +215,8 @@ $barColor:white;
           .event-container{
             .header{
               font-size: 24px;
-              font-family: 'bold'; 
               margin-bottom: 15px;
+              text-align: center;
             }
             .events{
               overflow-y:scroll ;
@@ -279,8 +278,8 @@ $barColor:white;
               .title{
                 width: 160px;
                 overflow: hidden;
-                height: 18px;
                 text-overflow: ellipsis;
+                white-space: nowrap;
               }
               .remaining-time{
                 font-size: 13px;

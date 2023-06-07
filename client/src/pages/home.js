@@ -7,7 +7,7 @@ const Home = () => {
   return <main>
     <Title title='Daily Manager (DM)' />
     <div className="main-container">
-      <Nav page='' />
+      <Nav page='home' />
       <div className="main">
         <div className="container">
           home

@@ -18,7 +18,7 @@ const NavEvents = () => {
               08:00
             </div>
             <div className="info">
-              <div className="title">Web Development</div>
+              <div className="title">Web Development Web DevelopmentWeb DevelopmentWeb Development</div>
               <div className="remaining-time"> 1h 33m</div>
             </div>
             <div className="bar" onClick={(e) => console.log(e.target)} >
