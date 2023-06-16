@@ -22,7 +22,7 @@ const NavEvents = () => {
               <div className="remaining-time"> 1h 33m</div>
             </div>
             <div className="bar" onClick={(e) => console.log(e.target)} >
-              <i class="fa-solid fa-chevron-down"></i>
+              <i className="fa-solid fa-chevron-down"></i>
             </div>
           </div>
           <div className="box-selection">

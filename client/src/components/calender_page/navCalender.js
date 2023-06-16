@@ -1,11 +1,41 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { getDate } from '../../utils/helpers'
+import format from 'date-fns/format';
+
 
 
 const NavCalender = () => {
-  const [weekDays, setweekDays] = useState(['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'])
-  const [monDays, setMonDays] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
-  const [monDayClass, setMonDayClass] = useState('mon-day')
+  const date = new getDate()
+  const now = new Date()
+
+  const today = format(now, 'dd M yyyy')
+  const weekDays = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr']
+
+  const [Month, setMonth] = useState(now.getMonth())
+  const [Year, setYear] = useState(now.getFullYear())
+  const monStart = format(new Date(Year, Month), 'EEEEEE')
+  const [customDate, setCustomDate] = useState(date.Date('MMMM yyyy', Month, Year))
+  const [monDays, setMonDays] = useState(date.monthDays('dd', Month, Year))
+  const plusMonth = () => {
+    if (Month > 12) {
+      setMonth(1)
+      setYear(Year + 1)
+    } else setMonth(Month + 1)
+  }
+
+  const minusMonth = () => {
+    if (Month < 0) {
+      setMonth(12)
+      setYear(Year - 1)
+    } else setMonth(Month - 1)
+  }
+  useEffect(() => {
+    setCustomDate(date.Date('MMMM yyyy', Month, Year))
+    setMonDays(date.monthDays('dd', Month, Year))
+  }, [Month])
+
+
 
   return <div className='calender'>
     <div className="calender-container">
@@ -16,22 +46,18 @@ const NavCalender = () => {
       </div>
       <div className="calender-component">
         <div className="head">
-          <button><i class="fa-solid fa-chevron-left"></i></button>
-          <div className="text-date">December 2020</div>
-          <button><i class="fa-solid fa-chevron-right"></i></button>
+          <button onClick={() => minusMonth()} ><i className="fa-solid fa-chevron-left"></i></button>
+          <div className="text-date">{customDate}</div>
+          <button onClick={() => plusMonth()}><i className="fa-solid fa-chevron-right"></i></button>
         </div>
         <div className="dates">
           <div className="week-days">
             {weekDays.map((day) => <div key={day}>{day}</div>)}
           </div>
           <div className="mon-days">
-            {monDays.map((day) => <div className={monDayClass} key={day}>{day}
-              {/* <div className="dot-event">
-                <span></span>
-                <span></span>
-                <span></span>
-              </div> */}
-            </div>)}
+            {
+              weekDays.map((weekDay) => weekDay === monStart ? monDays.map((day) => <div className={`${day} ${Month + 1} ${Year}` === today ? 'today mon-day' : 'mon-day'} key={day} > {day}</div >) : <div key={weekDay}></div>)
+            }
           </div>
         </div>
       </div>
@@ -41,3 +67,13 @@ const NavCalender = () => {
 
 
 export default NavCalender;
+
+
+
+
+
+
+
+
+
+

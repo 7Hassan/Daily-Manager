@@ -1,13 +1,3 @@
-.btn {
-  padding: 10px;
-  background-color: #E6F2FF;
-  border-radius: 15px;
-  font-family: "medium";
-  color: #0077FC;
-  cursor: pointer;
-  border: none;
-}
-
 .main {
   width: 100%;
 }
@@ -18,61 +8,136 @@
   overflow: scroll;
 }
 .main > .container .schedule {
-  padding: 40px 20px 0 20px;
-  height: 200vh;
+  width: 95%;
+  background-color: #eaecf1;
+  border-radius: 15px;
+  overflow: hidden;
 }
-.main > .container .schedule .header .text-header {
-  font-family: "bold";
-  font-size: 21px;
-}
-.main > .container .schedule .header .features-header-container {
-  margin-top: 20px;
+.main > .container .schedule .header {
+  padding: 17px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  background-color: #6264FE;
+  color: white;
 }
-.main > .container .schedule .header .features-header-container .date-buttons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 20px;
-  color: #95a0ae;
-}
-.main > .container .schedule .header .features-header-container .date-buttons .buttons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  gap: 20px;
-  color: #7D8EA6;
-}
-.main > .container .schedule .header .features-header-container .date-buttons .buttons div {
+.main > .container .schedule .header > div {
   cursor: pointer;
-  font-size: 20px;
-  background-color: #e9eff6;
-  padding: 5px;
-  border-radius: 4px;
 }
-.main > .container .schedule .header .features-header-container .new-event .button {
-  font-size: 18px;
+.main > .container .schedule .header > div > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 10px;
+  background-color: #8280FE;
+  padding: 7px 12px;
+  border-radius: 10px;
+}
+.main > .container .schedule .wheel-dates {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0 5px;
+  position: relative;
+}
+.main > .container .schedule .wheel-dates .container-wheel {
+  padding: 10px 17px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  width: calc(100% - 20px);
+  -ms-scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date {
+  scroll-snap-align: start;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  background-color: white;
+  padding: 10px;
+  border-radius: 16px;
+  -webkit-box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.06);
+          box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date:target {
+  -webkit-transform: scale(0.8);
+          transform: scale(0.8);
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.today {
+  border: 1px solid #0077FC;
   color: #0077FC;
-  background-color: #E6F2FF;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
 }
-.main > .container .schedule-nav {
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected {
+  background-color: #0077FC;
+  color: white;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .date span {
+  color: #dcdcdc;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .dotes span:nth-child(1) {
+  background-color: #FA9300;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .dotes span:nth-child(2) {
+  background-color: #35C759;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .dotes span:nth-child(3) {
+  background-color: #a0aab6;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date .date {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 5px;
+  font-size: 18px;
+}
+.main > .container .schedule .wheel-dates .container-wheel .ch-date span {
+  font-size: 15px;
+  color: #BCBDBC;
+}
+.main .schedule-nav {
   z-index: 10;
   -webkit-transition: 0.3s;
   transition: 0.3s;
@@ -87,10 +152,10 @@
   -webkit-box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.06);
           box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.06);
 }
-.main > .container .schedule-nav.hidden {
+.main .schedule-nav.hidden {
   right: -300px;
 }
-.main > .container .schedule-nav .slider {
+.main .schedule-nav .slider {
   opacity: 1;
   position: absolute;
   top: 50%;
@@ -103,7 +168,7 @@
           box-shadow: -14px 0px 15px rgba(0, 0, 0, 0.04);
   cursor: pointer;
 }
-.main > .container .schedule-nav .slider .slider-container {
+.main .schedule-nav .slider .slider-container {
   width: 100%;
   height: 100%;
   display: -webkit-box;
@@ -116,42 +181,43 @@
       -ms-flex-align: center;
           align-items: center;
 }
-.main > .container .schedule-nav .slider .slider-container i {
+.main .schedule-nav .slider .slider-container i {
   font-size: 20px;
   -webkit-transition: 0.5s;
   transition: 0.5s;
   -webkit-transform: rotateY(180deg);
           transform: rotateY(180deg);
 }
-.main > .container .schedule-nav .slider .slider-container i:last-child {
+.main .schedule-nav .slider .slider-container i:last-child {
   font-size: 18px;
   margin: -3px;
 }
-.main > .container .schedule-nav .slider.slide-up {
+.main .schedule-nav .slider.slide-up {
   opacity: 0.8;
 }
-.main > .container .schedule-nav .slider.slide-up .slider-container i {
+.main .schedule-nav .slider.slide-up .slider-container i {
   color: #0077FC !important;
   -webkit-transform: rotateY(0deg) !important;
           transform: rotateY(0deg) !important;
 }
-.main > .container .schedule-nav .container {
+.main .schedule-nav .container {
   padding: 10px 5px;
   height: 100%;
 }
-.main > .container .schedule-nav .container > .header {
+.main .schedule-nav .container > .header {
   width: 100%;
   height: 70px;
   text-align: center;
+  display: none;
 }
-.main > .container .schedule-nav .container .calender {
-  height: 360px;
+.main .schedule-nav .container .calender {
+  height: 400px;
   overflow: hidden;
 }
-.main > .container .schedule-nav .container .calender .calender-container {
+.main .schedule-nav .container .calender .calender-container {
   height: 100%;
 }
-.main > .container .schedule-nav .container .calender .calender-container .header {
+.main .schedule-nav .container .calender .calender-container .header {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -168,7 +234,7 @@
   padding: 5px 0;
   margin-bottom: 10px;
 }
-.main > .container .schedule-nav .container .calender .calender-container .header div {
+.main .schedule-nav .container .calender .calender-container .header div {
   padding: 10px;
   background-color: #E6F2FF;
   border-radius: 10px;
@@ -176,7 +242,7 @@
   color: #0077FC;
   cursor: pointer;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .head {
+.main .schedule-nav .container .calender .calender-container .calender-component .head {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -195,7 +261,7 @@
   padding: 0 15px;
   margin-bottom: 20px;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .head button {
+.main .schedule-nav .container .calender .calender-container .calender-component .head button {
   background-color: white;
   padding: 2px;
   font-size: 14px;
@@ -208,8 +274,12 @@
           box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   color: #0077FC;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .week-days,
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days {
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .week-days {
+  font-family: "bold";
+  color: #1D0058;
+}
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .week-days,
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -227,44 +297,44 @@
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .week-days div,
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days div {
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .week-days div,
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days div {
   width: 36px;
   height: 36px;
   text-align: center;
   margin: 2px;
   line-height: 35px;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days {
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days {
   -ms-flex-wrap: wrap !important;
       flex-wrap: wrap !important;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days .mon-day {
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days .mon-day {
   border-radius: 50%;
   cursor: pointer;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days .mon-day:hover {
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days .mon-day:hover {
   background-color: #E6F2FF;
   color: #0077FC;
 }
-.main > .container .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days .mon-day.today {
+.main .schedule-nav .container .calender .calender-container .calender-component .dates .mon-days .mon-day.today {
   border: 1px solid #0077FC;
   color: #0077FC;
 }
-.main > .container .schedule-nav .container .today-events {
+.main .schedule-nav .container .today-events {
   margin-top: 20px;
 }
-.main > .container .schedule-nav .container .today-events .event-container .header {
+.main .schedule-nav .container .today-events .event-container .header {
   font-size: 24px;
   margin-bottom: 15px;
   text-align: center;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events {
+.main .schedule-nav .container .today-events .event-container .events {
   overflow-y: scroll;
   height: calc(100vh - 515px);
   border-radius: 20px;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .container-ev {
+.main .schedule-nav .container .today-events .event-container .events .container-ev {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -276,7 +346,7 @@
       -ms-flex-pack: center;
           justify-content: center;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .container-ev .box-selection {
+.main .schedule-nav .container .today-events .event-container .events .container-ev .box-selection {
   width: 80%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -294,18 +364,18 @@
   font-size: 15px;
   margin: -50px auto;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .container-ev .box-selection.show {
+.main .schedule-nav .container .today-events .event-container .events .container-ev .box-selection.show {
   margin: 0 auto;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .container-ev .box-selection button:first-child {
+.main .schedule-nav .container .today-events .event-container .events .container-ev .box-selection button:first-child {
   background-color: #0077FC;
   color: white;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .container-ev .box-selection button:last-child {
+.main .schedule-nav .container .today-events .event-container .events .container-ev .box-selection button:last-child {
   background-color: #F2F2F2;
   color: black;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event {
+.main .schedule-nav .container .today-events .event-container .events .event {
   background-color: #F2F2F2;
   border-radius: 30px;
   height: 60px;
@@ -325,7 +395,7 @@
   overflow: hidden;
   margin: 10px 0;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event .hover {
+.main .schedule-nav .container .today-events .event-container .events .event .hover {
   height: 100%;
   background-color: #0077FC;
   position: absolute;
@@ -333,26 +403,26 @@
   opacity: 0.4;
   width: 0%;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event .time {
+.main .schedule-nav .container .today-events .event-container .events .event .time {
   padding-left: 20px;
   margin-right: 15px;
   font-size: 18px;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event .info {
+.main .schedule-nav .container .today-events .event-container .events .event .info {
   font-size: 15px;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event .info .title {
+.main .schedule-nav .container .today-events .event-container .events .event .info .title {
   width: 160px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event .info .remaining-time {
+.main .schedule-nav .container .today-events .event-container .events .event .info .remaining-time {
   font-size: 13px;
   color: #A0A1BC;
   padding-top: 4px;
 }
-.main > .container .schedule-nav .container .today-events .event-container .events .event .bar {
+.main .schedule-nav .container .today-events .event-container .events .event .bar {
   position: absolute;
   right: 0;
   font-size: 19px;

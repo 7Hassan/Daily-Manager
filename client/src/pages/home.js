@@ -1,6 +1,6 @@
 
 
-import { Title } from "../utils/funcs";
+import { Title } from "../utils/helpers";
 import Nav from "../components/nav";
 
 const Home = () => {
@@ -10,11 +10,10 @@ const Home = () => {
       <Nav page='home' />
       <div className="main">
         <div className="container">
-          home
+home
         </div>
       </div>
     </div>
-    Home
   </main>
 };
 

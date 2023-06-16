@@ -1,0 +1,15 @@
+@mixin selectedDotes() {
+  span {
+    &:nth-child(1) {
+      background-color: #FA9300;
+    }
+
+    &:nth-child(2) {
+      background-color: #35C759;
+    }
+
+    &:nth-child(3) {
+      background-color: #a0aab6;
+    }
+  }
+}

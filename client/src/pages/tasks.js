@@ -1,6 +1,6 @@
 
 import Nav from "../components/nav";
-import { Title } from "../utils/funcs";
+import { Title } from "../utils/helpers";
 
 const Tasks = () => {
   return <main>
