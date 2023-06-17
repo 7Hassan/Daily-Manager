@@ -7,65 +7,11 @@
 
 
 .main {
-  width: 100%;
-
   >.container {
     margin-left: 20px;
     margin-top: 60px;
     height: calc(100vh - 60px);
     overflow: scroll;
-
-    // .schedule {
-    //   padding: 40px 20px 0 20px;
-    //   height: 200vh;
-
-    //   .header {
-    //     .text-header {
-    //       font-family: 'bold';
-    //       font-size: 21px;
-    //     }
-
-    //     .features-header-container {
-    //       margin-top: 20px;
-    //       display: flex;
-    //       align-items: center;
-    //       justify-content: space-between;
-
-    //       .date-buttons {
-    //         display: flex;
-    //         align-items: center;
-    //         gap: 20px;
-    //         color: $mainColorIcons;
-
-    //         .buttons {
-    //           display: flex;
-    //           align-items: center;
-    //           gap: 20px;
-    //           color: #7D8EA6;
-
-    //           div {
-    //             cursor: pointer;
-    //             font-size: 20px;
-    //             background-color: #e9eff6;
-    //             padding: 5px;
-    //             border-radius: 4px;
-    //           }
-    //         }
-    //       }
-
-    //       .new-event {
-    //         .button {
-    //           font-size: 18px;
-    //           color: #0077FC;
-    //           background-color: #E6F2FF;
-    //           padding: 6px 12px;
-    //           border-radius: 20px;
-    //           cursor: pointer;
-    //         }
-    //       }
-    //     }
-    //   }
-    // }
 
     .schedule {
       width: 95%;
@@ -73,7 +19,7 @@
       border-radius: 15px;
       overflow: hidden;
 
-      .header {
+      >.header {
         padding: 17px;
         display: flex;
         flex-direction: row;
@@ -82,8 +28,158 @@
         justify-content: space-between;
         background-color: #6264FE;
         color: white;
+        position: relative;
 
-        >div {
+        &::after {
+          content: '';
+          border: 7px solid transparent;
+          border-top-color: #6264FE;
+          position: absolute;
+          bottom: -13px;
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .calender {
+          height: 400px;
+          background-color: white;
+          color: black;
+          width: 330px;
+          border-radius: 15px;
+          padding: 15px;
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 4;
+          box-shadow: 20px 19px 15px rgba(0, 0, 0, 0.1);
+          transition: .3s;
+
+          &::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            border: 8px solid transparent;
+            border-bottom-color: white;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: inherit;
+          }
+
+          &.hidden {
+            width: 0;
+            height: 0;
+            top: calc(100% - 25px);
+            padding: 0;
+
+            &::before {
+              border-color: transparent;
+            }
+          }
+
+
+          .calender-container {
+            height: 100%;
+            overflow: hidden;
+
+            .header {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              justify-content: space-between;
+              padding: 5px 0;
+              margin-bottom: 10px;
+              background-color: inherit;
+
+              div {
+                padding: 10px;
+                background-color: #E6F2FF;
+                border-radius: 10px;
+                font-family: 'medium';
+                color: $mainColor;
+                cursor: pointer;
+              }
+            }
+
+            .calender-component {
+              .head {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 5px 0;
+                margin-bottom: 10px;
+                padding: 0 15px;
+                margin-bottom: 20px;
+
+                button {
+                  background-color: white;
+                  padding: 2px;
+                  font-size: 14px;
+                  border-radius: 12px;
+                  width: 35px;
+                  height: 35px;
+                  cursor: pointer;
+                  border: none;
+                  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+                  color: $mainColor;
+                }
+              }
+
+              .dates {
+                $width: 36px;
+                $height: 36px;
+
+                .week-days {
+                  font-family: 'bold';
+                  color: #1D0058;
+                }
+
+                .week-days,
+                .mon-days {
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  padding: 0 5px;
+                  justify-content: flex-start;
+                  flex-wrap: nowrap;
+
+                  div {
+                    width: $width;
+                    height: $height;
+                    text-align: center;
+                    margin: 2px;
+                    line-height: 35px;
+                  }
+                }
+
+                .mon-days {
+                  flex-wrap: wrap !important;
+
+                  .mon-day {
+                    border-radius: 50%;
+                    cursor: pointer;
+
+                    &:hover {
+                      background-color: #E6F2FF;
+                      color: $mainColor;
+                    }
+
+                    &.today {
+                      border: 1px solid $mainColor;
+                      color: $mainColor;
+                    }
+                  }
+
+                }
+              }
+
+            }
+
+          }
+        }
+
+        >div:not(.calender) {
           cursor: pointer;
 
           >div {
@@ -109,26 +205,61 @@
         position: relative;
 
 
-        .container-wheel {
-          padding: 10px 17px;
-          display: flex;
-          gap: 20px;
-          overflow-x: auto;
-          width: calc(100% - 20px);
-          scroll-snap-type: x mandatory;
 
-          .ch-date {
-            &:target {
-              transform: scale(.8);
+        .inner-slider {
+          padding: 10px 17px;
+          overflow: hidden;
+          width: 100%;
+
+          .swiper-3d {
+
+            .swiper-slide-shadow-right {
+              background-image: linear-gradient(to right, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
             }
 
-            scroll-snap-align: start;
-            flex-shrink: 0;
+            .swiper-slide-shadow-left {
+              background-image: linear-gradient(to left, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
+            }
+          }
+
+          .slider-arrow {
+            padding: 30px 15px;
+            background-color: #6264FE;
+            border-radius: 12px;
+            color: white;
+            top: 40px !important;
+
+            &::after {
+              font-size: 19px !important;
+            }
+
+            &.swiper-button-next {
+              right: 0;
+            }
+
+            &.swiper-button-prev {
+              left: 0;
+            }
+
+            @media (max-width:900px) {
+              display: none;
+            }
+          }
+        }
+
+        .container-wheel {
+          .ch-date {
             background-color: white;
             padding: 10px;
             border-radius: 16px;
-            box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.06);
-            cursor: pointer;
+            // box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.06);
+            // cursor: pointer;
+            width: 50px !important;
+            height: 100px;
+            overflow: hidden !important;
+            cursor: pointer !important;
+
+            // &.swiper-slide-active {}
 
             &.today {
               border: 1px solid $mainColor;
@@ -138,6 +269,8 @@
             &.selected {
               background-color: $mainColor;
               color: white;
+              transform: scale(1.1);
+              box-shadow: 20px 19px 15px rgba(0, 0, 0, 0.1);
 
               .date {
                 span {
@@ -148,7 +281,6 @@
               .dotes {
                 @include selectedDotes;
               }
-
             }
 
             .date {
@@ -172,12 +304,13 @@
   }
 
   .schedule-nav {
+    background-color: white;
     $widthSlider: 300px;
     z-index: 10;
     transition: .3s;
     width: $widthSlider;
     height: 100vh;
-    background-color: $barColor;
+    background-color: white;
     position: fixed;
     top: 0;
     right: 0;
@@ -243,108 +376,6 @@
         display: none;
       }
 
-      .calender {
-        height: 400px;
-        overflow: hidden;
-
-        .calender-container {
-          height: 100%;
-
-          .header {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px 0;
-            margin-bottom: 10px;
-
-            div {
-              padding: 10px;
-              background-color: #E6F2FF;
-              border-radius: 10px;
-              font-family: 'medium';
-              color: $mainColor;
-              cursor: pointer;
-            }
-          }
-
-          .calender-component {
-            .head {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-              padding: 5px 0;
-              margin-bottom: 10px;
-              padding: 0 15px;
-              margin-bottom: 20px;
-
-              button {
-                background-color: white;
-                padding: 2px;
-                font-size: 14px;
-                border-radius: 12px;
-                width: 35px;
-                height: 35px;
-                cursor: pointer;
-                border: none;
-                box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-                color: $mainColor;
-              }
-            }
-
-            .dates {
-              $width: 36px;
-              $height: 36px;
-
-              .week-days {
-                font-family: 'bold';
-                color: #1D0058;
-              }
-
-              .week-days,
-              .mon-days {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                padding: 0 5px;
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-
-                div {
-                  width: $width;
-                  height: $height;
-                  text-align: center;
-                  margin: 2px;
-                  line-height: 35px;
-                }
-              }
-
-              .mon-days {
-                flex-wrap: wrap !important;
-
-                .mon-day {
-                  border-radius: 50%;
-                  cursor: pointer;
-
-                  &:hover {
-                    background-color: #E6F2FF;
-                    color: $mainColor;
-                  }
-
-                  &.today {
-                    border: 1px solid $mainColor;
-                    color: $mainColor;
-                  }
-                }
-
-              }
-            }
-
-          }
-
-        }
-      }
 
       .today-events {
         margin-top: 20px;

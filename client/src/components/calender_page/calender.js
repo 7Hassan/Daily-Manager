@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 
 
 
-const NavCalender = () => {
+const NavCalender = ({ className }) => {
   const date = new getDate()
   const now = new Date()
 
@@ -37,7 +37,7 @@ const NavCalender = () => {
 
 
 
-  return <div className='calender'>
+  return <div className={className}>
     <div className="calender-container">
       <div className="header">
         <div>Today</div>

@@ -1,35 +1,15 @@
 
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import Logo from '../../utils/logo';
 
 const Nav = ({ page }) => {
-  const [scrolled, setScrolled] = useState('');
-  useEffect(() => {
-    let prevScroll = window.pageYOffset || document.documentElement.scrollTop;
-    const handleScroll = () => {
-      let currScroll = window.pageYOffset || document.documentElement.scrollTop;
-      (currScroll > prevScroll) ? setScrolled('scroll') : setScrolled('')
-      prevScroll = currScroll;
-    }
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, []);
 
-
-
-
-
-
-  return <nav className={scrolled}>
+  return <nav>
     <div className="nav">
       <div className="container">
         <ul>
           <li className="img-text logo">
-            <div className="logo-design img">
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+            <Logo />
           </li>
           <li className="img-text user">
             <Link to='/'>
@@ -44,10 +24,10 @@ const Nav = ({ page }) => {
           <li key='Schedule' className={page === 'schedule' ? "schedule img-text clicked" : "img-text schedule"}>
             < Link to='/calender' >
               <div className="img">
-                <i className="fa-solid fa-clock"></i>
+                <i className="fa-solid fa-calendar"></i>
               </div>
             </Link>
-            <div className="text">My Schedule</div>
+            <div className="text">My Calender</div>
           </li>
           <li key='Tasks' className={page === 'tasks' ? "tasks clicked img-text" : "tasks img-text"}>
             <Link to='/tasks' >

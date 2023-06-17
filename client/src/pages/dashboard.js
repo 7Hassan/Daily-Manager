@@ -1,5 +1,5 @@
 
-import Nav from "../components/nav";
+import Nav from "../components/main/nav";
 import { Title } from "../utils/helpers";
 
 

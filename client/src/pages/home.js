@@ -1,7 +1,7 @@
 
 
 import { Title } from "../utils/helpers";
-import Nav from "../components/nav";
+import Nav from "../components/main/nav";
 
 const Home = () => {
   return <main>

@@ -277,27 +277,30 @@ nav {
 
 
 main {
-
-  // height: 300vh;
   .main-container {
     display: flex;
+
+    .main {
+      width: calc(100% - 50px);
+    }
   }
 }
 
 @media (max-width:700px) {
-  nav {
-    background-color: white;
-    position: fixed;
-    bottom: 0;
-    box-shadow: 0px -13px 15px rgba(0, 0, 0, 0.06);
-    border-top-left-radius: 28px;
-    border-top-right-radius: 28px;
-    width: 100vw;
+  .main {
+    width: 100% !important;
+    margin-top: 80px;
+  }
 
-    &.scroll {
-      box-shadow: unset;
-      bottom: -80px;
-    }
+  nav {
+    position: fixed;
+    top: 0;
+    box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    width: 100%;
+    height: 70px;
+    z-index: 10;
 
     .nav {
       width: 100%;
@@ -306,17 +309,38 @@ main {
         ul {
           flex-direction: row;
           align-items: center;
-          gap: 5px;
+          gap: unset;
+          justify-content: space-between;
 
           li {
-            .text {
-              display: none;
+            &.user {
+              a {
+                width: 100%;
+                height: 70px;
+              }
             }
 
             &.logo {
-              padding: 20px 0 !important;
+              padding: 10px 0 !important;
               justify-content: center;
 
+            }
+
+            &.logout {
+              position: unset;
+            }
+
+            &::before {
+              width: 100% !important;
+              height: 4px !important;
+              transform: translateX(-50%) !important;
+              top: -1px !important;
+              left: 50% !important;
+              z-index: 2;
+            }
+
+            .text {
+              display: none;
             }
 
             a,
@@ -325,21 +349,7 @@ main {
             }
 
             a {
-              padding: 24px 12px !important;
-            }
-
-            &::before {
-              width: 100% !important;
-              height: 4px !important;
-              transform: translateX(-50%) !important;
-              bottom: 0 !important;
-              top: unset !important;
-              left: 50% !important;
-              z-index: 2;
-            }
-
-            &.logout {
-              position: unset;
+              padding: 19px 10px !important;
             }
           }
 

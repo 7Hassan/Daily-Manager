@@ -314,22 +314,25 @@ main .main-container {
   display: -ms-flexbox;
   display: flex;
 }
+main .main-container .main {
+  width: calc(100% - 50px);
+}
 
 @media (max-width: 700px) {
-  nav {
-    background-color: white;
-    position: fixed;
-    bottom: 0;
-    -webkit-box-shadow: 0px -13px 15px rgba(0, 0, 0, 0.06);
-            box-shadow: 0px -13px 15px rgba(0, 0, 0, 0.06);
-    border-top-left-radius: 28px;
-    border-top-right-radius: 28px;
-    width: 100vw;
+  .main {
+    width: 100% !important;
+    margin-top: 80px;
   }
-  nav.scroll {
-    -webkit-box-shadow: unset;
-            box-shadow: unset;
-    bottom: -80px;
+  nav {
+    position: fixed;
+    top: 0;
+    -webkit-box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
+            box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    width: 100%;
+    height: 70px;
+    z-index: 10;
   }
   nav .nav {
     width: 100%;
@@ -342,16 +345,35 @@ main .main-container {
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    gap: 5px;
+    gap: unset;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
   }
-  nav .nav .container ul li .text {
-    display: none;
+  nav .nav .container ul li.user a {
+    width: 100%;
+    height: 70px;
   }
   nav .nav .container ul li.logo {
-    padding: 20px 0 !important;
+    padding: 10px 0 !important;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
+  }
+  nav .nav .container ul li.logout {
+    position: unset;
+  }
+  nav .nav .container ul li::before {
+    width: 100% !important;
+    height: 4px !important;
+    -webkit-transform: translateX(-50%) !important;
+            transform: translateX(-50%) !important;
+    top: -1px !important;
+    left: 50% !important;
+    z-index: 2;
+  }
+  nav .nav .container ul li .text {
+    display: none;
   }
   nav .nav .container ul li a, nav .nav .container ul li > div {
     -webkit-box-pack: center;
@@ -359,19 +381,6 @@ main .main-container {
             justify-content: center;
   }
   nav .nav .container ul li a {
-    padding: 24px 12px !important;
-  }
-  nav .nav .container ul li::before {
-    width: 100% !important;
-    height: 4px !important;
-    -webkit-transform: translateX(-50%) !important;
-            transform: translateX(-50%) !important;
-    bottom: 0 !important;
-    top: unset !important;
-    left: 50% !important;
-    z-index: 2;
-  }
-  nav .nav .container ul li.logout {
-    position: unset;
+    padding: 19px 10px !important;
   }
 }

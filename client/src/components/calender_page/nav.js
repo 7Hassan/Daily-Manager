@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import NavCalender from "./navCalender";
 import NavEvents from "./navEvents";
 import NavHeader from "./navHeader";
 
@@ -22,7 +21,6 @@ const CalenderNav = () => {
     </div>
     <div className="container">
       <NavHeader />
-      <NavCalender />
       <NavEvents />
     </div>
   </div >
