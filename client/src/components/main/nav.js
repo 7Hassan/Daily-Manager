@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import Logo from '../../utils/logo';
+import { Logo } from '../../utils/helpers';
 
 const Nav = ({ page }) => {
 

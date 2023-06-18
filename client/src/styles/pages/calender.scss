@@ -11,7 +11,6 @@
     margin-left: 20px;
     margin-top: 60px;
     height: calc(100vh - 60px);
-    overflow: scroll;
 
     .schedule {
       width: 95%;
@@ -131,8 +130,7 @@
                 $height: 36px;
 
                 .week-days {
-                  font-family: 'bold';
-                  color: #1D0058;
+                  color: #5b5e63;
                 }
 
                 .week-days,
@@ -180,7 +178,9 @@
         }
 
         >div:not(.calender) {
-          cursor: pointer;
+          &:not(.slider) {
+            cursor: pointer;
+          }
 
           >div {
             display: flex;
@@ -188,9 +188,77 @@
             flex-wrap: nowrap;
             align-items: center;
             gap: 10px;
+
+            &.value {
+              padding: 7px 12px;
+              justify-content: space-between;
+              gap: 0;
+            }
+          }
+
+          &.slider {
+            i {
+              cursor: pointer;
+              background-color: #8280FE;
+              padding: 10px;
+              border-radius: 10px;
+            }
+          }
+        }
+
+        .date {
+          background-color: #8280FE;
+          border-radius: 10px;
+          padding: 7px 12px;
+        }
+
+        .date-scale {
+          position: relative;
+          background-color: #8280FE;
+          border-radius: 10px;
+          width: 90px;
+
+          &:hover {
+            .selectors {
+              height: 132px;
+            }
+
+            .value {
+              i {
+                transform: rotateX(180deg);
+              }
+            }
+          }
+
+          .selectors {
+            position: absolute;
+            z-index: 3;
+            top: calc(100% + -6px);
+            left: 0;
+            height: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
             background-color: #8280FE;
-            padding: 7px 12px;
-            border-radius: 10px;
+            width: 100%;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            transition: .3s;
+            overflow: hidden;
+
+            div {
+              padding: 4px 12px;
+              width: 100%;
+              cursor: pointer;
+
+              &:first-child {
+                margin-top: 6px;
+              }
+
+              &:hover {
+                background-color: #6264FE;
+              }
+            }
           }
         }
       }
@@ -203,8 +271,6 @@
         justify-content: center;
         padding: 0 5px;
         position: relative;
-
-
 
         .inner-slider {
           padding: 10px 17px;
@@ -252,14 +318,10 @@
             background-color: white;
             padding: 10px;
             border-radius: 16px;
-            // box-shadow: 3px 1px 15px rgba(0, 0, 0, 0.06);
-            // cursor: pointer;
             width: 50px !important;
             height: 100px;
             overflow: hidden !important;
             cursor: pointer !important;
-
-            // &.swiper-slide-active {}
 
             &.today {
               border: 1px solid $mainColor;
@@ -300,6 +362,88 @@
         }
 
       }
+
+      .table {
+        background-color: white;
+        width: calc(100% - 20px);
+        border-radius: 15px;
+        height: 100vh;
+        margin: 30px auto;
+        box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
+        overflow-x: hidden;
+        overflow-y: scroll;
+
+        .table-container {
+          .day {
+            .day-container {
+              position: relative;
+              $hoursWidth: 100px;
+
+              .hour {
+                border-bottom: 1px solid $mainColorIcons;
+                width: 100%;
+                color: $mainColorIcons;
+                height: 100px;
+
+                &:last-child {
+                  border: none;
+                }
+
+                .time {
+                  height: 100%;
+                  width: $hoursWidth;
+                  padding: 30px;
+                  border-right: 1px solid $mainColorIcons;
+                }
+              }
+
+              .event {
+                //! some Edits on position 
+                $space: 40px;
+                position: absolute;
+                top: calc(100px);
+                left: calc($hoursWidth + ($space / 2));
+                background-color: #6264FE;
+                width: calc(100% - $hoursWidth - $space);
+                height: 200px;
+                border-radius: 15px;
+              }
+
+              .cursor {
+                position: absolute;
+                top: 50px;
+                left: $hoursWidth;
+                width: 100%;
+                border-top: 1.3px solid $mainColor;
+
+                .point {
+                  font-size: 12px;
+                  background-color: $mainColor;
+                  color: white;
+                  width: 20px !important;
+                  height: 20px;
+                  line-height: 21px;
+                  text-align: center;
+                  border-radius: 50%;
+                  position: relative;
+                  top: -25px;
+                  left: -10px;
+
+                  &::after {
+                    content: "";
+                    position: absolute;
+                    bottom: -12px;
+                    left: 1.8px;
+                    border: 8px solid transparent;
+                    border-top-color: #0077FC;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
     }
   }
 

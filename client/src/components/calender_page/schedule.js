@@ -2,6 +2,8 @@
 import NavCalender from "./calender";
 import { useState, useEffect, useRef } from "react";
 import { changeClass } from "../../utils/helpers";
+import { format } from 'date-fns';
+
 
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,14 +16,21 @@ import 'swiper/css/navigation';
 
 
 
-const Schedule = () => {
+const Schedule = ({ date, setDate }) => {
   const [calenderClass, setCalenderClass] = useState('calender hidden')
-  const innerSlider = useRef()
+  const [scale, setScale] = useState('Day')
+  const [time, setTime] = useState(format(new Date(), 'p'))
+  useEffect(() => {
+    const interval = setInterval(() => setTime(format(new Date(), 'p')), 1000 * 60) //every min
+    return () => clearInterval(interval)
+  }, [])
+
+
 
   const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '13', '14', '15', '16', '17', '18', '19', '20']
   // const days = ['01', '02', '03', '04', '05', '06', '07']
   // const days = ['01', '02', '03']
-  const dayStr = 'We'
+  const dayStr = 'We';
 
 
   const WheelSwiper = () => {
@@ -74,13 +83,68 @@ const Schedule = () => {
     </Swiper>
   }
 
+  const Day = () => {
+    const hours = Array.from({ length: 24 }, (_, index) => `${index > 9 ? index : '0' + index}:00`)
+    return (
+      <div className="day">
+        <div className="day-container">
+          <div className="cursor" style={{ top: `${topCursor(time)}px` }}>
+            <div className="point">{time.split(' ')[0].split(':')[1]}</div>
+          </div>
+          <div className="event">
+            <div className="event-container">
+              Event
+            </div>
+          </div>
+          {
+            hours.map((hour) => {
+              return (
+                <div className="hour" key={hour}>
+                  <div className="time">{hour}</div>
+                </div>
+              )
+            })
+          }
+        </div>
+      </div>
+    )
+  }
+  const Week = () => {
+    return <div className="week">
+      <div className="week-container">
+        week
+      </div>
+    </div>
+  }
+  const Month = () => {
+    return <div className="month">
+      <div className="month-container">
+        month
+      </div>
+    </div>
+  }
+  const Year = () => {
+    return <div className="year">
+      <div className="year-container">
+        year
+      </div>
+    </div>
+  }
+
+
   return <div className="schedule">
     <div className="header">
       <NavCalender className={calenderClass} />
       <div className="date-scale">
         <div className="value">
-          <div className="text">Day</div>
-          <div className="img"><i className="fa-solid fa-chevron-down"></i></div>
+          {scale}
+          <i className="fa-solid fa-chevron-down"></i>
+        </div>
+        <div className="selectors">
+          <div onClick={() => setScale('Day')}>Day</div>
+          <div onClick={() => setScale('Week')} >Week</div>
+          <div onClick={() => setScale('Month')}>Month</div>
+          <div onClick={() => setScale('Year')}>Year</div>
         </div>
       </div>
       <div className="date-calenders" onClick={() => changeClass(calenderClass, setCalenderClass, 'calender', 'calender hidden')}>
@@ -90,14 +154,25 @@ const Schedule = () => {
         </div>
       </div>
       <div className="slider">
-        <div>Slider</div>
+        <div>
+          <i className="fa-solid fa-chevron-left"></i>
+          <i className="fa-solid fa-chevron-right"></i>
+        </div>
       </div>
     </div>
     <div className="wheel-dates">
-      <dev ref={innerSlider} className="inner-slider">
+      <div className="inner-slider">
         <WheelSwiper />
-      </dev >
+      </div >
     </div >
+    <div className="table">
+      <div className="table-container">
+        {scale === 'Day' && Day()}
+        {scale === 'Week' && Week()}
+        {scale === 'Month' && Month()}
+        {scale === 'Year' && Year()}
+      </div>
+    </div>
   </div >
 }
 
@@ -105,3 +180,10 @@ export default Schedule;
 
 
 
+function topCursor(time) {
+  let timeSplit = time.split(' ')[0] //['12:40', 'PM'] 
+  timeSplit = timeSplit.split(':') //[12, 00]
+  const hour = +timeSplit[0], min = +timeSplit[1]
+  if (time.includes('PM')) return ((hour + 12) * 100 + ((min * 10) / 6))
+  return hour * 100 + ((min * 10) / 6)
+}
