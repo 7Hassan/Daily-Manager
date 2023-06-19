@@ -40,7 +40,7 @@
         }
 
         .calender {
-          height: 400px;
+          height: 450px;
           background-color: white;
           color: black;
           width: 330px;
@@ -76,29 +76,9 @@
             }
           }
 
-
           .calender-container {
             height: 100%;
             overflow: hidden;
-
-            .header {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: space-between;
-              padding: 5px 0;
-              margin-bottom: 10px;
-              background-color: inherit;
-
-              div {
-                padding: 10px;
-                background-color: #E6F2FF;
-                border-radius: 10px;
-                font-family: 'medium';
-                color: $mainColor;
-                cursor: pointer;
-              }
-            }
 
             .calender-component {
               .head {
@@ -115,13 +95,13 @@
                   background-color: white;
                   padding: 2px;
                   font-size: 14px;
-                  border-radius: 12px;
+                  border-radius: 50%;
                   width: 35px;
                   height: 35px;
                   cursor: pointer;
                   border: none;
                   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-                  color: $mainColor;
+                  color: #5100B6;
                 }
               }
 
@@ -172,6 +152,44 @@
                 }
               }
 
+              .start-end,
+              .options {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: nowrap;
+                padding: 0 15px;
+
+                div,
+                .btn {
+                  border: 1px solid #5100B6;
+                  border-radius: 15px;
+                  padding: 6px 15px;
+                  font-size: 15px;
+                  color: $mainColorIcons;
+                  color: #545454;
+
+                }
+              }
+
+              .options {
+                margin-top: 15px;
+
+                .btn {
+                  background-color: white;
+                  padding: 7px 35px;
+                  color: black;
+                  border-radius: 17px;
+
+                  &.apply {
+                    background-color: #5100B6;
+                    color: white;
+                    padding: 7px 45px;
+                  }
+
+                }
+              }
             }
 
           }
@@ -277,15 +295,22 @@
           overflow: hidden;
           width: 100%;
 
+          .swiper_container {
+            border-bottom: 1px solid #7e8ea3;
+          }
+
           .swiper-3d {
 
-            .swiper-slide-shadow-right {
-              background-image: linear-gradient(to right, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
+            .swiper-slide-shadow-right,
+            .swiper-slide-shadow-left {
+              display: none;
             }
 
-            .swiper-slide-shadow-left {
-              background-image: linear-gradient(to left, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
-            }
+            // .swiper-slide-shadow-left {
+            //   background-image: linear-gradient(to right, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
+            //   display: none;
+            //   background-image: linear-gradient(to left, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
+            // }
           }
 
           .slider-arrow {
@@ -315,7 +340,7 @@
 
         .container-wheel {
           .ch-date {
-            background-color: white;
+            // background-color: white;
             padding: 10px;
             border-radius: 16px;
             width: 50px !important;
@@ -350,12 +375,27 @@
               flex-direction: column;
               align-items: center;
               gap: 5px;
-              font-size: 18px;
+              font-size: 30px;
+              color: #7e8ea3;
+              font-family: 'bold';
+              position: relative;
+
+              &::after {
+                content: '';
+                width: 1px;
+                height: 20px;
+                background-color: #7e8ea3;
+                position: absolute;
+                bottom: -25px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 4;
+
+              }
             }
 
             span {
-              font-size: 15px;
-              color: #BCBDBC;
+              font-size: 13px;
             }
           }
 
@@ -370,7 +410,7 @@
         height: 100vh;
         margin: 30px auto;
         box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
-        overflow-x: hidden;
+        overflow-x: hiddenx;
         overflow-y: scroll;
 
         .table-container {

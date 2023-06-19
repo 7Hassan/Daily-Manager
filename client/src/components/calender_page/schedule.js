@@ -1,8 +1,9 @@
 
 import NavCalender from "./calender";
-import { useState, useEffect, useRef } from "react";
-import { changeClass } from "../../utils/helpers";
-import { format } from 'date-fns';
+import { useState, useEffect } from "react";
+import { changeClass, GetDate, scaleDates } from "../../utils/helpers";
+import { format, formatDistanceStrict } from 'date-fns';
+// import  formatDistanceStrict  from 'date-fns/formatDistanceStrict';
 
 
 
@@ -17,20 +18,31 @@ import 'swiper/css/navigation';
 
 
 const Schedule = ({ date, setDate }) => {
+  // const format1 = formatDistanceStrict(new Date(2014, 6, 2), new Date(2014, 6, 3))  1 day
+  const format1 = formatDistanceStrict(new Date(2014, 6, 2), new Date(2014, 6, 3))
+  // console.log('🚀 ~ format1:', format1)
+
+  const getDate = new GetDate()
   const [calenderClass, setCalenderClass] = useState('calender hidden')
   const [scale, setScale] = useState('Day')
-  const [time, setTime] = useState(format(new Date(), 'p'))
+  const [time, setTime] = useState(format(new Date(), 'k:m:s'))
+  const [swiper, setWiper] = useState(scaleDates(date, scale, 'dd,iii'))
+
+
+
   useEffect(() => {
-    const interval = setInterval(() => setTime(format(new Date(), 'p')), 1000 * 60) //every min
+    const waiting = (60 - time.split(':')[2]) * 1000;
+    const interval = setInterval(() => setTime(format(new Date(), 'k:m:s')), waiting)
     return () => clearInterval(interval)
-  }, [])
+  }, [time])
+
+  useEffect(() => {
+    setWiper(scaleDates(date, scale, 'dd,iii'))
+
+  }, [date, scale])
 
 
 
-  const days = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '13', '14', '15', '16', '17', '18', '19', '20']
-  // const days = ['01', '02', '03', '04', '05', '06', '07']
-  // const days = ['01', '02', '03']
-  const dayStr = 'We';
 
 
   const WheelSwiper = () => {
@@ -56,14 +68,17 @@ const Schedule = ({ date, setDate }) => {
       className="swiper_container container-wheel"
     >
       {
-        days.map((day, i) => {
+        swiper.map((day, i) => {
+          const dayNum = day.split(',')[0];
+          const dayStr = day.split(',')[1];
           return (
-            <SwiperSlide key={day + i} className={day === '04' ? 'ch-date today' : 'ch-date'} onClick={() => console.log('kk')}>
+            //! {day === '04' ? 'ch-date today' : 'ch-date'}
+            <SwiperSlide key={day} className='ch-date'>
               <div className="date">
+                {dayNum}
                 <span>{dayStr}</span>
-                {day}
               </div>
-              <div className="dotes">
+              <div className="dotes" style={{ display: 'none' }}>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -89,7 +104,7 @@ const Schedule = ({ date, setDate }) => {
       <div className="day">
         <div className="day-container">
           <div className="cursor" style={{ top: `${topCursor(time)}px` }}>
-            <div className="point">{time.split(' ')[0].split(':')[1]}</div>
+            <div className="point">{time.split(':')[1]}</div>
           </div>
           <div className="event">
             <div className="event-container">
@@ -134,7 +149,7 @@ const Schedule = ({ date, setDate }) => {
 
   return <div className="schedule">
     <div className="header">
-      <NavCalender className={calenderClass} />
+      <NavCalender className={calenderClass} date={date} setDate={setDate} />
       <div className="date-scale">
         <div className="value">
           {scale}
@@ -150,13 +165,13 @@ const Schedule = ({ date, setDate }) => {
       <div className="date-calenders" onClick={() => changeClass(calenderClass, setCalenderClass, 'calender', 'calender hidden')}>
         <div className="date">
           <div className="img"><i className="fa-solid fa-calendar-week"></i></div>
-          <div className="text">Oct 15, 2023</div>
+          <div className="text">{format(date, 'LLL dd, y')}</div>
         </div>
       </div>
       <div className="slider">
         <div>
           <i className="fa-solid fa-chevron-left"></i>
-          <i className="fa-solid fa-chevron-right"></i>
+          <i className="fa-solid fa-chevron-right" ></i>
         </div>
       </div>
     </div>
@@ -181,9 +196,7 @@ export default Schedule;
 
 
 function topCursor(time) {
-  let timeSplit = time.split(' ')[0] //['12:40', 'PM'] 
-  timeSplit = timeSplit.split(':') //[12, 00]
+  const timeSplit = time.split(':')
   const hour = +timeSplit[0], min = +timeSplit[1]
-  if (time.includes('PM')) return ((hour + 12) * 100 + ((min * 10) / 6))
   return hour * 100 + ((min * 10) / 6)
 }

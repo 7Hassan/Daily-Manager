@@ -8,6 +8,15 @@ import { useState } from 'react';
 
 const Calender = () => {
   const [date, setDate] = useState(new Date());
+
+  const dateObj = {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    day: date.getDate()
+  };
+new Date(dateObj.year, dateObj.month, dateObj.day)
+
+
   return <main>
     <div className="main-container">
       <Title title='DM - Schedule' />
