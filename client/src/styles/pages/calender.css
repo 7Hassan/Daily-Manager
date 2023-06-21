@@ -161,6 +161,14 @@
   border: 1px solid #0077FC;
   color: #0077FC;
 }
+.main > .container .schedule > .header .calender .calender-container .calender-component .dates .mon-days .mon-day.select {
+  background-color: #E6F2FF !important;
+  color: #0077FC !important;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .dates .mon-days .mon-day.selected {
+  background-color: #0077FC !important;
+  color: white !important;
+}
 .main > .container .schedule > .header .calender .calender-container .calender-component .start-end,
 .main > .container .schedule > .header .calender .calender-container .calender-component .options {
   display: -webkit-box;
@@ -248,7 +256,7 @@
   width: 90px;
 }
 .main > .container .schedule > .header .date-scale:hover .selectors {
-  height: 132px;
+  height: 100px;
 }
 .main > .container .schedule > .header .date-scale:hover .value i {
   -webkit-transform: rotateX(180deg);
@@ -286,6 +294,16 @@
 }
 .main > .container .schedule > .header .date-scale .selectors div:hover {
   background-color: #6264FE;
+}
+.main > .container .schedule > .header .date-calenders .date {
+  gap: 5px;
+  padding: 7px;
+}
+.main > .container .schedule > .header .date-calenders .text {
+  width: 100px;
+  white-space: nowrap;
+  text-align: center;
+  letter-spacing: 0.8px;
 }
 .main > .container .schedule .wheel-dates {
   display: -webkit-box;
@@ -341,35 +359,20 @@
 }
 .main > .container .schedule .wheel-dates .container-wheel .ch-date {
   padding: 10px;
-  border-radius: 16px;
   width: 50px !important;
   height: 100px;
-  overflow: hidden !important;
   cursor: pointer !important;
 }
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.today {
-  border: 1px solid #0077FC;
-  color: #0077FC;
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.today .date {
+  color: black !important;
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
 }
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected {
-  background-color: #0077FC;
-  color: white;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
-  -webkit-box-shadow: 20px 19px 15px rgba(0, 0, 0, 0.1);
-          box-shadow: 20px 19px 15px rgba(0, 0, 0, 0.1);
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .date {
+  color: #5100B6;
 }
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .date span {
-  color: #dcdcdc;
-}
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .dotes span:nth-child(1) {
-  background-color: #FA9300;
-}
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .dotes span:nth-child(2) {
-  background-color: #35C759;
-}
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .dotes span:nth-child(3) {
-  background-color: #a0aab6;
+.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .date::after {
+  background-color: #5100B6;
 }
 .main > .container .schedule .wheel-dates .container-wheel .ch-date .date {
   display: -webkit-box;

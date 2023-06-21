@@ -1,7 +1,7 @@
 
 
 import { Helmet } from "react-helmet";
-import { startOfYear, startOfMonth, startOfWeek, add, endOfMonth, eachDayOfInterval, eachMonthOfInterval, format } from 'date-fns';
+import { startOfYear, endOfYear, startOfMonth, endOfMonth, startOfWeek, add, eachDayOfInterval, eachMonthOfInterval, format } from 'date-fns';
 
 
 export const Title = ({ title }) => <Helmet><title>{title}</title></Helmet>
@@ -9,48 +9,46 @@ export const Title = ({ title }) => <Helmet><title>{title}</title></Helmet>
 export const changeClass = (varClass, setVar, initClass, nextClass) => varClass === initClass ? setVar(nextClass) : setVar(initClass)
 
 export class GetDate {
-  monDays = (date, formatting) => {
-    const start = startOfMonth(date);
-    const end = endOfMonth(date);
-    const Days = eachDayOfInterval({ start, end });
-    return Days.map((day) => format(day, formatting))
+  constructor(date) {
+    this.date = date;
   }
-  weekDays = (date, formatting) => {
-    const start = startOfWeek(date);
+
+  weekDays = () => {
+    const start = startOfWeek(this.date);
     const end = add(start, { days: 6 });
     const Days = eachDayOfInterval({ start, end })
-    return Days.map((day) => format(day, formatting))
+    return Days
   }
 
-  yearMons = (date, formatting) => {
-    const start = startOfYear(date);
+  monDays = () => {
+    const start = startOfMonth(this.date);
+    const end = endOfMonth(this.date);
+    const Days = eachDayOfInterval({ start, end });
+    return Days
+  }
+
+  yearMons = () => {
+    const start = startOfYear(this.date);
     const end = add(start, { months: 11 });
     const Months = eachMonthOfInterval({ start, end })
-    return Months.map((month) => format(month, 'MM,MMM'))
+    return Months
   }
 
-  Date = (formatting, month, year) => {
-    const start = startOfMonth(new Date(year, month));
-    return format(start, formatting)
-  }
 }
 
-
-export const scaleDates = (date, scale, formatting) => {
-  const getDate = new GetDate()
-  switch (scale) {
-    case 'Day':
-      return [format(date, formatting)]
-    case 'Week':
-      return getDate.weekDays(date, formatting)
-    case 'Month':
-      return getDate.monDays(date, formatting)
-    case 'Year':
-      return getDate.yearMons(date, formatting)
-    default:
-      return [format(date, formatting)]
+export class NextDate {
+  constructor(date, direction) {
+    this.date = date;
+    this.direction = direction;
+    this.scale = `${direction}1`;
   }
+
+  Day = () => add(this.date, { days: this.scale });
+  Week = () => add(this.date, { weeks: this.scale });
+  Month = () => add(this.date, { months: this.scale });
+  Year = () => add(this.date, { years: this.scale });
 }
+
 
 export const Logo = () => {
   return <div className="logo-design img">

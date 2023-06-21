@@ -147,8 +147,17 @@
                       border: 1px solid $mainColor;
                       color: $mainColor;
                     }
-                  }
 
+                    &.select {
+                      background-color: #E6F2FF !important;
+                      color: $mainColor !important;
+                    }
+
+                    &.selected {
+                      background-color: $mainColor !important;
+                      color: white !important;
+                    }
+                  }
                 }
               }
 
@@ -238,7 +247,7 @@
 
           &:hover {
             .selectors {
-              height: 132px;
+              height: 100px;
             }
 
             .value {
@@ -279,6 +288,20 @@
             }
           }
         }
+
+        .date-calenders {
+          .date {
+            gap: 5px;
+            padding: 7px;
+          }
+
+          .text {
+            width: 100px;
+            white-space: nowrap;
+            text-align: center;
+            letter-spacing: 0.8px;
+          }
+        }
       }
 
       .wheel-dates {
@@ -305,12 +328,6 @@
             .swiper-slide-shadow-left {
               display: none;
             }
-
-            // .swiper-slide-shadow-left {
-            //   background-image: linear-gradient(to right, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
-            //   display: none;
-            //   background-image: linear-gradient(to left, rgba(0, 0, 0, .13), rgba(0, 0, 0, 0)) !important;
-            // }
           }
 
           .slider-arrow {
@@ -340,33 +357,27 @@
 
         .container-wheel {
           .ch-date {
-            // background-color: white;
             padding: 10px;
-            border-radius: 16px;
             width: 50px !important;
             height: 100px;
-            overflow: hidden !important;
             cursor: pointer !important;
 
+
             &.today {
-              border: 1px solid $mainColor;
-              color: $mainColor;
+              .date {
+                color: black !important;
+                transform: scale(1.2);
+              }
             }
 
             &.selected {
-              background-color: $mainColor;
-              color: white;
-              transform: scale(1.1);
-              box-shadow: 20px 19px 15px rgba(0, 0, 0, 0.1);
-
               .date {
-                span {
-                  color: #dcdcdc;
-                }
-              }
+                color: #5100B6;
 
-              .dotes {
-                @include selectedDotes;
+                &::after {
+                  background-color: #5100B6;
+
+                }
               }
             }
 

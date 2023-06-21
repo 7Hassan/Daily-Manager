@@ -1,12 +1,8 @@
 
 import NavCalender from "./calender";
 import { useState, useEffect } from "react";
-import { changeClass, GetDate, scaleDates } from "../../utils/helpers";
-import { format, formatDistanceStrict } from 'date-fns';
-// import  formatDistanceStrict  from 'date-fns/formatDistanceStrict';
-
-
-
+import { changeClass, GetDate, NextDate } from "../../utils/helpers";
+import { format, isToday, isThisMonth } from 'date-fns';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation } from 'swiper';
 import 'swiper/css';
@@ -18,32 +14,67 @@ import 'swiper/css/navigation';
 
 
 const Schedule = ({ date, setDate }) => {
-  // const format1 = formatDistanceStrict(new Date(2014, 6, 2), new Date(2014, 6, 3))  1 day
-  const format1 = formatDistanceStrict(new Date(2014, 6, 2), new Date(2014, 6, 3))
-  // console.log('🚀 ~ format1:', format1)
-
-  const getDate = new GetDate()
   const [calenderClass, setCalenderClass] = useState('calender hidden')
   const [scale, setScale] = useState('Day')
-  const [time, setTime] = useState(format(new Date(), 'k:m:s'))
-  const [swiper, setWiper] = useState(scaleDates(date, scale, 'dd,iii'))
-
-
+  const [time, setTime] = useState(new Date())
 
   useEffect(() => {
-    const waiting = (60 - time.split(':')[2]) * 1000;
-    const interval = setInterval(() => setTime(format(new Date(), 'k:m:s')), waiting)
+    const sc = format(time, 's')
+    const waiting = (60 - sc) * 1000
+    const interval = setInterval(() => setTime(new Date()), waiting)
     return () => clearInterval(interval)
   }, [time])
 
-  useEffect(() => {
-    setWiper(scaleDates(date, scale, 'dd,iii'))
+  const timeToPx = () => {
+    const hour = format(time, 'k'), min = format(time, 'm')
+    return hour * 100 + ((min * 10) / 6) //? convert time to px scale
+  }
 
-  }, [date, scale])
+  const handleClicker = (direction) => {
+    const { Day, Week, Month, Year } = new NextDate(date, direction)
+    switch (scale) {
+      case 'Day':
+        return setDate(Day)
+      case 'Week':
+        return setDate(Week)
+      case 'Month':
+        return setDate(Month)
+      case 'Year':
+        return setDate(Year)
+      default:
+        return setDate(Day)
+    }
+  }
 
+  const scaleDates = () => {
+    const { weekDays, monDays, yearMons } = new GetDate(date)
+    switch (scale) {
+      case 'Day':
+        return [date]
+      case 'Week':
+        return weekDays()
+      case 'Month':
+        return monDays()
+      case 'Year':
+        return yearMons()
+      default:
+        return [date]
+    }
+  }
 
+  const getDateSwiper = (date) => {
+    let checkDate = isToday(date);
+    let dayNum = format(date, 'dd');
+    let dayStr = format(date, 'iii');
+    if (scale !== 'Year') return { checkDate, dayNum, dayStr }
+    checkDate = isThisMonth(date)
+    dayNum = format(date, 'MM')
+    dayStr = format(date, 'MMM')
+    return { checkDate, dayNum, dayStr }
+  }
 
-
+  const [swiperDates, setSwiperDates] = useState(scaleDates)
+  useEffect(() => setSwiperDates(scaleDates), [date, scale])
 
   const WheelSwiper = () => {
     return <Swiper
@@ -68,12 +99,11 @@ const Schedule = ({ date, setDate }) => {
       className="swiper_container container-wheel"
     >
       {
-        swiper.map((day, i) => {
-          const dayNum = day.split(',')[0];
-          const dayStr = day.split(',')[1];
+        swiperDates.map((swiperDate) => {
+          const { checkDate, dayNum, dayStr } = getDateSwiper(swiperDate)
+          const className = checkDate ? 'ch-date today' : 'ch-date'
           return (
-            //! {day === '04' ? 'ch-date today' : 'ch-date'}
-            <SwiperSlide key={day} className='ch-date'>
+            <SwiperSlide key={swiperDate} className={className} onClick={() => setDate(swiperDate)}>
               <div className="date">
                 {dayNum}
                 <span>{dayStr}</span>
@@ -103,8 +133,8 @@ const Schedule = ({ date, setDate }) => {
     return (
       <div className="day">
         <div className="day-container">
-          <div className="cursor" style={{ top: `${topCursor(time)}px` }}>
-            <div className="point">{time.split(':')[1]}</div>
+          <div className="cursor" style={{ top: `${timeToPx()}px` }}>
+            <div className="point">{format(time, 'm')}</div>
           </div>
           <div className="event">
             <div className="event-container">
@@ -156,22 +186,23 @@ const Schedule = ({ date, setDate }) => {
           <i className="fa-solid fa-chevron-down"></i>
         </div>
         <div className="selectors">
-          <div onClick={() => setScale('Day')}>Day</div>
-          <div onClick={() => setScale('Week')} >Week</div>
-          <div onClick={() => setScale('Month')}>Month</div>
-          <div onClick={() => setScale('Year')}>Year</div>
+          {
+            ['Day', 'Week', 'Month', 'Year'].map((sl) => {
+              return sl !== scale && <div key={sl} onClick={() => setScale(`${sl}`)}>{sl}</div>
+            })
+          }
         </div>
       </div>
       <div className="date-calenders" onClick={() => changeClass(calenderClass, setCalenderClass, 'calender', 'calender hidden')}>
         <div className="date">
           <div className="img"><i className="fa-solid fa-calendar-week"></i></div>
-          <div className="text">{format(date, 'LLL dd, y')}</div>
+          <div className="text">{format(date, 'dd LLL y')}</div>
         </div>
       </div>
       <div className="slider">
         <div>
-          <i className="fa-solid fa-chevron-left"></i>
-          <i className="fa-solid fa-chevron-right" ></i>
+          <i className="fa-solid fa-chevron-left" onClick={() => handleClicker('-')} ></i>
+          <i className="fa-solid fa-chevron-right" onClick={() => handleClicker('+')}></i>
         </div>
       </div>
     </div>
@@ -195,8 +226,3 @@ export default Schedule;
 
 
 
-function topCursor(time) {
-  const timeSplit = time.split(':')
-  const hour = +timeSplit[0], min = +timeSplit[1]
-  return hour * 100 + ((min * 10) / 6)
-}
