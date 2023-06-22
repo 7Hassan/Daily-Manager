@@ -14,7 +14,9 @@ import 'swiper/css/navigation';
 
 
 const Schedule = ({ date, setDate }) => {
-  const [calenderClass, setCalenderClass] = useState('calender hidden')
+  const [classN, setClassN] = useState('calender hidden')
+  const [start, setStart] = useState(date)
+  const [end, setEnd] = useState(date)
   const [scale, setScale] = useState('Day')
   const [time, setTime] = useState(new Date())
 
@@ -24,6 +26,7 @@ const Schedule = ({ date, setDate }) => {
     const interval = setInterval(() => setTime(new Date()), waiting)
     return () => clearInterval(interval)
   }, [time])
+
 
   const timeToPx = () => {
     const hour = format(time, 'k'), min = format(time, 'm')
@@ -87,9 +90,11 @@ const Schedule = ({ date, setDate }) => {
         rotate: 0,
         stretch: -5,
         depth: 10,
-        modifier: 3,
-      }}
-      pagination={{ el: '.swiper-pagination', clickable: true }}
+        modifier: scale === 'Week' ? 50 : scale === 'Year' ? 20 : 10,
+      }
+      }
+      pagination={{ el: '.swiper-pagination', clickable: true }
+      }
       navigation={{
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
@@ -117,15 +122,15 @@ const Schedule = ({ date, setDate }) => {
           )
         })
       }
-      <div className="slider-controler">
+      < div className="slider-controler" >
         <div className="swiper-button-prev slider-arrow">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </div>
         <div className="swiper-button-next slider-arrow">
           <ion-icon name="arrow-forward-outline"></ion-icon>
         </div>
-      </div>
-    </Swiper>
+      </div >
+    </Swiper >
   }
 
   const Day = () => {
@@ -179,7 +184,7 @@ const Schedule = ({ date, setDate }) => {
 
   return <div className="schedule">
     <div className="header">
-      <NavCalender className={calenderClass} date={date} setDate={setDate} />
+      <NavCalender className={classN} date={date} setDate={setDate} start={start} setStart={setStart} end={end} setEnd={setEnd} />
       <div className="date-scale">
         <div className="value">
           {scale}
@@ -193,7 +198,7 @@ const Schedule = ({ date, setDate }) => {
           }
         </div>
       </div>
-      <div className="date-calenders" onClick={() => changeClass(calenderClass, setCalenderClass, 'calender', 'calender hidden')}>
+      <div className="date-calenders" onClick={() => changeClass(classN, setClassN, 'calender', 'calender hidden')}>
         <div className="date">
           <div className="img"><i className="fa-solid fa-calendar-week"></i></div>
           <div className="text">{format(date, 'dd LLL y')}</div>

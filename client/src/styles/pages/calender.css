@@ -1,13 +1,11 @@
 .main > .container {
-  margin-left: 20px;
-  margin-top: 60px;
-  height: calc(100vh - 60px);
+  width: 95%;
+  margin: auto;
 }
 .main > .container .schedule {
-  width: 95%;
-  background-color: #eaecf1;
-  border-radius: 15px;
   overflow: hidden;
+  background-color: #eaecf1;
+  border-radius: 20px;
 }
 .main > .container .schedule > .header {
   padding: 17px;
@@ -41,7 +39,7 @@
           transform: translateX(-50%);
 }
 .main > .container .schedule > .header .calender {
-  height: 450px;
+  height: 410px;
   background-color: white;
   color: black;
   width: 330px;
@@ -169,8 +167,7 @@
   background-color: #0077FC !important;
   color: white !important;
 }
-.main > .container .schedule > .header .calender .calender-container .calender-component .start-end,
-.main > .container .schedule > .header .calender .calender-container .calender-component .options {
+.main > .container .schedule > .header .calender .calender-container .calender-component .start-end {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -189,29 +186,13 @@
   padding: 0 15px;
 }
 .main > .container .schedule > .header .calender .calender-container .calender-component .start-end div,
-.main > .container .schedule > .header .calender .calender-container .calender-component .start-end .btn,
-.main > .container .schedule > .header .calender .calender-container .calender-component .options div,
-.main > .container .schedule > .header .calender .calender-container .calender-component .options .btn {
+.main > .container .schedule > .header .calender .calender-container .calender-component .start-end .btn {
   border: 1px solid #5100B6;
   border-radius: 15px;
   padding: 6px 15px;
   font-size: 15px;
   color: #95a0ae;
   color: #545454;
-}
-.main > .container .schedule > .header .calender .calender-container .calender-component .options {
-  margin-top: 15px;
-}
-.main > .container .schedule > .header .calender .calender-container .calender-component .options .btn {
-  background-color: white;
-  padding: 7px 35px;
-  color: black;
-  border-radius: 17px;
-}
-.main > .container .schedule > .header .calender .calender-container .calender-component .options .btn.apply {
-  background-color: #5100B6;
-  color: white;
-  padding: 7px 45px;
 }
 .main > .container .schedule > .header > div:not(.calender):not(.slider) {
   cursor: pointer;
@@ -256,7 +237,7 @@
   width: 90px;
 }
 .main > .container .schedule > .header .date-scale:hover .selectors {
-  height: 100px;
+  height: 110px;
 }
 .main > .container .schedule > .header .date-scale:hover .value i {
   -webkit-transform: rotateX(180deg);
@@ -291,6 +272,9 @@
 }
 .main > .container .schedule > .header .date-scale .selectors div:first-child {
   margin-top: 6px;
+}
+.main > .container .schedule > .header .date-scale .selectors div:last-child {
+  padding-bottom: 10px;
 }
 .main > .container .schedule > .header .date-scale .selectors div:hover {
   background-color: #6264FE;
@@ -414,11 +398,12 @@
   margin: 30px auto;
   -webkit-box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
           box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
-  overflow-x: hiddenx;
+  overflow-x: hidden;
   overflow-y: scroll;
 }
 .main > .container .schedule .table .table-container .day .day-container {
   position: relative;
+  overflow: hidden;
 }
 .main > .container .schedule .table .table-container .day .day-container .hour {
   border-bottom: 1px solid #95a0ae;
@@ -468,7 +453,7 @@
   content: "";
   position: absolute;
   bottom: -12px;
-  left: 1.8px;
+  left: 1.9px;
   border: 8px solid transparent;
   border-top-color: #0077FC;
 }

@@ -9,13 +9,6 @@ import { useState } from 'react';
 const Calender = () => {
   const [date, setDate] = useState(new Date());
 
-  const dateObj = {
-    year: date.getFullYear(),
-    month: date.getMonth(),
-    day: date.getDate()
-  };
-new Date(dateObj.year, dateObj.month, dateObj.day)
-
 
   return <main>
     <div className="main-container">
@@ -24,7 +17,7 @@ new Date(dateObj.year, dateObj.month, dateObj.day)
       <div className="main">
         <div className="container">
           <Schedule date={date} setDate={setDate} />
-          <CalenderNav date={date} setDate={setDate} />
+          {/* <CalenderNav date={date} setDate={setDate} /> */}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 
 
 import { Helmet } from "react-helmet";
-import { startOfYear, endOfYear, startOfMonth, endOfMonth, startOfWeek, add, eachDayOfInterval, eachMonthOfInterval, format } from 'date-fns';
+import { startOfYear, startOfMonth, endOfMonth, startOfWeek, add, eachDayOfInterval, eachMonthOfInterval, isAfter } from 'date-fns';
 
 
 export const Title = ({ title }) => <Helmet><title>{title}</title></Helmet>
@@ -60,5 +60,7 @@ export const Logo = () => {
 
 
 
+export const getStart = (start, end) => isAfter(start, end) ? end : start;
+export const getEnd = (start, end) => isAfter(start, end) ? start : end;
 
 

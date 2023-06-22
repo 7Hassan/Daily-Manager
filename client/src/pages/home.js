@@ -7,10 +7,10 @@ const Home = () => {
   return <main>
     <Title title='Daily Manager (DM)' />
     <div className="main-container">
-      <Nav page='home' />
+      <Nav page='/' />
       <div className="main">
         <div className="container">
-home
+          home
         </div>
       </div>
     </div>

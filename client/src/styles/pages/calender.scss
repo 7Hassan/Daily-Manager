@@ -2,21 +2,15 @@
 @use '../helpers/mixin'as *;
 
 
-
-
-
-
 .main {
   >.container {
-    margin-left: 20px;
-    margin-top: 60px;
-    height: calc(100vh - 60px);
+    width: 95%;
+    margin: auto;
 
     .schedule {
-      width: 95%;
-      background-color: #eaecf1;
-      border-radius: 15px;
       overflow: hidden;
+      background-color: #eaecf1;
+      border-radius: 20px;
 
       >.header {
         padding: 17px;
@@ -40,7 +34,7 @@
         }
 
         .calender {
-          height: 450px;
+          height: 410px;
           background-color: white;
           color: black;
           width: 330px;
@@ -161,8 +155,7 @@
                 }
               }
 
-              .start-end,
-              .options {
+              .start-end {
                 display: flex;
                 flex-direction: row;
                 align-items: center;
@@ -178,24 +171,6 @@
                   font-size: 15px;
                   color: $mainColorIcons;
                   color: #545454;
-
-                }
-              }
-
-              .options {
-                margin-top: 15px;
-
-                .btn {
-                  background-color: white;
-                  padding: 7px 35px;
-                  color: black;
-                  border-radius: 17px;
-
-                  &.apply {
-                    background-color: #5100B6;
-                    color: white;
-                    padding: 7px 45px;
-                  }
 
                 }
               }
@@ -247,7 +222,7 @@
 
           &:hover {
             .selectors {
-              height: 100px;
+              height: 110px;
             }
 
             .value {
@@ -280,6 +255,10 @@
 
               &:first-child {
                 margin-top: 6px;
+              }
+
+              &:last-child {
+                padding-bottom: 10px;
               }
 
               &:hover {
@@ -421,7 +400,7 @@
         height: 100vh;
         margin: 30px auto;
         box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
-        overflow-x: hiddenx;
+        overflow-x: hidden;
         overflow-y: scroll;
 
         .table-container {
@@ -429,6 +408,7 @@
             .day-container {
               position: relative;
               $hoursWidth: 100px;
+              overflow: hidden;
 
               .hour {
                 border-bottom: 1px solid $mainColorIcons;
@@ -484,7 +464,7 @@
                     content: "";
                     position: absolute;
                     bottom: -12px;
-                    left: 1.8px;
+                    left: 1.9px;
                     border: 8px solid transparent;
                     border-top-color: #0077FC;
                   }
