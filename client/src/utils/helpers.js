@@ -1,7 +1,7 @@
 
 
 import { Helmet } from "react-helmet";
-import { startOfYear, startOfMonth, endOfMonth, startOfWeek, add, eachDayOfInterval, eachMonthOfInterval, isAfter } from 'date-fns';
+import { startOfYear, startOfMonth, endOfMonth, startOfWeek, add, eachDayOfInterval, eachMonthOfInterval, isAfter, differenceInDays, format } from 'date-fns';
 
 
 export const Title = ({ title }) => <Helmet><title>{title}</title></Helmet>
@@ -9,16 +9,21 @@ export const Title = ({ title }) => <Helmet><title>{title}</title></Helmet>
 export const changeClass = (varClass, setVar, initClass, nextClass) => varClass === initClass ? setVar(nextClass) : setVar(initClass)
 
 export class GetDate {
-  constructor(date) {
-    this.date = date;
+  constructor(start, end) {
+    this.start = getStart(start, end);
+    this.end = getEnd(start, end);
+    this.date = this.start;
   }
 
-  weekDays = () => {
-    const start = startOfWeek(this.date);
-    const end = add(start, { days: 6 });
-    const Days = eachDayOfInterval({ start, end })
-    return Days
-  }
+
+  days = () => eachDayOfInterval({ start: this.start, end: this.end })
+
+  // weekDays = () => {
+  //   const start = startOfWeek(this.date);
+  //   const end = add(start, { days: 6 });
+  //   const Days = eachDayOfInterval({ start, end })
+  //   return Days
+  // }
 
   monDays = () => {
     const start = startOfMonth(this.date);
@@ -33,30 +38,26 @@ export class GetDate {
     const Months = eachMonthOfInterval({ start, end })
     return Months
   }
-
 }
 
 export class NextDate {
   constructor(date, direction) {
     this.date = date;
     this.direction = direction;
-    this.scale = `${direction}1`;
+    this.direction = direction;
   }
 
-  Day = () => add(this.date, { days: this.scale });
-  Week = () => add(this.date, { weeks: this.scale });
-  Month = () => add(this.date, { months: this.scale });
-  Year = () => add(this.date, { years: this.scale });
+  // Day = () => add(this.date, { days: this.scale });
+  // Week = () => add(this.date, { weeks: this.scale });
+  // Month = () => add(this.date, { months: this.scale });
+  // Year = () => add(this.date, { years: this.scale });
 }
 
-
-export const Logo = () => {
-  return <div className="logo-design img">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+export const timeToPx = (time) => {
+  const hour = format(time, 'k'), min = format(time, 'm')
+  return hour * 100 + ((min * 10) / 6) //? convert time to px scale
 }
+
 
 
 

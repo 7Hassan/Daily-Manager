@@ -3,48 +3,41 @@
   src: url("./fonts/Gilroy-Bold.ttf") format("truetype");
   font-weight: bold;
 }
-
 @font-face {
   font-family: "medium";
   src: url("./fonts/Gilroy-Medium.ttf") format("truetype");
   font-weight: normal;
 }
-
 @font-face {
   font-family: "light";
   src: url("./fonts/Gilroy-Regular.ttf") format("truetype");
   font-weight: lighter;
 }
-
 @-webkit-keyframes spin {
   from {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+            transform: rotate(0deg);
   }
-
   to {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
-
 @keyframes spin {
   from {
     -webkit-transform: rotate(0deg);
-    transform: rotate(0deg);
+            transform: rotate(0deg);
   }
-
   to {
     -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
-
 * {
   padding: 0;
   margin: 0;
   -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
@@ -67,40 +60,36 @@ a {
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   height: 25px;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   margin: auto;
   margin-top: 5px;
 }
-
 .dotes span {
   background-color: red;
   width: 5px;
   height: 5px;
   border-radius: 50%;
 }
-
 .dotes span:nth-child(1) {
   background-color: #6264FE;
 }
-
 .dotes span:nth-child(2) {
   background-color: #0077FC;
 }
-
 .dotes span:nth-child(3) {
   background-color: #a0aab6;
 }
@@ -114,40 +103,35 @@ a {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   position: relative;
 }
-
 .logo-design.spin {
   -webkit-animation: spin 2s infinite;
-  animation: spin 2s infinite;
+          animation: spin 2s infinite;
 }
-
 .logo-design span {
   width: 50%;
   height: 50%;
   border-radius: 50%;
   border: 2px solid white;
 }
-
 .logo-design span:nth-child(1) {
   background-color: #4353DD;
   margin-top: 5px;
   margin-right: -3px;
   z-index: 2;
 }
-
 .logo-design span:nth-child(2) {
   background-color: #62D5E1;
   position: absolute;
   top: 0px;
   z-index: 3;
 }
-
 .logo-design span:nth-child(3) {
   background-color: #6264FE;
   margin-top: 5px;
@@ -170,13 +154,13 @@ a {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+      flex-wrap: nowrap;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   gap: 15px;
   padding-left: 20px;
 }
@@ -191,42 +175,38 @@ nav {
   position: fixed;
   top: 0;
   -webkit-box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
-  box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
+          box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
   border-bottom-left-radius: 28px;
   border-bottom-right-radius: 28px;
   width: 100%;
   z-index: 10;
   overflow: hidden;
 }
-
 nav .container {
   padding: 0 5px;
 }
-
 nav .container ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+      flex-wrap: nowrap;
   -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
-
 nav .container ul li {
   max-width: 100px;
   width: 100%;
   position: relative;
 }
-
 nav .container ul li.clicked::before {
   content: "";
   width: 100%;
@@ -236,39 +216,33 @@ nav .container ul li.clicked::before {
   left: 50%;
   z-index: 2;
   -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
+          transform: translateX(-50%);
   background-color: #0077FC;
 }
-
 nav .container ul li.clicked.logo.clicked::before {
   top: 0px;
 }
-
 nav .container ul li.clicked .text,
 nav .container ul li.clicked .img {
   color: #0077FC !important;
 }
-
 nav .container ul li:hover .img {
   color: #0077FC !important;
 }
-
 nav .container ul li a {
   width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   padding: 13px;
 }
-
 nav .container ul li a .img {
   color: #95a0ae;
   font-size: 25px;
 }
-
 nav .container ul li .text {
   display: none !important;
   -webkit-transition: 0.3s;
@@ -277,7 +251,7 @@ nav .container ul li .text {
   white-space: nowrap;
   background-color: white;
   -webkit-box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.06);
-  box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.06);
+          box-shadow: -2px 0px 15px rgba(0, 0, 0, 0.06);
   padding: 5px 7px;
   border-radius: 10px;
   position: absolute;
@@ -288,7 +262,6 @@ nav .container ul li .text {
   cursor: initial;
   z-index: -1;
 }
-
 nav .container ul li .text::before {
   content: "";
   border: 8px solid transparent;

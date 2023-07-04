@@ -39,7 +39,7 @@
           transform: translateX(-50%);
 }
 .main > .container .schedule > .header .calender {
-  height: 410px;
+  height: 450px;
   background-color: white;
   color: black;
   width: 330px;
@@ -82,25 +82,27 @@
   overflow: hidden;
 }
 .main > .container .schedule > .header .calender .calender-container .calender-component .head {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  padding: 5px 0;
+  padding: 10px 0;
   margin-bottom: 10px;
-  padding: 0 15px;
-  margin-bottom: 20px;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
-.main > .container .schedule > .header .calender .calender-container .calender-component .head button {
+.main > .container .schedule > .header .calender .calender-container .calender-component .swiper-coverflow {
+  overflow: unset !important;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .swiper-coverflow .swiper-slide-shadow-right,
+.main > .container .schedule > .header .calender .calender-container .calender-component .swiper-coverflow .swiper-slide-shadow-left {
+  display: none !important;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .swiper-coverflow .swiper-wrapper {
+  cursor: unset !important;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .swiper-coverflow .slider-arrow {
+  top: -66px;
+  position: absolute;
   background-color: white;
   padding: 2px;
   font-size: 14px;
@@ -112,6 +114,10 @@
   -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
           box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   color: #5100B6;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .swiper-coverflow .slider-arrow::after {
+  font-size: 18px !important;
+  font-weight: bold;
 }
 .main > .container .schedule > .header .calender .calender-container .calender-component .dates .week-days {
   color: #5b5e63;
@@ -184,6 +190,10 @@
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
   padding: 0 15px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 .main > .container .schedule > .header .calender .calender-container .calender-component .start-end div,
 .main > .container .schedule > .header .calender .calender-container .calender-component .start-end .btn {
@@ -194,7 +204,33 @@
   color: #95a0ae;
   color: #545454;
 }
-.main > .container .schedule > .header > div:not(.calender):not(.slider) {
+.main > .container .schedule > .header .calender .calender-container .calender-component .options {
+  margin-top: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .options .btn {
+  background-color: white;
+  padding: 7px 35px;
+  color: black;
+  border-radius: 17px;
+  border: 1px solid #5100B6;
+}
+.main > .container .schedule > .header .calender .calender-container .calender-component .options .btn.apply {
+  background-color: #5100B6;
+  color: white;
+  padding: 7px 45px;
+}
+.main > .container .schedule > .header > div:not(.calender) {
   cursor: pointer;
 }
 .main > .container .schedule > .header > div:not(.calender) > div {
@@ -219,11 +255,11 @@
           justify-content: space-between;
   gap: 0;
 }
-.main > .container .schedule > .header > div:not(.calender).slider i {
-  cursor: pointer;
+.main > .container .schedule > .header > div:not(.calender).slider {
   background-color: #8280FE;
-  padding: 10px;
+  padding: 7px 12px;
   border-radius: 10px;
+  letter-spacing: 0.8px;
 }
 .main > .container .schedule > .header .date {
   background-color: #8280FE;
@@ -231,53 +267,12 @@
   padding: 7px 12px;
 }
 .main > .container .schedule > .header .date-scale {
-  position: relative;
   background-color: #8280FE;
   border-radius: 10px;
-  width: 90px;
-}
-.main > .container .schedule > .header .date-scale:hover .selectors {
-  height: 110px;
-}
-.main > .container .schedule > .header .date-scale:hover .value i {
-  -webkit-transform: rotateX(180deg);
-          transform: rotateX(180deg);
-}
-.main > .container .schedule > .header .date-scale .selectors {
-  position: absolute;
-  z-index: 3;
-  top: calc(100% - 6px);
-  left: 0;
-  height: 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  gap: 5px;
-  background-color: #8280FE;
-  width: 100%;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
-  overflow: hidden;
-}
-.main > .container .schedule > .header .date-scale .selectors div {
-  padding: 4px 12px;
-  width: 100%;
-  cursor: pointer;
-}
-.main > .container .schedule > .header .date-scale .selectors div:first-child {
-  margin-top: 6px;
-}
-.main > .container .schedule > .header .date-scale .selectors div:last-child {
-  padding-bottom: 10px;
-}
-.main > .container .schedule > .header .date-scale .selectors div:hover {
-  background-color: #6264FE;
+  width: 105px;
+  padding: 7px 5px;
+  white-space: nowrap;
+  text-align: center;
 }
 .main > .container .schedule > .header .date-calenders .date {
   gap: 5px;
@@ -348,15 +343,9 @@
   cursor: pointer !important;
 }
 .main > .container .schedule .wheel-dates .container-wheel .ch-date.today .date {
-  color: black !important;
+  color: #5100B6 !important;
   -webkit-transform: scale(1.2);
           transform: scale(1.2);
-}
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .date {
-  color: #5100B6;
-}
-.main > .container .schedule .wheel-dates .container-wheel .ch-date.selected .date::after {
-  background-color: #5100B6;
 }
 .main > .container .schedule .wheel-dates .container-wheel .ch-date .date {
   display: -webkit-box;
@@ -394,21 +383,39 @@
   background-color: white;
   width: calc(100% - 20px);
   border-radius: 15px;
-  height: 100vh;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
   margin: 30px auto;
-  -webkit-box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
-          box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
-  overflow-x: hidden;
-  overflow-y: scroll;
+}
+.main > .container .schedule .table .table-container .day {
+  position: relative;
+}
+.main > .container .schedule .table .table-container .day .day-date {
+  position: absolute;
+  top: -32px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  background-color: #7303ff;
+  padding: 5px 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  color: white;
+  font-size: 18px;
+  font-family: "medium";
+  width: 85px;
+  text-align: center;
+  white-space: nowrap;
 }
 .main > .container .schedule .table .table-container .day .day-container {
   position: relative;
   overflow: hidden;
 }
 .main > .container .schedule .table .table-container .day .day-container .hour {
-  border-bottom: 1px solid #95a0ae;
+  border-bottom: 1px solid rgba(149, 160, 174, 0.3490196078);
   width: 100%;
-  color: #95a0ae;
+  color: #647993;
   height: 100px;
 }
 .main > .container .schedule .table .table-container .day .day-container .hour:last-child {
@@ -418,7 +425,7 @@
   height: 100%;
   width: 100px;
   padding: 30px;
-  border-right: 1px solid #95a0ae;
+  border-right: 1px solid rgba(149, 160, 174, 0.3490196078);
 }
 .main > .container .schedule .table .table-container .day .day-container .event {
   position: absolute;
@@ -456,6 +463,82 @@
   left: 1.9px;
   border: 8px solid transparent;
   border-top-color: #0077FC;
+}
+.main > .container .schedule .table .table-container .days {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 20px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 20px 10px;
+}
+.main > .container .schedule .table .table-container .days > div {
+  width: 100%;
+  max-width: 300px;
+  height: 200px;
+  border-radius: 15px;
+  -webkit-box-shadow: 1px 0px 15px rgba(0, 0, 0, 0.09);
+          box-shadow: 1px 0px 15px rgba(0, 0, 0, 0.09);
+  overflow: hidden;
+}
+.main > .container .schedule .table .table-container .days > div.today {
+  border: 1px solid #6264FE;
+}
+.main > .container .schedule .table .table-container .days > div .date {
+  text-align: center;
+  width: 80px;
+  padding: 5px;
+  margin: auto;
+  white-space: nowrap;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #7303ff;
+  color: white;
+}
+.main > .container .schedule .table .table-container .days > div .events {
+  height: 170px;
+  width: 100%;
+  padding: 10px 5px 5px 5px;
+}
+.main > .container .schedule .table .table-container .days > div .events .event {
+  background-color: #0077FC;
+  color: white;
+  border-radius: 15px;
+  padding: 5px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 4px;
+}
+.main > .container .schedule .table .table-container .days > div .events .event > div {
+  width: 75% !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.main > .container .schedule .table .table-container .days > div .events .event > div.time {
+  width: 20% !important;
+  text-align: end;
 }
 .main .schedule-nav {
   background-color: white;

@@ -34,7 +34,7 @@
         }
 
         .calender {
-          height: 410px;
+          height: 450px;
           background-color: white;
           color: black;
           width: 330px;
@@ -76,16 +76,27 @@
 
             .calender-component {
               .head {
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: space-between;
-                padding: 5px 0;
+                padding: 10px 0;
                 margin-bottom: 10px;
-                padding: 0 15px;
-                margin-bottom: 20px;
+                text-align: center;
+                user-select: none;
+              }
 
-                button {
+              .swiper-coverflow {
+                overflow: unset !important;
+
+                .swiper-slide-shadow-right,
+                .swiper-slide-shadow-left {
+                  display: none !important;
+                }
+
+                .swiper-wrapper {
+                  cursor: unset !important;
+                }
+
+                .slider-arrow {
+                  top: -66px;
+                  position: absolute;
                   background-color: white;
                   padding: 2px;
                   font-size: 14px;
@@ -96,6 +107,11 @@
                   border: none;
                   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
                   color: #5100B6;
+
+                  &::after {
+                    font-size: 18px !important;
+                    font-weight: bold;
+                  }
                 }
               }
 
@@ -155,6 +171,7 @@
                 }
               }
 
+
               .start-end {
                 display: flex;
                 flex-direction: row;
@@ -162,6 +179,7 @@
                 justify-content: space-between;
                 flex-wrap: nowrap;
                 padding: 0 15px;
+                user-select: none;
 
                 div,
                 .btn {
@@ -174,13 +192,35 @@
 
                 }
               }
+
+              .options {
+                margin-top: 15px;
+                display: flex;
+                flex-wrap: nowrap;
+                align-items: center;
+                justify-content: space-between;
+
+                .btn {
+                  background-color: white;
+                  padding: 7px 35px;
+                  color: black;
+                  border-radius: 17px;
+                  border: 1px solid #5100B6;
+
+                  &.apply {
+                    background-color: #5100B6;
+                    color: white;
+                    padding: 7px 45px;
+                  }
+                }
+              }
             }
 
           }
         }
 
         >div:not(.calender) {
-          &:not(.slider) {
+          & {
             cursor: pointer;
           }
 
@@ -199,12 +239,11 @@
           }
 
           &.slider {
-            i {
-              cursor: pointer;
-              background-color: #8280FE;
-              padding: 10px;
-              border-radius: 10px;
-            }
+            background-color: #8280FE;
+            padding: 7px 12px;
+            border-radius: 10px;
+            letter-spacing: .8px;
+
           }
         }
 
@@ -215,57 +254,13 @@
         }
 
         .date-scale {
-          position: relative;
           background-color: #8280FE;
           border-radius: 10px;
-          width: 90px;
+          width: 105px;
+          padding: 7px 5px;
+          white-space: nowrap;
+          text-align: center;
 
-          &:hover {
-            .selectors {
-              height: 110px;
-            }
-
-            .value {
-              i {
-                transform: rotateX(180deg);
-              }
-            }
-          }
-
-          .selectors {
-            position: absolute;
-            z-index: 3;
-            top: calc(100% + -6px);
-            left: 0;
-            height: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            background-color: #8280FE;
-            width: 100%;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-            transition: .3s;
-            overflow: hidden;
-
-            div {
-              padding: 4px 12px;
-              width: 100%;
-              cursor: pointer;
-
-              &:first-child {
-                margin-top: 6px;
-              }
-
-              &:last-child {
-                padding-bottom: 10px;
-              }
-
-              &:hover {
-                background-color: #6264FE;
-              }
-            }
-          }
         }
 
         .date-calenders {
@@ -344,20 +339,10 @@
 
             &.today {
               .date {
-                color: black !important;
+                color: #5100B6 !important;
                 transform: scale(1.2);
               }
-            }
 
-            &.selected {
-              .date {
-                color: #5100B6;
-
-                &::after {
-                  background-color: #5100B6;
-
-                }
-              }
             }
 
             .date {
@@ -397,23 +382,39 @@
         background-color: white;
         width: calc(100% - 20px);
         border-radius: 15px;
-        height: 100vh;
+        height: fit-content;
         margin: 30px auto;
-        box-shadow: 14px 11px 15px rgba(0, 0, 0, 0.1);
-        overflow-x: hidden;
-        overflow-y: scroll;
 
         .table-container {
           .day {
+            position: relative;
+
+            .day-date {
+              position: absolute;
+              top: -32px;
+              left: 50%;
+              transform: translateX(-50%);
+              background-color: #7303ff;
+              padding: 5px 10px;
+              border-top-left-radius: 15px;
+              border-top-right-radius: 15px;
+              color: white;
+              font-size: 18px;
+              font-family: "medium";
+              width: 85px;
+              text-align: center;
+              white-space: nowrap;
+            }
+
             .day-container {
               position: relative;
               $hoursWidth: 100px;
               overflow: hidden;
 
               .hour {
-                border-bottom: 1px solid $mainColorIcons;
+                border-bottom: 1px solid #95a0ae59;
                 width: 100%;
-                color: $mainColorIcons;
+                color: #647993;
                 height: 100px;
 
                 &:last-child {
@@ -424,7 +425,7 @@
                   height: 100%;
                   width: $hoursWidth;
                   padding: 30px;
-                  border-right: 1px solid $mainColorIcons;
+                  border-right: 1px solid #95a0ae59;
                 }
               }
 
@@ -468,6 +469,72 @@
                     border: 8px solid transparent;
                     border-top-color: #0077FC;
                   }
+                }
+              }
+            }
+          }
+
+          .days {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px 10px;
+
+            >div {
+              width: 100%;
+              max-width: 300px;
+              height: 200px;
+              border-radius: 15px;
+              box-shadow: 1px 0px 15px rgba(0, 0, 0, 0.09);
+              overflow: hidden;
+
+              &.today {
+                border: 1px solid #6264FE;
+              }
+
+              .date {
+                text-align: center;
+                width: 80px;
+                padding: 5px;
+                margin: auto;
+                white-space: nowrap;
+                border-bottom-left-radius: 15px;
+                border-bottom-right-radius: 15px;
+                background-color: #7303ff;
+                color: white;
+              }
+
+              .events {
+                height: calc(200px - 30px);
+                width: 100%;
+                padding: 10px 5px 5px 5px;
+
+                .event {
+                  background-color: $mainColor;
+                  color: white;
+                  border-radius: 15px;
+                  padding: 5px 10px;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  flex-wrap: nowrap;
+                  justify-content: space-between;
+                  margin-bottom: 4px;
+
+                  >div {
+                    width: 75% !important;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    &.time {
+                      width: 20% !important;
+                      text-align: end;
+                    }
+                  }
+
                 }
               }
             }
