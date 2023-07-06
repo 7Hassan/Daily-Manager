@@ -2,8 +2,8 @@
 
 
 
-export const Logo = () => {
-  return <div className="logo-design img">
+export const Logo = ({ spin = false }) => {
+  return <div className={spin ? "logo-design spin" : "logo-design"}>
     <span></span>
     <span></span>
     <span></span>

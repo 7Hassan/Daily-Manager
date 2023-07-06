@@ -1,7 +1,7 @@
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './styles/main.css'
 import Home from "./pages/home";
 import Calender from './pages/calender';
@@ -9,10 +9,8 @@ import Tasks from './pages/tasks';
 import Chat from './pages/chat';
 import Dashboard from './pages/dashboard';
 
-
 function App() {
   const [dateRange, setDateRange] = useState({ start: new Date(), end: new Date() })
-
   return <Router>
     <div className="App">
       <Routes>
@@ -27,3 +25,4 @@ function App() {
 }
 
 export default App;
+

@@ -32,8 +32,8 @@ const Schedule = ({ data }) => {
           <div className="text">{format(new Date(), 'dd LLL y')}</div>
         </div>
       </div>
-      <div className="slider">
-        <div onClick={() => setDates(Days)}> Reset</div>
+      <div className="slider" onClick={() => setDates(Days)}>
+        <div>Reset</div>
       </div>
     </div>
     <div className="wheel-dates">

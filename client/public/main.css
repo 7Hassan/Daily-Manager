@@ -1,0 +1,143 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: "medium";
+  font-size: 16px;
+}
+
+#preLoader {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: white;
+  z-index: 100;
+  justify-content: center;
+  transition: .5s;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
+
+#preLoader .logo-design {
+  width: 70px;
+  height: 70px;
+}
+
+#preLoader .logo-design.spin {
+  animation: spin 2s;
+}
+
+#preLoader .text {
+  display: flex;
+  position: relative;
+  left: 20px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-family: 'medium';
+  letter-spacing: 3px;
+  text-align: center;
+  width: 200px;
+  overflow: hidden;
+  font-weight: 900;
+  height: 30px;
+}
+
+#preLoader .text .first {
+  color: #4353DD;
+  position: absolute;
+  left: 0;
+  animation: show 1s ease-in-out;
+
+}
+
+#preLoader .text .second {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  animation: show 1s 1s ease-in-out forwards;
+  color: #62D5E1;
+  transition: .5s;
+}
+
+
+@keyframes show {
+  0% {
+    top: 30px;
+  }
+
+  90% {
+    top: 0px;
+
+  }
+
+  100% {
+    top: 2px;
+  }
+}
+
+
+
+
+.logo-design {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.logo-design.spin {
+  animation: spin 2s infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.logo-design span {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  border: 2px solid white !important;
+}
+
+.logo-design span:nth-child(1) {
+  background-color: #4353dd;
+  margin-top: 5px;
+  margin-right: -3px;
+  z-index: 2;
+}
+
+.logo-design span:nth-child(2) {
+  background-color: #62d5e1;
+  position: absolute;
+  top: 0px;
+  z-index: 3;
+}
+
+.logo-design span:nth-child(3) {
+  background-color: #6264fe;
+  margin-top: 5px;
+  margin-left: -3px;
+}

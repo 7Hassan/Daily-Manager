@@ -8,17 +8,36 @@
   <meta name="description"
     content="Daily Manager is a web-based application that combines a calendar, task manager, and charting functionality to help users stay organized and on top of their daily activities. It offers an intuitive interface that makes it easy to view and manage your schedule, add and track tasks, and visualize your progress over time." />
   <link rel="icon" href="./favicon.ico" />
+  <link rel="stylesheet" href="./main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="apple-touch-icon" href="../imgs/logo.png" />
   <link rel="manifest" href="./manifest.json" />
-  <title>React App</title>
+  <title>Daily Manager</title>
 </head>
 
 <body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="preLoader">
+    <div class="logo-design spin">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="text">
+      <div class="first">Daily</div>
+      <div class="second">Manager</div>
+    </div>
+  </div>
   <div id="root"></div>
+  <script defer>
+    const ele = document.getElementById('preLoader');
+    const body = document.body
+    setTimeout(() => {
+      ele.style.top = '100%'
+      body.style.overflow = 'unset'
+    }, 2200);
+  </script>
 </body>
 
 </html>
