@@ -1,10 +1,10 @@
 
 import { Dotes } from '../../utils/elements';
 import { format, isToday, isSameDay, isBefore, isAfter } from 'date-fns';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow, Pagination, Navigation } from 'swiper';
 import { GetDate, getStart, getEnd } from '../../utils/helpers'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
@@ -50,7 +50,7 @@ const getDateSwiper = (date) => {
 };
 
 export const MonSwiper = ({ data }) => {
-  const { classN, weekDays, tempDateRange, setTempDateRange, setCalenderDate } = data;
+  const { hideCalender, weekDays, tempDateRange, setTempDateRange, setCalenderDate } = data;
   const tempStart = tempDateRange.start
   const tempEnd = tempDateRange.end
   const [status, setStatus] = useState('start')
@@ -73,7 +73,7 @@ export const MonSwiper = ({ data }) => {
     setCalenderDate(month)
     setStatus('start')
   };
-  useEffect(() => setStatus('start'), [classN])
+  useEffect(() => setStatus('start'), [hideCalender])
 
   return <Swiper {...optionsObj} onSlideChange={monthChange} >
     <Controller />
@@ -111,21 +111,25 @@ export const WheelSwiper = (props) => {
     swiper.slideTo(index, 500, setDates([day]))
   }
 
-  return <Swiper {...optionsObj} onInit={(ev) => setSwiper(ev)}>
-    {
-      Days.map((day) => {
-        const { checkDate, dayNum, dayStr } = getDateSwiper(day)
-        const className = checkDate ? 'ch-date today' : 'ch-date'
-        return (
-          <SwiperSlide key={day} className={className} onClick={() => handleClick(day)}>
-            <div className="date"> {dayNum} <span>{dayStr}</span> </div>
-            <Dotes />
-          </SwiperSlide>
-        )
-      })
-    }
-    < Controller />
-  </Swiper >
+  return <div className="wheel-dates">
+    <div className="inner-slider">
+      <Swiper {...optionsObj} onInit={(ev) => setSwiper(ev)}>
+        {
+          Days.map((day) => {
+            const { checkDate, dayNum, dayStr } = getDateSwiper(day)
+            const className = checkDate ? 'ch-date today' : 'ch-date'
+            return (
+              <SwiperSlide key={day} className={className} onClick={() => handleClick(day)}>
+                <div className="date"> {dayNum} <span>{dayStr}</span> </div>
+                <Dotes />
+              </SwiperSlide>
+            )
+          })
+        }
+        < Controller />
+      </Swiper >
+    </div>
+  </div>
 };
 
 

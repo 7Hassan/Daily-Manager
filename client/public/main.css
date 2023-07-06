@@ -42,16 +42,21 @@ body {
   left: 20px;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
   font-size: 20px;
   text-transform: uppercase;
   font-family: 'medium';
   letter-spacing: 3px;
   text-align: center;
-  width: 200px;
+  width: 195px;
   overflow: hidden;
   font-weight: 900;
   height: 30px;
+}
+
+@media (max-width:700px) {
+  #preLoader .text {
+    width: 210px !important;
+  }
 }
 
 #preLoader .text .first {
@@ -59,14 +64,13 @@ body {
   position: absolute;
   left: 0;
   animation: show 1s ease-in-out;
-
 }
 
 #preLoader .text .second {
   position: absolute;
   right: 0;
   top: 30px;
-  animation: show 1s 1s ease-in-out forwards;
+  animation: show 1s .7s ease-in-out forwards;
   color: #62D5E1;
   transition: .5s;
 }
@@ -78,8 +82,7 @@ body {
   }
 
   90% {
-    top: 0px;
-
+    top: 2px;
   }
 
   100% {

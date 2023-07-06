@@ -1,10 +1,10 @@
 
-import NavCalender from "./pop.calender";
-import { useState, useEffect } from "react";
-import { changeClass, GetDate, getStart, getEnd } from "../../utils/helpers";
-import { format } from 'date-fns';
+import { useState, useEffect, useMemo } from "react";
+import { GetDate, getStart, getEnd } from "../../utils/helpers";
+import { format, eachDayOfInterval } from 'date-fns';
 import { WheelSwiper } from './swipes'
 import Scales from "./scales.dates";
+import Header from "./header";
 
 
 
@@ -13,34 +13,16 @@ import Scales from "./scales.dates";
 const Schedule = ({ data }) => {
   const { dateRange } = data;
   const { start, end } = dateRange;
-  const { days } = new GetDate(start, end);
-  const Days = days()
-  const [classN, setClassN] = useState('calender hidden')
+  const Days = useMemo(() => eachDayOfInterval({ start, end }), [start, end])
   const [dates, setDates] = useState(Days)
-
-  useEffect(() => { setDates(Days) }, [dateRange])
+  useEffect(() => setDates(Days), [Days])
 
   return <div className="schedule">
-    <div className="header">
-      <NavCalender data={{ ...data, classN, setClassN }} />
-      <div className="date-scale">
-        {format(getStart(start, end), 'dd')} - {format(getEnd(start, end), 'dd')} {format(start, 'MMM')}
-      </div>
-      <div className="date-calenders" onClick={() => changeClass(classN, setClassN, 'calender', 'calender hidden')}>
-        <div className="date">
-          <div className="img"><i className="fa-solid fa-calendar-week"></i></div>
-          <div className="text">{format(new Date(), 'dd LLL y')}</div>
-        </div>
-      </div>
-      <div className="slider" onClick={() => setDates(Days)}>
-        <div>Reset</div>
-      </div>
+    <Header data={{ ...data, setDates, Days }} />
+    <WheelSwiper Days={Days} setDates={setDates} />
+    <div className="events">
+      event
     </div>
-    <div className="wheel-dates">
-      <div className="inner-slider">
-        <WheelSwiper Days={Days} setDates={setDates} />
-      </div >
-    </div >
     <div className="table">
       <div className="table-container">
         <Scales dates={dates} />
