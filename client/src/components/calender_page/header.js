@@ -1,12 +1,12 @@
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { getStart, getEnd } from '../../utils/helpers'
 import { format } from 'date-fns';
 import { MonSwiper } from './swipes';
 
 
 
-const Calender = ({ data }) => {
+export const Calender = ({ data }) => {
   const weekDays = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
   const [calenderDate, setCalenderDate] = useState(new Date());
   return <>
@@ -46,7 +46,7 @@ const CalenderContainer = ({ data }) => {
         <div className="text">{format(new Date(), 'dd LLL y')}</div>
       </div>
     </div>
-    <div className={hideCalender ? 'calender hidden' : 'calender'}>
+    <div className={`calender ${hideCalender ? ' hidden' : ''}`}>
       <div className="calender-container">
         <div className="calender-component">
           <Calender data={{ tempDateRange, setTempDateRange, hideCalender }} />
@@ -67,10 +67,9 @@ const CalenderContainer = ({ data }) => {
 const Header = ({ data }) => {
   const { dateRange, setDates, Days } = data;
   const { start, end } = dateRange;
+  const scale = useMemo(() => `${format(getStart(start, end), 'dd')} - ${format(getEnd(start, end), 'dd')} ${format(start, 'MMM')}`, [start, end])
   return <div className="header">
-    <div className="date-scale">
-      {format(getStart(start, end), 'dd')} - {format(getEnd(start, end), 'dd')} {format(start, 'MMM')}
-    </div>
+    <div className="date-scale"> {scale} </div>
     <CalenderContainer data={data} />
     <div className="slider" onClick={() => setDates(Days)}> Reset </div>
   </div>

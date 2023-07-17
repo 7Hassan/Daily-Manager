@@ -48,7 +48,6 @@ a {
   padding: 10px;
   background-color: #E6F2FF;
   border-radius: 15px;
-  font-family: "medium";
   color: #0077FC;
   cursor: pointer;
   border: none;
@@ -78,7 +77,7 @@ nav {
   border-bottom-left-radius: 28px;
   border-bottom-right-radius: 28px;
   width: 100%;
-  z-index: 10;
+  z-index: 9;
   overflow: hidden;
 
   .container {

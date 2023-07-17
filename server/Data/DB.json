@@ -1,0 +1,38 @@
+{
+  "user": {
+    "userName": "7hassan",
+    "password": "12345678",
+    "firstName": "Hassan",
+    "lastName": "Hossam",
+    "jobTitle": "Web Developer",
+    "createdAt": "Fri Jul 07 2023 12:33:04",
+    "imgUrl": "./imgs/profile.png"
+  },
+
+  "events": {
+    "dateRange": {
+      "start": "Fri Jul 07 2023",
+      "end": "Fri Jul 07 2023"
+    },
+    "allEvs": [
+      {
+        "date": "Fri Jul 07 2023",
+        "evs": [
+          {
+            "time": {
+              "start": "8:00",
+              "end": "10:00"
+            },
+            "title": "Web Course",
+            "description": "Course description",
+            "additionalInfo": {
+              "imgs": ["./imgs/profile.png", "./imgs/profile2.png"],
+              "url": "http://udacity.com/course/web",
+              "location": "https://www.google.com/maps/place/Cuzco+House/@32.8846123,-117.2421087,17z/data=!3m1!4b1!4m6!3m5!1s0x80dc06ea8e300001:0xa9f5db8fafe327d7!8m2!3d32.8846123!4d-117.2421087!16s%2Fg%2F11hd1hvdwt?entry=ttu"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

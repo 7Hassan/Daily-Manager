@@ -20,9 +20,6 @@ const Schedule = ({ data }) => {
   return <div className="schedule">
     <Header data={{ ...data, setDates, Days }} />
     <WheelSwiper Days={Days} setDates={setDates} />
-    <div className="events">
-      event
-    </div>
     <div className="table">
       <div className="table-container">
         <Scales dates={dates} />

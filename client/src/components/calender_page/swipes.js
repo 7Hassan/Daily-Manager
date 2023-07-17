@@ -132,4 +132,48 @@ export const WheelSwiper = (props) => {
   </div>
 };
 
+export const EventSwipes = () => {
+  const optionsObj = {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    loop: false,
+    slidesPerView: 'auto',
+    initialSlide: 0,
+    coverflowEffect: {
+      rotate: 0,
+      stretch: -10,
+      depth: 0,
+      modifier: 20,
+    },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true },
+    modules: [EffectCoverflow, Pagination, Navigation],
+    className: 'swiper_container container-wheel',
+  }
+
+  return <Swiper {...optionsObj}  >
+    <Controller />
+    <SwiperSlide className="event"  >
+      <div className="time">
+        <div className="start">08:00</div>
+        <div className="remaining">4h 34m</div>
+      </div>
+      <div className="details">
+        <img src="	https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVW6tRa_qW83fppIYIFced0ZU96MQixbuoag8FH9umQQ&s" alt="img" />
+        <div className="title">Web Developer</div>
+      </div>
+    </SwiperSlide>
+    <SwiperSlide className="event">
+      <div className="time">
+        <div className="start">08:00</div>
+        <div className="remaining">4h 34m</div>
+      </div>
+      <div className="details">
+        <img src="	https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVW6tRa_qW83fppIYIFced0ZU96MQixbuoag8FH9umQQ&s" alt="img" />
+        <div className="title">Web Developer</div>
+      </div>
+    </SwiperSlide>
+  </Swiper >
+};
 

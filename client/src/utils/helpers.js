@@ -53,9 +53,9 @@ export class NextDate {
   // Year = () => add(this.date, { years: this.scale });
 }
 
-export const timeToPx = (time) => {
+export const timeToPx = (time, scale = 80) => {
   const hour = format(time, 'k'), min = format(time, 'm')
-  return hour * 100 + ((min * 10) / 6) //? convert time to px scale
+  return hour * scale + ((min * scale) / 60) //? convert time to px scale
 }
 
 
