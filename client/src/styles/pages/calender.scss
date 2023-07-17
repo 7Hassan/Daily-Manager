@@ -194,14 +194,10 @@
   }
 }
 
-
-
-
 .swiper-slide-shadow-right,
 .swiper-slide-shadow-left {
   display: none !important;
 }
-
 
 
 .main {
@@ -271,6 +267,38 @@
         &+.input-label {
           color: #6658d3;
           transform: translateY(-1.5rem);
+
+        }
+      }
+    }
+
+    .text-area {
+      margin-top: 10px;
+
+      label {
+        margin: -25px 0 0 5px;
+        color: #6658d3;
+        font-size: 18px;
+      }
+
+      textarea {
+        resize: vertical;
+        font-family: Arial, sans-serif;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1.125rem;
+        line-height: 1.6;
+        outline: none;
+        letter-spacing: 1.5px;
+      }
+
+      &.urls {
+        margin: 0 0 0 5px !important;
+
+        textarea {
+          padding: 0 10px;
+          font-size: 1rem;
         }
       }
     }
@@ -390,6 +418,7 @@
             transform: unset;
             box-shadow: unset;
             margin: auto;
+            padding-bottom: 0;
 
             .slider-controler {
               >div {
@@ -454,17 +483,6 @@
                 }
               }
             }
-
-
-
-
-
-
-
-
-
-
-
           }
         }
       }

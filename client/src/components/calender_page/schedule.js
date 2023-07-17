@@ -1,7 +1,6 @@
 
 import { useState, useEffect, useMemo } from "react";
-import { GetDate, getStart, getEnd } from "../../utils/helpers";
-import { format, eachDayOfInterval } from 'date-fns';
+import { eachDayOfInterval } from 'date-fns';
 import { WheelSwiper } from './swipes'
 import Scales from "./scales.dates";
 import Header from "./header";
