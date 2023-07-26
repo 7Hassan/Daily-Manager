@@ -1,17 +1,19 @@
 
+
 import { Title } from "../utils/helpers";
 
-const Tasks = () => {
+const Signup = () => {
   return <main>
-    <Title title='DM - Tasks' />
+    <Title title='DM - Signup' />
     <div className="main-container">
       <div className="main">
-        <div className="container">
-          tasks
-        </div>
+        signup
       </div>
     </div>
-  </main>
+  </main >
 };
 
-export default Tasks;
+export default Signup;
+
+
+

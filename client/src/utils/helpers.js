@@ -1,7 +1,12 @@
 
 
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { startOfYear, startOfMonth, endOfMonth, startOfWeek, add, eachDayOfInterval, eachMonthOfInterval, isAfter, differenceInDays, format } from 'date-fns';
+import {
+  startOfYear, startOfMonth, endOfMonth, add,
+  eachDayOfInterval, eachMonthOfInterval, isAfter,
+  format, differenceInMinutes, differenceInHours, minutesToHours
+} from 'date-fns';
 
 
 export const Title = ({ title }) => <Helmet><title>{title}</title></Helmet>
@@ -46,17 +51,13 @@ export class NextDate {
     this.direction = direction;
     this.direction = direction;
   }
-
-  // Day = () => add(this.date, { days: this.scale });
-  // Week = () => add(this.date, { weeks: this.scale });
-  // Month = () => add(this.date, { months: this.scale });
-  // Year = () => add(this.date, { years: this.scale });
 }
 
-export const timeToPx = (time, scale = 80) => {
-  const hour = format(time, 'k'), min = format(time, 'm')
-  return hour * scale + ((min * scale) / 60) //? convert time to px scale
+export const timeToMins = (time) => {
+  const hour = format(time, 'H'), min = format(time, 'm')
+  return +hour * 60 + +min
 }
+
 
 
 
@@ -65,3 +66,21 @@ export const getStart = (start, end) => isAfter(start, end) ? end : start;
 export const getEnd = (start, end) => isAfter(start, end) ? start : end;
 
 
+
+export const differenceInTime = (start, end) => {
+  const minutes = differenceInMinutes(getEnd(start, end), getStart(start, end))
+  const hours = minutesToHours(minutes)
+  return { hours: hours, minutes: minutes - hours * 60 }
+}
+
+
+export const useTime = () => {
+  const [time, setTime] = useState(new Date())
+  useEffect(() => {
+    const sc = format(time, 's')
+    const waiting = (60 - sc) * 1000
+    const interval = setInterval(() => setTime(new Date()), waiting)
+    return () => clearInterval(interval)
+  }, [time])
+  return time
+}

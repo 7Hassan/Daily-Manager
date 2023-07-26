@@ -1,46 +1,37 @@
 
 import { Dotes } from '../../utils/elements';
 import { format, isToday, isSameDay, isBefore, isAfter } from 'date-fns';
+import { GetDate, getStart, getEnd, timeToMins, differenceInTime, useTime } from '../../utils/helpers'
+import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination, Navigation } from 'swiper';
-import { GetDate, getStart, getEnd } from '../../utils/helpers'
-import { useState, useEffect } from 'react'
+import { EffectCoverflow, Pagination, Navigation, A11y } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-const options = (start) => {
+
+const options = (start = 0) => {
   return {
     effect: 'coverflow',
     grabCursor: true,
     centeredSlides: true,
     loop: false,
     slidesPerView: 'auto',
-    initialSlide: start ? start : 0,
+    initialSlide: start,
     coverflowEffect: {
       rotate: 0,
       stretch: -5,
       depth: 10,
       modifier: 20,
     },
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true },
-    modules: [EffectCoverflow, Pagination, Navigation],
+    navigation: {},
+    modules: [EffectCoverflow, Pagination, Navigation, A11y],
     className: 'swiper_container container-wheel',
   }
 }
 
-const Controller = () => {
-  return < div className="slider-controler" >
-    <div className="swiper-button-prev slider-arrow" >
-      <ion-icon name="arrow-back-outline"></ion-icon>
-    </div>
-    <div className="swiper-button-next slider-arrow"  >
-      <ion-icon name="arrow-forward-outline"></ion-icon>
-    </div>
-  </div >
-};
 
 const getDateSwiper = (date) => {
   const checkDate = isToday(date)
@@ -75,8 +66,17 @@ export const MonSwiper = ({ data }) => {
   };
   useEffect(() => setStatus('start'), [hideCalender])
 
-  return <Swiper {...optionsObj} onSlideChange={monthChange} >
-    <Controller />
+  return <Swiper {...optionsObj}
+
+    onSlideChange={monthChange}>
+    {/* < div className="slider-controler" >
+      <div className="swiper-button-prev slider-arrow" >
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </div>
+      <div className="swiper-button-next slider-arrow"  >
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </div>
+    </div > */}
     {
       months.map((month) => {
         const { monDays } = new GetDate(month)
@@ -101,15 +101,10 @@ export const MonSwiper = ({ data }) => {
   </Swiper >
 };
 
-export const WheelSwiper = (props) => {
-  const { Days, setDates } = props
+export const WheelSwiper = ({ Days, setDates }) => {
   const optionsObj = options(0)
   const [swiper, setSwiper] = useState({});
-
-  const handleClick = (day) => {
-    const index = Days.indexOf(day)
-    swiper.slideTo(index, 500, setDates([day]))
-  }
+  const handleClick = (day) => swiper.slideTo(Days.indexOf(day), 500, setDates([day]))
 
   return <div className="wheel-dates">
     <div className="inner-slider">
@@ -121,59 +116,127 @@ export const WheelSwiper = (props) => {
             return (
               <SwiperSlide key={day} className={className} onClick={() => handleClick(day)}>
                 <div className="date"> {dayNum} <span>{dayStr}</span> </div>
-                <Dotes />
+                {/* <Dotes /> */}
               </SwiperSlide>
             )
           })
         }
-        < Controller />
       </Swiper >
     </div>
-  </div>
+  </div >
 };
 
-export const EventSwipes = () => {
-  const optionsObj = {
-    effect: 'coverflow',
-    grabCursor: true,
-    centeredSlides: true,
-    loop: false,
-    slidesPerView: 'auto',
-    initialSlide: 0,
-    coverflowEffect: {
-      rotate: 0,
-      stretch: -10,
-      depth: 0,
-      modifier: 20,
-    },
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev', clickable: true },
-    modules: [EffectCoverflow, Pagination, Navigation],
-    className: 'swiper_container container-wheel',
-  }
+const Event = ({ event, top }) => {
+  const time = useTime()
+  const { start, end } = event.time
+  const marginTop = top ? (timeToMins(start) - top) : 0
+  const height = top ? (timeToMins(end) - timeToMins(start)) : 100
+  const remaining = differenceInTime(start, time)
+  const timeEvent = isBefore(time, start) ? remaining : { hours: 0, minutes: 0 }
+  const fullTime = differenceInTime(start, end)
+  const percentageEvent = (100 - ((end - time) / (end - start)) * 100)
+  const widthBar = percentageEvent < 0 ? 0 : percentageEvent > 100 ? 100 : percentageEvent
+  const startInMins = timeToMins(start)
+  const diffPercent = ((startInMins - timeToMins(time)) / startInMins) * 100
+  const percentage = diffPercent < 0 ? 0 : diffPercent > 100 ? 100 : diffPercent
+  const counter = time > start ? { ...remaining, minutes: remaining.minutes + 1 } : time > end ? fullTime : { hours: 0, minutes: 0 }
+  const handleClickEvent = () => { }
 
-  return <Swiper {...optionsObj}  >
-    <Controller />
-    <SwiperSlide className="event"  >
-      <div className="time">
-        <div className="start">08:00</div>
-        <div className="remaining">4h 34m</div>
+
+  return <div className="event-dev event-st"
+    style={{ marginTop, backgroundColor: `${event.color}`, height }}
+    onClick={() => handleClickEvent()}>
+    <div className="event-container">
+      {height > 30 &&
+        <div className="time">
+          <div className="start">{format(start, 'hh:mm aa')}</div>
+          {top && <div className="remaining">{timeEvent.hours}h {timeEvent.minutes}m</div>}
+
+          {
+            !top && <div className="time-remaining">
+              <CircularProgressbarWithChildren value={percentage}
+                styles={buildStyles({
+                  strokeLinecap: 'round',
+                  pathTransitionDuration: 0.5,
+                  pathColor: 'lime',
+                  trailColor: 'white',
+                })}
+              ><span className='per-remaining'>{`${timeEvent.hours}:${timeEvent.minutes}`}</span>
+              </CircularProgressbarWithChildren>
+            </div>
+          }
+        </div>
+      }
+      {height > 80 &&
+        <div className="inf">
+          <div className="title">{event.title}</div>
+          {height > 100 && <div className="disc">{event.description}</div>}
+          {height > 140 && <div className="disc notes">{event.notes}</div>}
+          {height > 170 && <div className="urls">
+            {event.urls.map((url, i) => {
+              return <div key={`${i}${url.name}`}>
+                <a target={'_blank'} style={{ color: `${event.color}` }}
+                  rel="noopener noreferrer" href={url.link}>{url.name}</a>
+              </div>
+            })}
+          </div>}
+        </div>
+      }
+    </div>
+
+    {
+      height > 50 &&
+      <div className="event-bar">
+        <div className="counter">{counter.hours}h {counter.minutes}m</div>
+        <div className="ev-bar">
+          <span className="line-bar" style={{ width: `${widthBar}%` }}></span>
+        </div>
+        <div className="full-time">{fullTime.hours}h {fullTime.minutes}m</div>
       </div>
-      <div className="details">
-        <img src="	https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVW6tRa_qW83fppIYIFced0ZU96MQixbuoag8FH9umQQ&s" alt="img" />
-        <div className="title">Web Developer</div>
-      </div>
-    </SwiperSlide>
-    <SwiperSlide className="event">
-      <div className="time">
-        <div className="start">08:00</div>
-        <div className="remaining">4h 34m</div>
-      </div>
-      <div className="details">
-        <img src="	https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVW6tRa_qW83fppIYIFced0ZU96MQixbuoag8FH9umQQ&s" alt="img" />
-        <div className="title">Web Developer</div>
-      </div>
-    </SwiperSlide>
+    }
+  </div >
+}
+
+export const EventSwipes = ({ events, top = null }) => {
+  events.sort((a, b) => a.time.start - b.time.start);
+
+  const optionsObj = {
+    ...options(0), pagination: { clickable: true }, spaceBetween: 10, breakpoints: {
+      900: {
+        slidesPerView: 2,
+      },
+      1100: {
+        slidesPerView: top ? 3 : 2,
+      },
+      1300: {
+        slidesPerView: top ? 4 : 3,
+      },
+    }, coverflowEffect: {
+      rotate: 0,
+      stretch: -5,
+      depth: top ? 20 : 50,
+      modifier: 10,
+    },
+  }
+  const [swiper, setSwiper] = useState({});
+
+
+  const handleClick = (i) => {
+    swiper.slideTo(i, 500)
+    if (top) {
+
+    }
+  }
+  return <Swiper {...optionsObj} style={{ top }} onInit={(ev) => setSwiper(ev)}>
+    {
+      events.map((event, i) => {
+        return <SwiperSlide key={event.title + i} onClick={() => handleClick(i)} >
+          <Event event={event} top={top} />
+        </SwiperSlide>
+      })
+    }
   </Swiper >
 };
+
+
 

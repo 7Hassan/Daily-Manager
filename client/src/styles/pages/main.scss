@@ -1,6 +1,5 @@
-@use "./helpers/fonts";
-@use "./helpers/colors"as *;
-@use "./helpers/animation";
+@use "../helpers/colors"as *;
+@use "../helpers/animation";
 
 
 li {
@@ -51,6 +50,7 @@ a {
   color: #0077FC;
   cursor: pointer;
   border: none;
+  font-size: 16px;
 }
 
 .nav-text-icon {
@@ -63,21 +63,20 @@ a {
 }
 
 main {
+  overflow: hidden;
+
   .main {
-    margin-top: 90px;
     width: 100%;
   }
 }
 
 nav {
   background-color: white;
-  position: fixed;
-  top: 0;
-  box-shadow: 0px 20px 15px rgba(0, 0, 0, 0.06);
-  border-bottom-left-radius: 28px;
-  border-bottom-right-radius: 28px;
+  box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
+  border-radius: 30px;
   width: 100%;
-  z-index: 9;
+  max-width: 500px;
+  margin: auto;
   overflow: hidden;
 
   .container {

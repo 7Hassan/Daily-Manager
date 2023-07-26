@@ -1,55 +1,48 @@
 
 
-import { useState, useEffect } from "react";
-import { timeToPx } from "../../utils/helpers";
+import { timeToMins, useTime } from "../../utils/helpers";
 import { format, isToday } from "date-fns";
-
+import { useCalender } from "../../pages/calender";
+import { EventSwipes } from "./swipes";
 
 const Scales = ({ dates }) => (dates.length > 1) ? Days(dates) : isToday(dates[0]) ? Today() : Day(dates[0])
 export default Scales;
 
-const Event = () => {
-  let img = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVW6tRa_qW83fppIYIFced0ZU96MQixbuoag8FH9umQQ&s'
-  // img = null;
-  return <div className="event-dev">
-    <div className="event-container">
-      <div className="time">
-        <div className="start">08:00</div>
-        <div className="remaining">2h 34m</div>
-      </div>
-      <div className="details">
-        {img && <img src={img} alt='img' />}
-        <div className="inf">
-          <div className="title">Web development</div>
-          <div className="disc">Course Web development</div>
-        </div>
-      </div>
+
+
+
+const wrapComponent = Component => {
+  return ({ events }) => {
+    events.sort((a, b) => a.time.start - b.time.start);
+    const wrapEvents = evsIntersect(events)
+    return wrapEvents.map((evs, i) => {
+      const top = timeToMins(evs[0].time.start);
+      return < Component key={evs[0].title + i} events={evs} top={top} />
+    })
+  }
+}
+
+const Cursor = () => {
+  const time = useTime()
+  return <>
+    <div className="cursor" style={{ top: `${timeToMins(time)}px` }}>
+      <div className="point">{format(time, 'm')}</div>
     </div>
-    <div className="event-bar">
-      <div className="counter">0h 30m</div>
-      <div className="bar"></div>
-      <div className="full-time">2h 56m</div>
-    </div>
-  </div >
+  </>
 }
 
 const Today = () => {
+  const { calender } = useCalender()
+  const { events } = calender
+  const todayEvents = events.filter(event => isToday(event.day))[0]
   const hours = Array.from({ length: 24 }, (_, index) => `${index > 9 ? index : '0' + index}:00`)
-  const [time, setTime] = useState(new Date())
-  useEffect(() => {
-    const sc = format(time, 's')
-    const waiting = (60 - sc) * 1000
-    const interval = setInterval(() => setTime(new Date()), waiting)
-    return () => clearInterval(interval)
-  }, [time])
+  const WrapEvents = todayEvents?.evs ? wrapComponent(EventSwipes) : null
 
   return (
     <div className="day">
       <div className="day-date">{format(new Date(), 'dd iii')}</div>
       <div className="day-container">
-        <div className="cursor" style={{ top: `${timeToPx(time)}px` }}>
-          <div className="point">{format(time, 'm')}</div>
-        </div>
+        <Cursor />
         {
           hours.map((hour) => {
             return (
@@ -60,7 +53,7 @@ const Today = () => {
             )
           })
         }
-        <Event />
+        {WrapEvents && <WrapEvents events={todayEvents.evs} />}
       </div>
     </div>
   )
@@ -105,7 +98,7 @@ const DaysEvent = ({ data }) => {
     </div>
     {evs && <div className="other-same-time">
       {
-        evs.map((ev, i) => i === 2 ? <span className="text">+</span> : <span></span>)
+        evs.map((ev, i) => i === 2 ? <span key={ev} className="text">+</span> : <span></span>)
       }
     </div>
     }
@@ -131,3 +124,24 @@ const Days = (days) => {
 
 
 
+function evsIntersect(events) {
+  let wrapEvents = [], evsIntersect = [], isIntersect = true;
+  events.map((event, i) => {
+    for (let j = 0; j < i; j++) {
+      const start = event.time.start;
+      const end = events[j].time.end;
+      isIntersect = start < end
+      if (isIntersect) break;
+    }
+    if (isIntersect) evsIntersect.push(event)
+    else {
+      wrapEvents.push(evsIntersect)
+      evsIntersect = []
+      evsIntersect.push(event)
+    }
+
+  })
+  // if (evsIntersect.length > 0) wrapEvents.push(evsIntersect)
+  if (isIntersect) wrapEvents.push(evsIntersect)
+  return wrapEvents;
+}

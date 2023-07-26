@@ -4,20 +4,20 @@ import { eachDayOfInterval } from 'date-fns';
 import { WheelSwiper } from './swipes'
 import Scales from "./scales.dates";
 import Header from "./header";
+import { useCalender } from '../../pages/calender';
 
 
 
 
-
-const Schedule = ({ data }) => {
-  const { dateRange } = data;
-  const { start, end } = dateRange;
+const Schedule = () => {
+  const { calender } = useCalender()
+  const { start, end } = calender.dateRange;
   const Days = useMemo(() => eachDayOfInterval({ start, end }), [start, end])
   const [dates, setDates] = useState(Days)
   useEffect(() => setDates(Days), [Days])
 
   return <div className="schedule">
-    <Header data={{ ...data, setDates, Days }} />
+    <Header Days={Days} setDates={setDates} />
     <WheelSwiper Days={Days} setDates={setDates} />
     <div className="table">
       <div className="table-container">

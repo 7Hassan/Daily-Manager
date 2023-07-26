@@ -3,17 +3,17 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="viewport" content="width=device-width" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="description"
     content="Daily Manager is a web-based application that combines a calendar, task manager, and charting functionality to help users stay organized and on top of their daily activities. It offers an intuitive interface that makes it easy to view and manage your schedule, add and track tasks, and visualize your progress over time." />
-  <link rel="icon" href="./favicon.ico" />
-  <link rel="stylesheet" href="./main.css">
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/index.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="apple-touch-icon" href="../imgs/logo.png" />
-  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="/../imgs/logo.png" />
+  <link rel="manifest" href="/manifest.json" />
   <title>Daily Manager (DM)</title>
 </head>
 
@@ -32,10 +32,10 @@
   <div id="root"></div>
   <script defer>
     const ele = document.getElementById('preLoader');
-    const body = document.body
+    const root = document.getElementById('root');
     setTimeout(() => {
       ele.style.top = '100%'
-      body.style.overflow = 'unset'
+      root.style.display = 'unset';
     }, 2500);
   </script>
 </body>
