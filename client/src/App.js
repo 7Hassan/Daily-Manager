@@ -15,10 +15,9 @@ import Nav from './components/main/nav'
 
 function App() {
   const [loading, setLoading] = useState(false)
-
   return <Router>
     <div className="App">
-      <Nav location={useLocation} loading={loading} />
+      {<Nav location={useLocation} loading={loading} />}
       <Routes>
         <Route path="/" exact element={<Home />} />
         <Route path="/calender" element={<Calender setLoading={setLoading} />} />

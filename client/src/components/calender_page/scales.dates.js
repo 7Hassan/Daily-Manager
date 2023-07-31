@@ -1,6 +1,6 @@
 
 
-import { timeToMins, useTime } from "../../utils/helpers";
+import { timeToMins, useTime, GetDate } from "../../utils/helpers";
 import { format, isToday } from "date-fns";
 import { useCalender } from "../../pages/calender";
 import { EventSwipes } from "./swipes";
@@ -34,8 +34,10 @@ const Cursor = () => {
 const Today = () => {
   const { calender } = useCalender()
   const { events } = calender
+  const getDate = new GetDate(new Date())
   const todayEvents = events.filter(event => isToday(event.day))[0]
-  const hours = Array.from({ length: 24 }, (_, index) => `${index > 9 ? index : '0' + index}:00`)
+  const hoursDay = getDate.dayHours()
+  const hours = hoursDay.map(hour => format(hour, 'hh a'));
   const WrapEvents = todayEvents?.evs ? wrapComponent(EventSwipes) : null
 
   return (
@@ -53,7 +55,10 @@ const Today = () => {
             )
           })
         }
-        {WrapEvents && <WrapEvents events={todayEvents.evs} />}
+
+        <div className="container-swipes-evs">
+          {WrapEvents && <WrapEvents events={todayEvents.evs} />}
+        </div>
       </div>
     </div>
   )

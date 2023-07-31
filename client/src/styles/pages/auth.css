@@ -1,0 +1,128 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+.login-form {
+  min-height: 100%;
+}
+.login-form .card {
+  height: unset;
+}
+.login-form .card .top-text {
+  font-size: 40px;
+  letter-spacing: 2px;
+  color: #5100B6;
+  margin: 20px auto;
+}
+.login-form .card .logo {
+  position: absolute;
+  top: -105px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 7px;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 20px;
+  font-family: "Gilroy-normal";
+  text-transform: uppercase;
+  color: #4353dd;
+  letter-spacing: 1.5px;
+  font-size: 20px;
+}
+.login-form .card .logo .ls {
+  color: #62d5e1;
+}
+.login-form .card .logo .logo-design {
+  height: 50px;
+  width: 50px;
+  background-color: transparent;
+}
+.login-form .card .logo .text {
+  white-space: nowrap;
+}
+.login-form .card .first-last-name {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  gap: 1.5rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+}
+.login-form .card .first-last-name .input {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+.login-form .card .first-last-name .input:last-child {
+  margin-top: 0 !important;
+}
+.login-form .card .input input {
+  letter-spacing: 1.5px !important;
+}
+.login-form .card .input.password .input {
+  padding-right: 35px;
+}
+.login-form .card .input.password .icons {
+  position: absolute;
+  right: 0;
+  bottom: 5px;
+  cursor: pointer;
+  z-index: 2;
+}
+.login-form .card .input.password .icons i {
+  font-size: 20px;
+  color: #6658d3;
+}
+.login-form .card .input.password .icons i.hidden {
+  display: none;
+}
+.login-form .card .or {
+  margin: 15px auto;
+  border-bottom: 1px solid #6658d3;
+  width: 80%;
+  text-align: center;
+}
+.login-form .card .or span {
+  position: relative;
+  bottom: -10px;
+  padding: 10px;
+  background-color: white;
+}
+.login-form .card .signUp {
+  margin: 20px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 20px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+.login-form .card .signUp a {
+  background-color: #5100B6;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 15px;
+}
+.login-form .card .signUp button {
+  background-color: transparent;
+  color: #4353dd;
+}

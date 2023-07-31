@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import {
   startOfYear, startOfMonth, endOfMonth, add,
   eachDayOfInterval, eachMonthOfInterval, isAfter,
-  format, differenceInMinutes, differenceInHours, minutesToHours
+  format, differenceInMinutes, differenceInHours, minutesToHours, startOfDay, endOfDay, eachHourOfInterval
 } from 'date-fns';
 
 
@@ -23,12 +23,12 @@ export class GetDate {
 
   days = () => eachDayOfInterval({ start: this.start, end: this.end })
 
-  // weekDays = () => {
-  //   const start = startOfWeek(this.date);
-  //   const end = add(start, { days: 6 });
-  //   const Days = eachDayOfInterval({ start, end })
-  //   return Days
-  // }
+  dayHours = () => {
+    const start = startOfDay(this.date);
+    const end = endOfDay(this.date);
+    const hours = eachHourOfInterval({ start, end })
+    return hours
+  }
 
   monDays = () => {
     const start = startOfMonth(this.date);
@@ -67,11 +67,12 @@ export const getEnd = (start, end) => isAfter(start, end) ? start : end;
 
 
 
-export const differenceInTime = (start, end) => {
-  const minutes = differenceInMinutes(getEnd(start, end), getStart(start, end))
-  const hours = minutesToHours(minutes)
-  return { hours: hours, minutes: minutes - hours * 60 }
+export const minsToTime = (mins) => {
+  const hours = minutesToHours(mins)
+  const minutes = mins - hours * 60
+  return `${hours}h  ${minutes}m`
 }
+
 
 
 export const useTime = () => {

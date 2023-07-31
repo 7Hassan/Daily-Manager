@@ -1,10 +1,11 @@
 
 import { Link } from 'react-router-dom';
 import { Logo } from '../../utils/elements';
-
+import Auth from './auth'
 const Nav = ({ location, loading }) => {
   const { pathname } = location()
-  return <nav>
+
+  return !pathname.includes('auth') && <nav>
     <div className="container">
       <ul>
         <li className={pathname === '/' ? "clicked logo" : "logo"}>
@@ -45,7 +46,9 @@ const Nav = ({ location, loading }) => {
         </li>
       </ul>
     </div>
+    {false && <Auth />}
   </nav >
+
 }
 export default Nav;
 

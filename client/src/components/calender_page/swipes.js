@@ -1,7 +1,7 @@
 
 import { Dotes } from '../../utils/elements';
-import { format, isToday, isSameDay, isBefore, isAfter } from 'date-fns';
-import { GetDate, getStart, getEnd, timeToMins, differenceInTime, useTime } from '../../utils/helpers'
+import { format, isToday, isSameDay, isBefore, isAfter, differenceInMinutes, minutesToHours } from 'date-fns';
+import { GetDate, getStart, getEnd, timeToMins, minsToTime, useTime } from '../../utils/helpers'
 import { CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -31,7 +31,6 @@ const options = (start = 0) => {
     className: 'swiper_container container-wheel',
   }
 }
-
 
 const getDateSwiper = (date) => {
   const checkDate = isToday(date)
@@ -126,34 +125,76 @@ export const WheelSwiper = ({ Days, setDates }) => {
   </div >
 };
 
-const Event = ({ event, top }) => {
-  const time = useTime()
-  const { start, end } = event.time
-  const marginTop = top ? (timeToMins(start) - top) : 0
-  const height = top ? (timeToMins(end) - timeToMins(start)) : 100
-  const remaining = differenceInTime(start, time)
-  const timeEvent = isBefore(time, start) ? remaining : { hours: 0, minutes: 0 }
-  const fullTime = differenceInTime(start, end)
-  const percentageEvent = (100 - ((end - time) / (end - start)) * 100)
-  const widthBar = percentageEvent < 0 ? 0 : percentageEvent > 100 ? 100 : percentageEvent
-  const startInMins = timeToMins(start)
-  const diffPercent = ((startInMins - timeToMins(time)) / startInMins) * 100
-  const percentage = diffPercent < 0 ? 0 : diffPercent > 100 ? 100 : diffPercent
-  const counter = time > start ? { ...remaining, minutes: remaining.minutes + 1 } : time > end ? fullTime : { hours: 0, minutes: 0 }
-  const handleClickEvent = () => { }
+const PopEvent = ({ data }) => {
+  const { show, start, end, title, description,
+    notes, urls, color, counter, widthBar, fullTime, bottom = false } = data
 
+  return <div style={{ borderColor: color }}
+    className={`event-pop ${show ? 'show' : ''}  ${bottom ? 'bottom' : ''}`}>
+    <div className="event-container" onClick={e => e.stopPropagation()}>
+      <div className="time">
+        <div className="start">{format(start, 'hh:mm aa')}</div>
+        <div className="remaining">{format(end, 'hh:mm aa')}</div>
+      </div>
+      <div className="inf">
+        <div className="title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente totam magni perferendis suscipit dolorem! Aspernatur, eligendi. Impedit molestiae, exercitationem voluptatum veritatis deserunt provident est quia vitae velit soluta facere atque.</div>
+        <div className="disc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente totam magni perferendis suscipit dolorem! Aspernatur, eligendi. Impedit molestiae, exercitationem voluptatum veritatis deserunt provident est quia vitae velit soluta facere atque. iptio</div>
+        <div className="disc notes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente totam magni perferendis suscipit dolorem! Aspernatur, eligendi. Impedit molestiae, exercitationem voluptatum veritatis deserunt provident est quia vitae velit soluta facere atque.</div>
+        <div className="urls">
+          {urls.map((url, i) => {
+            return <div key={`${i}${url.name}`}>
+              <a target={'_blank'}
+                rel="noopener noreferrer" href={url.link}>{url.name}</a>
+            </div>
+          })}
+        </div>
+      </div>
+    </div>
+    <div className="event-bar">
+      <div className="counter">{minsToTime(counter)}</div>
+      <div className="ev-bar">
+        <span className="line-bar" style={{ width: `${widthBar}%` }}></span>
+      </div>
+      <div className="full-time">{minsToTime(fullTime)}</div>
+    </div>
+  </div >
+}
+
+const Event = ({ event, top, index, activeIndex }) => {
+  const time = useTime()
+  const check = top !== null
+  const { start, end } = event.time
+  const { title, description, notes, urls, color } = event
+  const [popEvent, setPopEvent] = useState(false);
+
+  const startInMins = timeToMins(start)
+  const endInMins = timeToMins(end)
+  const fullTime = differenceInMinutes(end, start)
+  const remaining = differenceInMinutes(start, time)
+  const marginTop = startInMins - top
+  const height = check ? endInMins - startInMins : 100
+  const timeEvent = remaining > 0 ? remaining : 0
+  const percentage = 100 - ((1440 - timeEvent) * 100 / 1440)
+  const counter = remaining > 0 ? 0 : (time > start && time < end) ? -remaining : fullTime
+  const widthBar = 100 - ((fullTime - counter) * 100 / fullTime)
+  useEffect(() => { if (activeIndex !== index) setPopEvent(false) }, [activeIndex, index])
 
   return <div className="event-dev event-st"
-    style={{ marginTop, backgroundColor: `${event.color}`, height }}
-    onClick={() => handleClickEvent()}>
+    style={{ marginTop, backgroundColor: `${color}`, height }}
+    onClick={() => check ? setPopEvent(!popEvent) : null} >
+    {check && <PopEvent data={{
+      show: popEvent, start, end, title, description,
+      notes, urls, color, counter, widthBar, fullTime, bottom: startInMins < 320
+    }} />
+    }
     <div className="event-container">
       {height > 30 &&
         <div className="time">
           <div className="start">{format(start, 'hh:mm aa')}</div>
-          {top && <div className="remaining">{timeEvent.hours}h {timeEvent.minutes}m</div>}
+          {check && <div className="remaining">{minsToTime(timeEvent)} </div>}
 
           {
-            !top && <div className="time-remaining">
+            !check && <div className="time-remaining">
               <CircularProgressbarWithChildren value={percentage}
                 styles={buildStyles({
                   strokeLinecap: 'round',
@@ -161,7 +202,7 @@ const Event = ({ event, top }) => {
                   pathColor: 'lime',
                   trailColor: 'white',
                 })}
-              ><span className='per-remaining'>{`${timeEvent.hours}:${timeEvent.minutes}`}</span>
+              ><span className='per-remaining'>{minsToTime(timeEvent)}</span>
               </CircularProgressbarWithChildren>
             </div>
           }
@@ -169,17 +210,18 @@ const Event = ({ event, top }) => {
       }
       {height > 80 &&
         <div className="inf">
-          <div className="title">{event.title}</div>
-          {height > 100 && <div className="disc">{event.description}</div>}
-          {height > 140 && <div className="disc notes">{event.notes}</div>}
+          <div className="title">{title}</div>
+          {height > 100 && <div className="disc">{description}</div>}
+          {height > 140 && <div className="disc notes">{notes}</div>}
           {height > 170 && <div className="urls">
-            {event.urls.map((url, i) => {
+            {urls.map((url, i) => {
               return <div key={`${i}${url.name}`}>
-                <a target={'_blank'} style={{ color: `${event.color}` }}
+                <a target={'_blank'} style={{ color: `${color}` }}
                   rel="noopener noreferrer" href={url.link}>{url.name}</a>
               </div>
             })}
-          </div>}
+          </div>
+          }
         </div>
       }
     </div>
@@ -187,51 +229,48 @@ const Event = ({ event, top }) => {
     {
       height > 50 &&
       <div className="event-bar">
-        <div className="counter">{counter.hours}h {counter.minutes}m</div>
+        <div className="counter">{minsToTime(counter)}</div>
         <div className="ev-bar">
           <span className="line-bar" style={{ width: `${widthBar}%` }}></span>
         </div>
-        <div className="full-time">{fullTime.hours}h {fullTime.minutes}m</div>
+        <div className="full-time">{minsToTime(fullTime)}</div>
       </div>
     }
   </div >
 }
 
 export const EventSwipes = ({ events, top = null }) => {
+  console.log('🚀 ~ top:', top)
   events.sort((a, b) => a.time.start - b.time.start);
-
+  const [swiper, setSwiper] = useState({});
+  const [active, setActive] = useState(0)
+  const check = top !== null
   const optionsObj = {
     ...options(0), pagination: { clickable: true }, spaceBetween: 10, breakpoints: {
       900: {
         slidesPerView: 2,
       },
       1100: {
-        slidesPerView: top ? 3 : 2,
+        slidesPerView: check ? 3 : 2,
       },
       1300: {
-        slidesPerView: top ? 4 : 3,
+        slidesPerView: check ? 4 : 3,
       },
     }, coverflowEffect: {
       rotate: 0,
       stretch: -5,
-      depth: top ? 20 : 50,
+      depth: 20,
       modifier: 10,
     },
   }
-  const [swiper, setSwiper] = useState({});
 
-
-  const handleClick = (i) => {
-    swiper.slideTo(i, 500)
-    if (top) {
-
-    }
+  return <Swiper {...optionsObj} style={{ top }} onInit={(ev) => { setSwiper(ev); ev.slideTo(active, 500) }
   }
-  return <Swiper {...optionsObj} style={{ top }} onInit={(ev) => setSwiper(ev)}>
+    onSlideChange={(swiper) => setActive(swiper.activeIndex)}>
     {
       events.map((event, i) => {
-        return <SwiperSlide key={event.title + i} onClick={() => handleClick(i)} >
-          <Event event={event} top={top} />
+        return <SwiperSlide key={event.title + i} onClick={() => swiper.slideTo(i, 500)} >
+          <Event event={event} top={top} index={i} activeIndex={active} />
         </SwiperSlide>
       })
     }

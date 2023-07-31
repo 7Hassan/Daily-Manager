@@ -1,0 +1,134 @@
+@use '../helpers/colors'as *;
+@use '../helpers/mixin'as *;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+
+.login-form {
+  min-height: 100%;
+
+  .card {
+    height: unset;
+
+    .top-text {
+      font-size: 40px;
+      letter-spacing: 2px;
+      color: #5100B6;
+      margin: 20px auto;
+    }
+
+    .logo {
+      position: absolute;
+      top: -105px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: nowrap;
+      justify-content: center;
+      margin-top: 20px;
+      font-family: 'Gilroy-normal';
+      text-transform: uppercase;
+      color: #4353dd;
+      letter-spacing: 1.5px;
+      font-size: 20px;
+
+      .ls {
+        color: #62d5e1;
+      }
+
+      .logo-design {
+        height: 50px;
+        width: 50px;
+        background-color: transparent;
+      }
+
+      .text {
+        white-space: nowrap;
+      }
+    }
+
+    .first-last-name {
+      display: flex;
+      align-items: flex-end;
+      gap:  1.5rem;
+      flex-wrap: wrap;
+      width: 100%;
+      margin-bottom: 10px;
+      margin-bottom: 1.5rem;
+
+      .input {
+        flex-grow: 1;
+        &:last-child{
+          margin-top: 0 !important;
+        }
+      }
+    }
+
+    .input {
+      input {
+        letter-spacing: 1.5px !important;
+      }
+
+      &.password {
+        .input {
+          padding-right: 35px;
+
+        }
+
+        .icons {
+          position: absolute;
+          right: 0;
+          bottom: 5px;
+          cursor: pointer;
+          z-index: 2;
+
+          i {
+            font-size: 20px;
+            color: #6658d3;
+
+            &.hidden {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+    .or {
+      margin: 15px auto;
+      border-bottom: 1px solid #6658d3;
+      width: 80%;
+      text-align: center;
+
+
+      span {
+        position: relative;
+        bottom: -10px;
+        padding: 10px;
+        background-color: white;
+      }
+    }
+
+    .signUp {
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: nowrap;
+
+      a {
+        background-color: #5100B6;
+        border-radius: 10px;
+        color: white;
+        padding: 10px 15px;
+
+      }
+
+      button {
+        background-color: transparent;
+        color: #4353dd;
+      }
+    }
+  }
+}

@@ -1,12 +1,12 @@
 
-import { useState, useMemo, useEffect, useContext, createContext } from 'react'
+import { useState, useMemo, useEffect, useContext, createContext, useRef } from 'react'
 import '../styles/pages/calender.css';
 import { Title } from "../utils/helpers";
 import Schedule from '../components/calender_page/schedule';
 import { EventSwipes } from '../components/calender_page/swipes';
 import { CalenderDays } from '../components/calender_page/datesComponents';
 import { Clock } from '../components/calender_page/datesComponents';
-import { format, addHours, isToday } from 'date-fns';
+import { format, addHours, isToday, addMinutes } from 'date-fns';
 import { useGet, usePost } from '../services/api/fetch';
 import { GetDate } from '../utils/helpers';
 
@@ -44,7 +44,6 @@ const TimeInputs = ({ tempDateRange, setTempDateRange, evTime, setEvTime }) => {
     </div>
   </div >
 }
-
 const Form = ({ showForm, setShowForm }) => {
   const [form, setForm] = useState({
     title: '',
@@ -59,13 +58,22 @@ const Form = ({ showForm, setShowForm }) => {
   })
 
   const { title, description, color, urlLink, urlName, notes } = form
-  const isDisabledForm = useMemo(() => !form.title || !form.color, [form])
-  const isDisabledUrl = useMemo(() => !form.urlLink || !form.urlName, [form])
+  const isDisabledForm = useMemo(() => !title || !color, [title, color])
+  const isDisabledUrl = useMemo(() => !urlLink || !urlName, [urlName, urlLink])
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
   const urlRemove = (index) => {
     const urls = [...form.urls]
     urls.splice(index, 1)
     setForm({ ...form, urls: [...urls] })
+  }
+
+  const handleKeyDown = (e) => {
+    const value = e.target.value
+    if (e.nativeEvent.inputType !== 'deleteContentBackward') {
+      const notesDote = value.split('\n').map((note) => note.includes('•') ? note : '• ' + note).join('\n')
+      setForm({ ...form, notes: notesDote })
+    }
+    else setForm({ ...form, notes: value })
   }
 
   const handleSubmit = e => {
@@ -122,7 +130,9 @@ const Form = ({ showForm, setShowForm }) => {
           }
         </div>
         <div className="input text-area">
-          <textarea placeholder='optional' name="notes" value={notes} onChange={e => handleChange(e)} />
+          <textarea placeholder='optional' name="notes"
+            value={notes} onChange={e => handleKeyDown(e)}
+          />
           <label className="input-label">Notes</label>
         </div>
         <TimeInputs
@@ -146,14 +156,13 @@ const Calender = ({ setLoading }) => {
   const todayCalender = calender.events.filter(event => isToday(event.day))[0]
   const [form, setForm] = useState(false)
 
-
-  return <main>
+  return <main >
     <Title title='DM - Schedule' />
     <div className="main-container">
       {form && < Form showForm={form} setShowForm={setForm} />}
       {
         !form && <div className="main">
-          <div className="container">
+          <div className="container" >
             <div className="head-schedule">
               <div className="text">
                 <i className="fa-solid fa-calendar-check"></i>
@@ -216,19 +225,29 @@ function generateSudoEvents() {
   const days = getDate.monDays()
 
   for (let i = 0; i < days.length; i++) {
-    const dayEvents = Math.random() * 5
+    // const dayEvents = Math.random() * 5
+    const dayEvents = 5
     const evs = []
     for (let j = 0; j <= dayEvents; j++) {
-      const index = +((Math.random() * 4).toFixed())
-      const hour = +((Math.random() * 4).toFixed())
+      // const index = +((Math.random() * 1).toFixed())
+      // const hour = +((Math.random() * 1).toFixed())
+      const index = 0
+      const hour = 1
+      const start = addMinutes(new Date(), -1250)
       evs.push({
         title: titles[index],
         description: descriptions[index],
         color: colors[index],
-        urls: [],
+        urls: [1, 2, 3, 4, 5, 5, 5, 5, 5, 5].map(() => {
+          return {
+            name: 'hassan',
+            link: 'google.com',
+          }
+        }),
         notes: notes[index],
         time: {
-          start: addHours(new Date(), index), end: addHours(new Date(), index + hour)
+          // start: addHours(new Date(), index), end: addHours(new Date(), index + hour)
+          start: start, end: addMinutes(start, 120)
         },
       })
     }
