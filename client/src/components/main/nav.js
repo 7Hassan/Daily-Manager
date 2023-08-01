@@ -1,9 +1,10 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+
 import { Logo } from '../../utils/elements';
 import Auth from './auth'
-const Nav = ({ location, loading }) => {
-  const { pathname } = location()
+const Nav = ({ loading }) => {
+  const { pathname } = useLocation()
 
   return !pathname.includes('auth') && <nav>
     <div className="container">

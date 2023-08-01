@@ -6,10 +6,10 @@ import Schedule from '../components/calender_page/schedule';
 import { EventSwipes } from '../components/calender_page/swipes';
 import { CalenderDays } from '../components/calender_page/datesComponents';
 import { Clock } from '../components/calender_page/datesComponents';
-import { format, addHours, isToday, addMinutes } from 'date-fns';
+import { format, addHours, isToday, addMinutes, add } from 'date-fns';
 import { useGet, usePost } from '../services/api/fetch';
 import { GetDate } from '../utils/helpers';
-
+import { v4 as uuidv4 } from 'uuid';
 
 const calenderContext = createContext()
 export const useCalender = () => useContext(calenderContext)
@@ -151,7 +151,10 @@ const Form = ({ showForm, setShowForm }) => {
 }
 
 const Calender = ({ setLoading }) => {
-  const [calender, setCalender] = useState({ dateRange: { start: new Date(), end: new Date() }, events: generateSudoEvents() });
+  const [calender, setCalender] = useState({
+    dateRange: { start: new Date(), end: add(new Date(), { days: 10 }) }
+    , events: generateSudoEvents()
+  });
   // const [calender, setCalender] = useState({ dateRange: { start: new Date(), end: new Date() }, events: [] });
   const todayCalender = calender.events.filter(event => isToday(event.day))[0]
   const [form, setForm] = useState(false)
@@ -225,19 +228,20 @@ function generateSudoEvents() {
   const days = getDate.monDays()
 
   for (let i = 0; i < days.length; i++) {
-    // const dayEvents = Math.random() * 5
     const dayEvents = 5
+    // const dayEvents = 5
     const evs = []
     for (let j = 0; j <= dayEvents; j++) {
-      // const index = +((Math.random() * 1).toFixed())
-      // const hour = +((Math.random() * 1).toFixed())
-      const index = 0
-      const hour = 1
-      const start = addMinutes(new Date(), -1250)
+      const index = +((Math.random() * 2).toFixed())
+      const hour = +((Math.random() * 5).toFixed())
+      // const index = 0
+      // const hour = 1
+      // const start = addMinutes(new Date(), -1250)
       evs.push({
+        id: uuidv4(),
         title: titles[index],
         description: descriptions[index],
-        color: colors[index],
+        color: colors[+((Math.random() * 8).toFixed())],
         urls: [1, 2, 3, 4, 5, 5, 5, 5, 5, 5].map(() => {
           return {
             name: 'hassan',
@@ -246,8 +250,8 @@ function generateSudoEvents() {
         }),
         notes: notes[index],
         time: {
-          // start: addHours(new Date(), index), end: addHours(new Date(), index + hour)
-          start: start, end: addMinutes(start, 120)
+          start: addHours(new Date(), index), end: addHours(new Date(), index + hour)
+          // start: start, end: addMinutes(start, 120)
         },
       })
     }

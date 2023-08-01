@@ -6,7 +6,7 @@ const calenderSchema = new mongoose.Schema({
       type: Date,
       default: new Date(),
     },
-    start: {
+    end: {
       type: Date,
       default: new Date(),
     },
@@ -71,5 +71,5 @@ calenderSchema.virtual('author', {
 })
 
 
-const Calendar = mongoose.model('calender', calenderSchema)
+const Calendar = mongoose.model('calenders', calenderSchema)
 module.exports = Calendar

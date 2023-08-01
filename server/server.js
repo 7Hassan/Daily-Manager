@@ -8,7 +8,8 @@ const mongoose = require('mongoose')
 const app = require('./app')
 
 const DBLink = 'mongodb://localhost:27017/eventsDB'
-const port = process.env.PORT
+// const port = process.env.PORT 
+const port = 4000
 
 //? connect with DataBase
 mongoose.connect(DBLink).then(() => console.log('✅ connect with DataBase'))

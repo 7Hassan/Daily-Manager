@@ -64,10 +64,10 @@ app.use(cookieParser()); //? to access a cookie requests
 //? setup express message
 app.use(async (req, res, next) => {
   res.locals.messages = require('express-messages')(req, res);
-  const events = req.body.events
-  const eventsDB = await Events.create({ events: events })
-  console.log('🚀 ~ eventsDB:', eventsDB)
-  await eventsDB.save()
+  // const events = req.body.events
+  // const eventsDB = await Events.create({ events: events })
+  // console.log('🚀 ~ eventsDB:', eventsDB)
+  // await eventsDB.save()
   next();
 });
 
@@ -88,7 +88,7 @@ app.use(compression())
 app.use(helmet()) //? set security http header
 
 app.use('/api', require('./routes/api'));
-// app.use('/auth', require('./routes/auth'));
+app.use('/auth', require('./routes/auth'));
 
 //! 404
 app.all('*', (req, res, next) => next(new AppError('not found', 404)))

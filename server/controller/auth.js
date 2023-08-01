@@ -1,9 +1,7 @@
 const User = require('../models/users')
-const Cart = require('../models/cart')
 const crypto = require('crypto')
 const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
-const Email = require('./email')
 const helper = require('./helperFunc')
 
 exports.signPage = catchError(async (req, res, next) => {
@@ -93,17 +91,19 @@ exports.signUp = catchError(async (req, res, next) => {
   const user = await User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    email: req.body.email,
+    userName: req.body.userName,
     password: req.body.password,
-    country: req.body.country
+    jobTitle: req.body.jobTitle,
+    passwordRemember: req.body.passwordRemember,
   })
-  await user.createCart(Cart)
-  const token = await user.createToken('email')
+  await user.createUser()
+  // const token = await user.createToken('email')
   await user.save()
-  const jwtToken = await helper.createJwtToken(user._id)
-  const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
-  await new Email(user, url).verify()
-  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/auth/signup/verify' })
+  // const jwtToken = await helper.createJwtToken(user._id)
+  // const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
+  // await new Email(user, url).verify()
+  // res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/auth/signup/verify' })
+  res.status(200).json({ success: true })
 })
 
 exports.verify = async (req, res, next) => {

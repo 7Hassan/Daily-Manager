@@ -44,14 +44,14 @@ const userSchema = new mongoose.Schema({
   },
   calender: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Calendar',
+    ref: 'calenders',
   },
 });
 
 //? Hashing
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next() //? password is not change
-  this.userName = await bcrypt.hash(this.userName, 10)
+  // this.userName = await bcrypt.hash(this.userName, 10)
   this.password = await bcrypt.hash(this.password, 10)
   this.passwordRemember = await bcrypt.hash(this.passwordRemember, 10)
   // this.date = Date.now() - 1000
@@ -69,10 +69,10 @@ userSchema.methods.isCorrectPass = async function (password, hashPassword) {
 // }
 
 userSchema.pre(/^find/, async function () {
-  this.select("-__v").populate({ path: 'calender', select: "-__v" })
+  this.select("-__v").populate({ path: 'calender', select: "-__v -_id -user" })
 })
 
-userSchema.methods.createCart = async function () {
+userSchema.methods.createUser = async function () {
   const calender = await Calender.create({ user: this._id })
   this.calender = calender._id
 }

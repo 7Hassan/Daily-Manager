@@ -137,9 +137,9 @@ const PopEvent = ({ data }) => {
         <div className="remaining">{format(end, 'hh:mm aa')}</div>
       </div>
       <div className="inf">
-        <div className="title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente totam magni perferendis suscipit dolorem! Aspernatur, eligendi. Impedit molestiae, exercitationem voluptatum veritatis deserunt provident est quia vitae velit soluta facere atque.</div>
-        <div className="disc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente totam magni perferendis suscipit dolorem! Aspernatur, eligendi. Impedit molestiae, exercitationem voluptatum veritatis deserunt provident est quia vitae velit soluta facere atque. iptio</div>
-        <div className="disc notes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sapiente totam magni perferendis suscipit dolorem! Aspernatur, eligendi. Impedit molestiae, exercitationem voluptatum veritatis deserunt provident est quia vitae velit soluta facere atque.</div>
+        <div className="title">{title}</div>
+        <div className="disc">{description}</div>
+        <div className="disc notes">{notes}</div>
         <div className="urls">
           {urls.map((url, i) => {
             return <div key={`${i}${url.name}`}>
@@ -150,17 +150,18 @@ const PopEvent = ({ data }) => {
         </div>
       </div>
     </div>
-    <div className="event-bar">
+    {fullTime && <div className="event-bar">
       <div className="counter">{minsToTime(counter)}</div>
       <div className="ev-bar">
         <span className="line-bar" style={{ width: `${widthBar}%` }}></span>
       </div>
       <div className="full-time">{minsToTime(fullTime)}</div>
     </div>
+    }
   </div >
 }
 
-const Event = ({ event, top, index, activeIndex }) => {
+const TodayEvent = ({ event, top, index, activeIndex }) => {
   const time = useTime()
   const check = top !== null
   const { start, end } = event.time
@@ -213,15 +214,6 @@ const Event = ({ event, top, index, activeIndex }) => {
           <div className="title">{title}</div>
           {height > 100 && <div className="disc">{description}</div>}
           {height > 140 && <div className="disc notes">{notes}</div>}
-          {height > 170 && <div className="urls">
-            {urls.map((url, i) => {
-              return <div key={`${i}${url.name}`}>
-                <a target={'_blank'} style={{ color: `${color}` }}
-                  rel="noopener noreferrer" href={url.link}>{url.name}</a>
-              </div>
-            })}
-          </div>
-          }
         </div>
       }
     </div>
@@ -239,11 +231,58 @@ const Event = ({ event, top, index, activeIndex }) => {
   </div >
 }
 
-export const EventSwipes = ({ events, top = null }) => {
-  console.log('🚀 ~ top:', top)
+const Event = ({ event, top, index, activeIndex }) => {
+  const { start, end } = event.time
+  const { title, description, notes, urls, color } = event
+  const [popEvent, setPopEvent] = useState(false);
+  const startInMins = timeToMins(start)
+  const endInMins = timeToMins(end)
+  const marginTop = startInMins - top
+  const height = endInMins - startInMins
+  useEffect(() => { if (activeIndex !== index) setPopEvent(false) }, [activeIndex, index])
+
+  return <div className="event-dev event-st"
+    style={{ marginTop, backgroundColor: `${color}`, height }}
+    onClick={() => setPopEvent(!popEvent)} >
+    <PopEvent data={{
+      show: popEvent, start, end, title, description,
+      notes, urls, color, bottom: startInMins < 320
+    }} />
+
+    <div className="event-container">
+      {height > 30 &&
+        <div className="time">
+          <div className="start">{format(start, 'hh:mm aa')}</div>
+          <div className="remaining">{format(end, 'hh:mm aa')} </div>
+        </div>
+      }
+      {height > 50 &&
+        <div className="inf">
+          <div className="title">{title}</div>
+          {height > 100 && <div className="disc">{description}</div>}
+          {height > 140 && <div className="disc notes">{notes}</div>}
+        </div>
+      }
+    </div>
+  </div >
+}
+
+const wrapComponent = Component => {
+  return (events, swiper, top, active) => {
+    return events.map((event, i) => {
+      return <SwiperSlide key={event.id} onClick={() => swiper.slideTo(i, 500)} >
+        <Component event={event} top={top} index={i} activeIndex={active} />
+      </SwiperSlide>
+    })
+  }
+}
+
+
+export const EventSwipes = ({ events, day = null, top = null }) => {
   events.sort((a, b) => a.time.start - b.time.start);
   const [swiper, setSwiper] = useState({});
   const [active, setActive] = useState(0)
+  const wrapEvents = !day || (day && isToday(day)) ? wrapComponent(TodayEvent) : wrapComponent(Event)
   const check = top !== null
   const optionsObj = {
     ...options(0), pagination: { clickable: true }, spaceBetween: 10, breakpoints: {
@@ -264,16 +303,10 @@ export const EventSwipes = ({ events, top = null }) => {
     },
   }
 
-  return <Swiper {...optionsObj} style={{ top }} onInit={(ev) => { setSwiper(ev); ev.slideTo(active, 500) }
-  }
+  return <Swiper {...optionsObj} style={{ top }}
+    onInit={(ev) => { setSwiper(ev); ev.slideTo(active, 500) }}
     onSlideChange={(swiper) => setActive(swiper.activeIndex)}>
-    {
-      events.map((event, i) => {
-        return <SwiperSlide key={event.title + i} onClick={() => swiper.slideTo(i, 500)} >
-          <Event event={event} top={top} index={i} activeIndex={active} />
-        </SwiperSlide>
-      })
-    }
+    {wrapEvents(events, swiper, top, active)}
   </Swiper >
 };
 
