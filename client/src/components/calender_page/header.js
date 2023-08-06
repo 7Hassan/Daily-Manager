@@ -1,8 +1,8 @@
 
 import { useMemo, useState, useEffect } from 'react'
-import { getStart, getEnd, useTime } from '../../utils/helpers'
+import {  useTime } from '../../utils/helpers'
 import { format } from 'date-fns';
-import { useCalender } from '../../pages/calender';
+import { useCalender } from '../../App';
 import { CalenderDays } from './datesComponents';
 
 
@@ -13,8 +13,7 @@ const CalenderContainer = () => {
   const { start, end } = dateRange;
   const [tempDateRange, setTempDateRange] = useState(dateRange)
   const [hideCalender, setHideCalender] = useState(true)
-  const scale = useMemo(() => `${format(getStart(start, end), 'dd')} - ${format(getEnd(start, end), 'dd')} ${format(start, 'MMM')}`, [start, end])
-  const tempStart = tempDateRange.start, tempEnd = tempDateRange.end
+  const scale = useMemo(() => `${format(start, 'dd MMM')} - ${format(end, 'dd MMM')}`, [start, end])
   const apply = () => {
     setHideCalender(true)
     setCalender({ ...calender, dateRange: tempDateRange })
@@ -37,11 +36,7 @@ const CalenderContainer = () => {
     <div className={`calender ${hideCalender ? ' hidden' : ''}`}>
       <div className="calender-container">
         <div className="calender-component">
-          <CalenderDays data={{ tempDateRange, setTempDateRange, hideCalender, start }} />
-          <div className="start-end">
-            <div className="start">{format(getStart(tempStart, tempEnd), 'dd/LL/y')}</div>
-            <div className="end">{format(getEnd(tempStart, tempEnd), 'dd/LL/y')}</div>
-          </div>
+          <CalenderDays data={{ tempDateRange, setTempDateRange, hidden: hideCalender, start }} />
           <div className="options">
             <button className='btn cancel' onClick={cancel}>Cancel</button>
             <button className='btn apply' onClick={apply}>Apply</button>
@@ -52,13 +47,11 @@ const CalenderContainer = () => {
   </>
 }
 
-const TodayHeader = () => {
-  const { calender, setCalender } = useCalender()
+const TodayHeader = ({ setToday }) => {
   const time = useTime()
-  const handleClick = () => setCalender({ ...calender, dateRange: { start: time, end: time } })
 
   return <>
-    <div className="today" onClick={handleClick}>
+    <div className="today" onClick={() => setToday([time])}>
       <div className="date">
         <div className="img"><i className="fa-solid fa-calendar-week"></i></div>
         <div className="text">{format(time, 'dd LLL')}</div>
@@ -68,9 +61,8 @@ const TodayHeader = () => {
 }
 
 const Header = ({ Days, setDates }) => {
-
   return <div className="header">
-    <TodayHeader />
+    <TodayHeader setToday={setDates} />
     <CalenderContainer />
     <div className="slider" onClick={() => setDates(Days)}> Reset </div>
   </div>

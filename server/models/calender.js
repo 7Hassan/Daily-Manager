@@ -52,7 +52,9 @@ const calenderSchema = new mongoose.Schema({
   }],
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: 'users'
+    ref: 'users',
+    select: false
+
   }
 },
   //? to activate virtuals

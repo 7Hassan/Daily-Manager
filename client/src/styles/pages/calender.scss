@@ -257,8 +257,8 @@
       }
 
       .dates {
-        $width: 36px;
-        $height: 36px;
+        $width: 37px;
+        $height: 38px;
 
         .week-days {
           color: #5b5e63;
@@ -273,7 +273,7 @@
           justify-content: flex-start;
           flex-wrap: nowrap;
 
-          div {
+          >div {
             width: $width;
             height: $height;
             text-align: center;
@@ -288,6 +288,19 @@
           .mon-day {
             border-radius: 50%;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: nowrap;
+            .dotes{
+              flex-direction: row;
+              gap: 2px;
+              margin-top: -10px;
+              span{
+                margin: 0;
+              }
+            }
+
 
             &:hover {
               background-color: #E6F2FF;
@@ -307,6 +320,14 @@
             &.selected {
               background-color: $mainColor !important;
               color: white !important;
+              .dotes{
+              span{
+                background-color: white !important;
+              }
+              i{
+                color: white;
+              }
+            }
             }
           }
         }
@@ -923,6 +944,7 @@
         >div:not(.calender) {
           & {
             cursor: pointer;
+            z-index: 5;
           }
 
           >div {
@@ -1021,9 +1043,7 @@
             &.today {
               .date {
                 color: #5100B6 !important;
-                transform: scale(1.2);
               }
-
             }
 
             .date {
@@ -1035,19 +1055,6 @@
               color: #7e8ea3;
               font-weight: bold;
               position: relative;
-
-              &::after {
-                content: '';
-                width: 1px;
-                height: 20px;
-                background-color: #7e8ea3;
-                position: absolute;
-                bottom: -25px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 4;
-
-              }
             }
 
             span {
@@ -1089,21 +1096,8 @@
             .day-container {
               position: relative;
               $hoursWidth: 70px;
-              overflow: hidden;
-
-              .container-swipes-evs {
-                position: absolute;
-                top: 0;
-                width: calc(100% - 70px);
-                right: 0;
-                overflow: hidden;
-                height: 100%;
-              }
 
               .hours {
-
-
-
                 .hour {
                   width: 100%;
                   color: #647993;
@@ -1139,67 +1133,81 @@
                 }
               }
 
-              .swiper {
+              .container-swipes-evs {
                 position: absolute;
                 top: 0;
-                width: 100%;
-                height: fit-content;
-                right: 0;
-                overflow: unset;
+                width: calc(100% - 58px);
+                right: -12px;
+                overflow: hidden;
+                height: 100%;
 
-                .swiper-button-next,
-                .swiper-button-prev {
-                  display: none;
-                }
-
-                .swiper-pagination {
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  flex-wrap: nowrap;
+                .swiper {
+                  position: absolute;
                   top: 0;
-                  gap: 7px;
-                  right: -3px;
-                  left: unset;
-                  width: fit-content;
-
-                  span {
-                    width: 10px;
-                    height: 10px;
-                  }
-                }
-
-                .event-dev {
                   width: 100%;
-                  height: 150px;
-                  position: relative;
-                  margin: 0 auto;
+                  height: fit-content;
+                  right: 0;
+                  overflow: unset;
 
-                  @media (max-width:900px) {
-                    width: 90%;
+                  .swiper-button-next,
+                  .swiper-button-prev {
+                    display: none;
                   }
-                }
 
-                .swiper-slide-active {
+                  .swiper-pagination {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    flex-wrap: nowrap;
+                    top: 0;
+                    gap: 7px;
+                    right: 0;
+                    left: unset;
+                    width: 13px;
+                    background-color: #eaecf1;
+                    ;
+                    border-left: 1px solid white;
+                    height: 100%;
+                    margin: 0;
+
+                    span {
+                      width: 10px;
+                      height: 10px;
+                    }
+                  }
+
                   .event-dev {
-                    .event-pop {
-                      &.show {
-                        opacity: 1;
-                        bottom: calc(100% + 15px);
-                        // max-height: 300px;
-                        height: fit-content;
-                        // overflow: unset;
-                        width: 100%;
-                        overflow: unset;
+                    width: 100%;
+                    height: 150px;
+                    position: relative;
+                    margin: 0 auto;
+
+                    @media (max-width:900px) {
+                      width: 90%;
+                    }
+                  }
+
+                  .swiper-slide-active {
+                    .event-dev {
+                      .event-pop {
+                        &.show {
+                          opacity: 1;
+                          bottom: calc(100% + 15px);
+                          // max-height: 300px;
+                          height: fit-content;
+                          // overflow: unset;
+                          width: 100%;
+                          overflow: unset;
 
 
-                        &.bottom {
-                          bottom: unset;
-                          top: calc(100% + 15px);
-                        }
+                          &.bottom {
+                            bottom: unset;
+                            top: calc(100% + 15px);
+                          }
 
-                        @media (min-width:900px) {
-                          min-width: 500px;
+                          @media (min-width:900px) {
+                            min-width: 500px;
+                          }
                         }
                       }
                     }

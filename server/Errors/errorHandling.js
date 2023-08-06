@@ -1,10 +1,10 @@
 
 const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500
-  err.message = err.message || 'Network response was not ok'
+  err.message = err.message || "Network response is't ok"
 
   // if (err.name == 'ValidationError' || err.name == 'CastError' || err.name == 'MongoServerError') return validationMongoErr(err, res)
-  res.status(err.statusCode).send({ message: err.message, status: 'error' })
+  res.status(err.statusCode).json({ msg: err.message, success: false })
 }
 module.exports = errorHandler
 

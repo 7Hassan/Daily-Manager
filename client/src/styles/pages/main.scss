@@ -13,33 +13,23 @@ a {
 
 .dotes {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: center;
   justify-content: center;
   width: fit-content;
-  height: 25px;
-  justify-content: space-between;
+  height: fit-content;
   margin: auto;
-  margin-top: 5px;
 
   span {
-    background-color: red;
+    margin-top: 5px;
     width: 5px;
     height: 5px;
     border-radius: 50%;
-
-    &:nth-child(1) {
-      background-color: #6264FE;
-    }
-
-    &:nth-child(2) {
-      background-color: $mainColor;
-    }
-
-    &:nth-child(3) {
-      background-color: #a0aab6;
-    }
-
+    background-color: #6264FE;
+  }
+  i {
+    font-size: 10px;
+    color: #4353dd;
   }
 }
 

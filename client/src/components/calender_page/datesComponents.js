@@ -5,7 +5,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { format, addHours } from 'date-fns';
 import { TimeClock } from '@mui/x-date-pickers/TimeClock';
-import { MonSwiper } from './swipes';
+import { MonsSwiper } from './swipes';
+import { getStart, getEnd } from '../../utils/helpers'
 
 
 export const Clock = ({ evTime, setEvTime }) => {
@@ -68,17 +69,23 @@ export const Clock = ({ evTime, setEvTime }) => {
   </div >
 };
 
+
 export const CalenderDays = ({ data }) => {
-  const start = data.start ? data.start : new Date()
+  const { start, end } = data.tempDateRange
   const weekDays = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
   const [calenderDate, setCalenderDate] = useState(start);
+
   return <>
     <div className="head"> {format(calenderDate, 'LLL y')}</div>
     <div className="dates">
       <div className="week-days">
         {weekDays.map((day) => <div key={day}>{day}</div>)}
       </div>
-      <MonSwiper data={{ ...data, weekDays, setCalenderDate }} />
+      <MonsSwiper data={{ ...data, setCalenderDate }} />
+    </div>
+    <div className="start-end">
+      <div className="start">{format(getStart(start, end), 'dd/LL/y')}</div>
+      <div className="end">{format(getEnd(start, end), 'dd/LL/y')}</div>
     </div>
   </>
 

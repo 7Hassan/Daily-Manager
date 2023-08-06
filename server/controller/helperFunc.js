@@ -6,26 +6,19 @@ const { countries, zones } = require("moment-timezone/data/meta/latest.json");
 const WebSocket = require('ws');
 const multer = require('multer')
 const sharp = require('sharp')
-const geoip = require('geoip-lite');
-const requestIp = require('request-ip');
-const iso = require('iso-3166-1-alpha-2')
 
 
 exports.cookieOptions = {
   expires: new Date(Date.now() + process.env.JWT_COOKIE_EXP * 24 * 60 * 60 * 1000), //? expire in 30 days
   //? secure: true, for only https
-  httpOnly: true
+  // httpOnly: true
 }
 
 //? create a jwt token
 exports.createJwtToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRED })
 
-exports.getCountry = (req) => {
-  const ip = requestIp.getClientIp(req);
-  const countryCode = geoip.lookup(ip) ? geoip.lookup(ip).country : ''
-  const country = iso.getCountry(countryCode);
-  return country
-}
+
+
 
 exports.testJwtToken = async (req, res, next) => {
   let cookie, user, time

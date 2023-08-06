@@ -4,7 +4,7 @@ import { eachDayOfInterval } from 'date-fns';
 import { WheelSwiper } from './swipes'
 import Scales from "./scales.dates";
 import Header from "./header";
-import { useCalender } from '../../pages/calender';
+import { useCalender } from '../../App';
 
 
 

@@ -2,7 +2,7 @@
 
 import { timeToMins, useTime, GetDate } from "../../utils/helpers";
 import { format, isToday, isSameDay } from "date-fns";
-import { useCalender } from "../../pages/calender";
+import { useCalender } from '../../App';
 import { EventSwipes } from "./swipes";
 import { useState } from "react";
 // const Scales = ({ dates }) => (dates.length > 1) ? Days(dates)
@@ -175,7 +175,6 @@ const Days = (days) => {
 
 
 function evsIntersect(events) {
-  console.log('🚀 ~ events:', events)
   let wrapEvents = [], evsIntersect = [], isIntersect = true;
   events.map((event, i) => {
     for (let j = 0; j < i; j++) {

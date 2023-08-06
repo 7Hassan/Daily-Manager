@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const crypto = require('crypto')
+const validator = require('validator')
 const Calender = require('../models/Calender')
 
 
@@ -8,16 +9,21 @@ const userSchema = new mongoose.Schema({
   firstName: {
     type: String,
     required: [true, 'First Name is required'],
+    minlength: 2,
+    maxlength: 50
   },
   lastName: {
     type: String,
+    minlength: 2,
+    maxlength: 50
   },
   userName: {
     type: String,
-    required: [true, 'User Name is required'],
+    required: [function () { return this.role === 'user' }, 'Email is required'],
     minlength: [4, 'User Name must be at least 4 characters'],
+    maxlength: 50,
     unique: true,
-    select: false //? not sending a password only by use select('+password')
+    select: false
   },
   password: {
     type: String,
@@ -25,36 +31,49 @@ const userSchema = new mongoose.Schema({
     minlength: [8, 'Password must be at least 8 characters'],
     select: false
   },
-  passwordRemember: {
+  role: {
     type: String,
-    required: [true, 'Password Remember is required'],
-    select: false
+    enum: ['user', 'test'],
+    default: 'user'
   },
-  img: {
+  email: {
+    type: String,
+    required: [function () { return this.role === 'user' }, 'Email is required'],
+    unique: true,
+    validate: {
+      validator: validator.isEmail,
+      message: 'Email is not valid'
+    }
+  },
+  image: {
     type: String,
     default: 'default.webp'
   },
   jobTitle: {
     type: String,
     required: [true, 'Job Title is required'],
+    minlength: 2,
+    maxlength: 50
   },
   createdAt: {
     type: Date,
     default: Date.now(),
   },
+  verify: {
+    type: Object,
+    default: null,
+    select: false
+  },
   calender: {
     type: mongoose.Schema.ObjectId,
     ref: 'calenders',
   },
-});
+}, { timestamps: true })
 
-//? Hashing
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next() //? password is not change
-  // this.userName = await bcrypt.hash(this.userName, 10)
-  this.password = await bcrypt.hash(this.password, 10)
-  this.passwordRemember = await bcrypt.hash(this.passwordRemember, 10)
-  // this.date = Date.now() - 1000
+  if (!this.isModified('password')) return next()
+  const salt = await bcrypt.genSalt()
+  this.password = await bcrypt.hash(this.password, salt)
   next()
 })
 
@@ -62,14 +81,8 @@ userSchema.methods.isCorrectPass = async function (password, hashPassword) {
   return await bcrypt.compare(password, hashPassword)
 }
 
-//? password changed & data updated
-// userSchema.methods.isChangedPass = function (dateToken) {
-//   const dateUser = parseInt(this.date.getTime() / 1000) //? in S
-//   return (dateUser > dateToken)
-// }
-
 userSchema.pre(/^find/, async function () {
-  this.select("-__v").populate({ path: 'calender', select: "-__v -_id -user" })
+  this.select("-__v -_id").populate({ path: 'calender', select: "-__v -_id" })
 })
 
 userSchema.methods.createUser = async function () {

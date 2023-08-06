@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useCalender } from '../../App';
 
 
 const options = (start = 0) => {
@@ -32,27 +33,27 @@ const options = (start = 0) => {
   }
 }
 
-const getDateSwiper = (date) => {
-  const checkDate = isToday(date)
-  const dayNum = format(date, 'dd')
-  const dayStr = format(date, 'iii')
-  return { checkDate, dayNum, dayStr }
-};
 
-export const MonSwiper = ({ data }) => {
-  const { hideCalender, weekDays, tempDateRange, setTempDateRange, setCalenderDate } = data;
-  const tempStart = tempDateRange.start
-  const tempEnd = tempDateRange.end
+
+export const MonsSwiper = ({ data }) => {
+  const { hidden, tempDateRange, setTempDateRange, setCalenderDate } = data;
+  const { start, end } = tempDateRange
   const [status, setStatus] = useState('start')
   const { yearMons } = new GetDate(new Date())
   const months = yearMons()
-  const optionsObj = options((format(tempStart, 'M') - 1))
+  const optionsObj = options((format(start, 'M') - 1))
+  const weekDays = ['Sa', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr'];
+  const { calender } = useCalender()
 
 
-  const handleMouseOver = (day) => (status === 'end') ? setTempDateRange({ ...tempDateRange, end: day }) : null
-  const handleMouseLeave = () => (status === 'end' && window.innerWidth > 1050) ? setTempDateRange({ ...tempDateRange, end: tempStart }) : null
-  const handleClickDate = (day) => {
+  const handleMouseOver = (day) => status === 'end' &&
     setTempDateRange({ ...tempDateRange, end: day })
+
+  const handleMouseLeave = () => status === 'end' && window.innerWidth > 1050 &&
+    setTempDateRange({ ...tempDateRange, end: start })
+
+  const handleClickDate = (day) => {
+    setTempDateRange({ start: getStart(start, day), end: getEnd(start, day) })
     if (status !== 'start') return setStatus('start')
     setTempDateRange({ start: day, end: day })
     setStatus('end')
@@ -61,21 +62,10 @@ export const MonSwiper = ({ data }) => {
     const index = swiper.activeIndex;
     const month = months[index]
     setCalenderDate(month)
-    setStatus('start')
   };
-  useEffect(() => setStatus('start'), [hideCalender])
+  useEffect(() => setStatus('start'), [hidden])
+  return <Swiper {...optionsObj} onSlideChange={monthChange}>
 
-  return <Swiper {...optionsObj}
-
-    onSlideChange={monthChange}>
-    {/* < div className="slider-controler" >
-      <div className="swiper-button-prev slider-arrow" >
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </div>
-      <div className="swiper-button-next slider-arrow"  >
-        <ion-icon name="arrow-forward-outline"></ion-icon>
-      </div>
-    </div > */}
     {
       months.map((month) => {
         const { monDays } = new GetDate(month)
@@ -86,12 +76,17 @@ export const MonSwiper = ({ data }) => {
           {splitWeeksDays.map((weekDay) => < div key={weekDay} style={{ color: '#ccc' }} ></div>)}
           {
             days.map((day) => {
+              const dayEvents = calender.events.filter((ev) => isSameDay(ev.day, day))[0]
               const dayNum = format(day, 'dd')
-              const checkSame = isSameDay(day, tempStart) || isSameDay(day, tempEnd)
-              const checkBetween = isBefore(day, getEnd(tempStart, tempEnd)) && isAfter(day, getStart(tempStart, tempEnd))
+              const checkSame = isSameDay(day, start) || isSameDay(day, end)
+              const checkBetween = isBefore(day, getEnd(start, end)) && isAfter(day, getStart(start, end))
               let className = isToday(day) ? 'today mon-day' : 'mon-day'
               className += checkSame ? ' selected' : checkBetween ? ' select' : '';
-              return <div className={className} key={day} onMouseOver={() => handleMouseOver(day)} onClick={() => handleClickDate(day)} > {dayNum}</div >
+              return <div className={className} key={day} onMouseOver={() => handleMouseOver(day)}
+                onClick={() => handleClickDate(day)} >
+                {dayNum}
+                {dayEvents && <Dotes evs={dayEvents.evs} />}
+              </div >
             })
           }
         </SwiperSlide>
@@ -103,19 +98,27 @@ export const MonSwiper = ({ data }) => {
 export const WheelSwiper = ({ Days, setDates }) => {
   const optionsObj = options(0)
   const [swiper, setSwiper] = useState({});
+  const { calender } = useCalender()
   const handleClick = (day) => swiper.slideTo(Days.indexOf(day), 500, setDates([day]))
+  const getDateSwiper = (date) => {
+    const checkDate = isToday(date)
+    const dayNum = format(date, 'dd')
+    const dayStr = format(date, 'iii')
+    return { checkDate, dayNum, dayStr }
+  };
 
   return <div className="wheel-dates">
     <div className="inner-slider">
       <Swiper {...optionsObj} onInit={(ev) => setSwiper(ev)}>
         {
           Days.map((day) => {
+            const dayEvents = calender.events.filter((ev) => isSameDay(ev.day, day))[0]
             const { checkDate, dayNum, dayStr } = getDateSwiper(day)
             const className = checkDate ? 'ch-date today' : 'ch-date'
             return (
               <SwiperSlide key={day} className={className} onClick={() => handleClick(day)}>
                 <div className="date"> {dayNum} <span>{dayStr}</span> </div>
-                {/* <Dotes /> */}
+                {dayEvents && <Dotes evs={dayEvents.evs} />}
               </SwiperSlide>
             )
           })
@@ -276,7 +279,6 @@ const wrapComponent = Component => {
     })
   }
 }
-
 
 export const EventSwipes = ({ events, day = null, top = null }) => {
   events.sort((a, b) => a.time.start - b.time.start);

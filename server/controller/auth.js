@@ -4,38 +4,8 @@ const catchError = require('../Errors/catch')
 const AppError = require('../Errors/classError')
 const helper = require('./helperFunc')
 
-exports.signPage = catchError(async (req, res, next) => {
 
-  res.render('user/createAccount', {
-    country: helper.getCountry(req),
-    title: 'Sign up',
-    errors: req.flash('errors'),
-    warning: req.flash('warning'),
-    success: req.flash('success'),
-    toast: req.flash('toast'),
-  })
-})
 
-exports.logPage = catchError(async (req, res, next) => {
-  res.render('user/registration', {
-    title: 'Log In',
-    errors: req.flash('errors'),
-    warning: req.flash('warning'),
-    success: req.flash('success'),
-    toast: req.flash('toast'),
-  })
-})
-
-exports.verifyPage = catchError(async (req, res, next) => {
-  res.render('user/verification', {
-    title: 'Verify your email',
-    email: req.user.email,
-    errors: req.flash('errors'),
-    warning: req.flash('warning'),
-    success: req.flash('success'),
-    toast: req.flash('toast'),
-  })
-})
 
 exports.changEmailVerify = catchError(async (req, res, next) => {
   const { email } = req.body
@@ -79,31 +49,26 @@ exports.isEmailConfig = catchError(async (req, res, next) => {
   }
 })
 
-exports.checkAuth = async (req, res, next) => {
+exports.protectAuth = async (req, res, next) => {
   const { user, time } = await helper.testJwtToken(req, res, next)
-  if (!user || user.isChangedPass(time)) return next()
-  req.flash('warning', 'You are register')
-  res.status(403).redirect('/')
+  if (!user) return next()
+  next(new AppError('You are register', 401))
 }
 
 exports.signUp = catchError(async (req, res, next) => {
-  //? create a user
-  const user = await User.create({
+  const newUser = await User.create({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     userName: req.body.userName,
     password: req.body.password,
     jobTitle: req.body.jobTitle,
-    passwordRemember: req.body.passwordRemember,
+    email: req.body.email,
   })
-  await user.createUser()
-  // const token = await user.createToken('email')
-  await user.save()
-  // const jwtToken = await helper.createJwtToken(user._id)
-  // const url = `${req.protocol}://${req.get('host')}/auth/signup/verify/${token}`
-  // await new Email(user, url).verify()
-  // res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/auth/signup/verify' })
-  res.status(200).json({ success: true })
+  await newUser.createUser()
+  await newUser.save()
+  const jwtToken = helper.createJwtToken(newUser._id)
+  const user = await User.findById({ _id: newUser._id })
+  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ success: true, data: user })
 })
 
 exports.verify = async (req, res, next) => {
@@ -121,22 +86,22 @@ exports.verify = async (req, res, next) => {
   new Email(req.user, url).welcome()
 }
 
-exports.logIn = catchError(async (req, res, next) => {
+exports.login = catchError(async (req, res, next) => {
   //? 1) if email & password are send
-  const { email, password } = req.body
-  if (!email) return next(new AppError('Email required', 401))
+  const { userName, password } = req.body
+  if (!userName) return next(new AppError('User Name required', 401))
   if (!password) return next(new AppError('Password required', 401))
   if (password.length < 8) return next(new AppError('Password is incorrect', 401))
 
   //? 2) if user is exist & correct password
-  const user = await User.findOne({ email }).select('+password')
-  if (!user) return next(new AppError('Email is incorrect', 401))
-  if (!(await user.isCorrectPass(password, user.password))) return next(new AppError('Password is incorrect', 401))
+  const user = await User.findOne({ userName }).select('+password')
+  if (!user) return next(new AppError('User Name is incorrect', 401))
+  const isMatch = await user.isCorrectPass(password, user.password)
+  if (!isMatch) return next(new AppError('Password is incorrect', 401))
 
   //? 3) create a token send a success response
   const jwtToken = await helper.createJwtToken(user._id)
-  req.flash('success', 'Welcome ' + user.firstName)
-  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ redirect: '/' })
+  res.cookie('jwt', jwtToken, helper.cookieOptions).status(200).json({ success: true, data: user })
 })
 
 exports.forgetPass = catchError(async (req, res, next) => {
