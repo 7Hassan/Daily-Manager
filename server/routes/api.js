@@ -1,14 +1,11 @@
 const express = require('express')
 const Router = express.Router()
-const funcs = require('../controller/api')
+const func = require('../controller/api')
 
-Router.route('/user')
-  .get(funcs.getUser)
-// .post(funcs.postUser)
-// .delete(funcs.deleteUser)
 
-// Router.route('/events')
-//   .get(funcs.getEvents)
+Router.use(func.protectAPI)
+
+Router.route('/calender').put(func.postEvent)
 
 module.exports = Router
 

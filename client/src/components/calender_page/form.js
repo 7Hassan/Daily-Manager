@@ -1,7 +1,7 @@
 
 import { useState, useMemo } from 'react'
 import { CalenderDays, Clock } from './datesComponents';
-
+import { eachDayOfInterval, isSameMinute, addHours } from 'date-fns';
 
 const Dates = ({ data }) => {
   return <>
@@ -16,27 +16,27 @@ const Dates = ({ data }) => {
 }
 
 const TimeInputs = ({ tempDateRange, setTempDateRange, evTime, setEvTime }) => {
-  const [calender, setCalender] = useState(true)
+  const [sw, setSwitch] = useState(true)
 
   return <div className="input date-clock">
     <div className="date-container">
-      <div className={`header ${calender ? 'calender-show' : 'clock-show'}`}>
-        <button className='calender-btn' onClick={() => setCalender(true)}>
+      <div className={`header ${sw ? 'calender-show' : 'clock-show'}`}>
+        <button className='calender-btn' onClick={() => setSwitch(true)}>
           <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
             focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="DateRangeIcon">
             <path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"></path></svg>
         </button>
-        <button className='clock-btn' onClick={() => setCalender(false)}>
+        <button className='clock-btn' onClick={() => setSwitch(false)}>
           <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TimeIcon"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"></path><path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"></path></svg>
         </button>
         <span></span>
       </div>
       <div className="content-components">
-        {calender && <Dates
-          data={{ tempDateRange, setTempDateRange, hidden: calender }}
+        {sw && <Dates
+          data={{ tempDateRange, setTempDateRange, hidden: sw }}
         />
         }
-        {!calender && <Clock evTime={evTime} setEvTime={setEvTime} />}
+        {!sw && <Clock evTime={evTime} setEvTime={setEvTime} />}
       </div>
     </div>
   </div >
@@ -54,11 +54,11 @@ export const Form = ({ showForm, setShowForm }) => {
     urls: [],
     notes: '',
     days: { start: new Date(), end: new Date() },
-    time: { start: new Date(), end: new Date() },
+    time: { start: new Date(), end: addHours(new Date(), 1) },
   })
 
-  const { title, description, color, urlLink, urlName, notes } = form
-  const isDisabledForm = useMemo(() => !title || !color, [title, color])
+  const { title, description, color, urlLink, urlName, notes, time } = form
+  const isDisabledForm = useMemo(() => !title || !color || isSameMinute(time.start, time.end), [title, color, time])
   const isDisabledUrl = useMemo(() => !urlLink || !urlName, [urlName, urlLink])
   const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value })
   const urlRemove = (index) => {
@@ -76,11 +76,17 @@ export const Form = ({ showForm, setShowForm }) => {
     else setForm({ ...form, notes: value })
   }
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    if (isDisabledForm) {
-      console.log(form)
+  const handleSubmit = () => {
+
+    if (!isDisabledForm) {
+      const data = { ...form }
+      delete data.urlName
+      delete data.urlLink
+      const { start, end } = form.days
+      data.days = eachDayOfInterval({ start, end });
+      console.log('🚀 ~ data:', data)
     }
+
   }
 
   return <div className={`event-form ${showForm ? 'show' : ''}`}>
@@ -88,7 +94,7 @@ export const Form = ({ showForm, setShowForm }) => {
       <div className="cancel-form">
         <button onClick={() => setShowForm(false)}>Cancel</button>
       </div>
-      <form action="POST" onSubmit={(e) => handleSubmit(e)} className="card-form">
+      <form action="POST" onSubmit={(e) => e.preventDefault()} className="card-form">
         <div className="input">
           <input type="text" placeholder='required' className="input-field" name="title" value={title} onChange={e => handleChange(e)} />
           <label className="input-label">Title</label>
@@ -142,8 +148,8 @@ export const Form = ({ showForm, setShowForm }) => {
           setEvTime={(obj) => setForm({ ...form, time: obj })}
         />
         <div className="action">
-          <button type='submit' disabled={isDisabledForm}
-            className={`action-button ${isDisabledForm ? 'disabled' : ''}`}>Add</button>
+          <button type='submit' disabled={isDisabledForm} onClick={handleSubmit}
+            className={`action-button ${isDisabledForm && 'disabled'}`}>Add</button>
         </div>
       </form>
     </div >

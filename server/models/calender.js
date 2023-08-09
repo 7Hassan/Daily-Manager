@@ -16,7 +16,7 @@ const calenderSchema = new mongoose.Schema({
       type: Date,
       required: [true, 'Day of event is required'],
     },
-    ev: [{
+    evs: [{
       title: {
         type: String,
         required: [true, 'Title of event is required'],
@@ -29,6 +29,7 @@ const calenderSchema = new mongoose.Schema({
       },
       color: {
         type: String,
+        enum: ['#E27AFB', '#17D2A0', '#0077FC', '#34A9DC', '#6658d3', '#5100B6', '#DDB372', '#E06C2A'],
         required: [true, 'Color of event is required'],
       },
       urls: [

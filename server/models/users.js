@@ -82,7 +82,7 @@ userSchema.methods.isCorrectPass = async function (password, hashPassword) {
 }
 
 userSchema.pre(/^find/, async function () {
-  this.select("-__v -_id").populate({ path: 'calender', select: "-__v -_id" })
+  this.select("-__v").populate({ path: 'calender', select: "-__v" })
 })
 
 userSchema.methods.createUser = async function () {

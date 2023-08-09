@@ -114,7 +114,7 @@ function generateSudoEvents() {
         notes: notes[index],
         time: {
           // start: addHours(new Date(), -index), end: addHours(new Date(), index + hour)
-          start: start, end: addMinutes(start, 520)
+          start: start, end: addMinutes(start, 230)
         },
       })
     }
