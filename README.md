@@ -4,5 +4,26 @@ Daily Manager is a web-based application that combines a calendar, task manager,
 
 </p>
 
-<h2>Design</h2>
-<img src='./Design/Design.png'/>
+<h2>Logo</h2>
+<img src='./Design/Logo.jpeg'/>
+
+<h2>Calender Page</h2>
+<img src='./Design/Calender.png'/>
+
+<section>
+			<h2>Technologies Used</h2>
+			<ul>
+				<li>Reactjs v18</li>
+				<li>Socket.io</li>
+				<li>Swiperjs</li>
+				<li>Date-fns.org</li>
+				<li>SCSS, CSS</li>
+				<li>REST API</li>
+				<li>Node.js</li>
+				<li>Express</li>
+				<li>MongoDB</li>
+				<li>Mongoose</li>
+			</ul>
+		</section>
+
+<section>
